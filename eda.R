@@ -7,7 +7,6 @@ library("ggplot2")
 library("GGally")
 library("ggmosaic")
 
-library("scagnostics")
 library("andrews")
 
 # Assets pairwise
@@ -28,4 +27,20 @@ ggplot(data = data_scaled[, c("Insolvent", "X.VAR27.")]) +
   labs(x = "", y = "Insolvent",
        title = "Mosaic Plot of categorical Variables")
 
-# Andrews Curves
+# Andrews Curves for random sample
+set.seed(42)
+
+sample_andrews = function(data, size = 50, folds = 1, ...){
+  par(mfrow = c(folds, 1))
+  for (i in 1:folds) {
+    sample_set = sample(1:dim(data)[1], size = size)
+    andrews(data[sample_set, ], ...)
+  }
+  par(mfrow = c(1, 1))
+}
+
+sample_andrews(data_scaled[, c(3:19, 21:25, 36)], size = 100, folds = 4, clr=22)
+
+# Parallel-Coordinate Plots
+ggparcoord(data = data_scaled) +
+  geom_line()

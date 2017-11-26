@@ -91,4 +91,5 @@ data = data[-5697, full_names]
 data_scaled = data.frame(
   data[, 1:3],
   scale(data[, 1:26 + 3]),
-  data[, 30:36])
+  data[, 30:36],
+  Ins_color = ifelse(data[, 36], "red", "black"))
