@@ -1,0 +1,323 @@
+\documentclass{beamer}
+
+\usepackage{graphicx}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{eso-pic}
+\usepackage{mathrsfs}
+\usepackage{url}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{multirow}
+\usepackage{hyperref}
+\usepackage{booktabs}
+% \usepackage{bbm}
+\usepackage{cooltooltips}
+\usepackage{colordef}
+\usepackage{beamerdefs}
+\usepackage{lvblisting}
+
+\pgfdeclareimage[height=2cm]{logobig}{hulogo}
+\pgfdeclareimage[height=0.7cm]{logosmall}{Figures/LOB_Logo}
+
+\renewcommand{\titlescale}{1.0}
+\renewcommand{\titlescale}{1.0}
+\renewcommand{\leftcol}{0.6}
+
+\title[Progress Report WT 17/18]{Statistical Programming Languages}
+\authora{Valeryia Mosinzova}
+\authorb{Michail Psarakis}
+\authorc{Thomas Siskos}
+
+\def\linka{http://lvb.wiwi.hu-berlin.de}
+\def\linkb{}
+\def\linkc{}
+
+\institute{Ladislaus von Bortkiewicz Chair of Statistics \\
+Humboldt--Universität zu Berlin \\}
+
+\hypersetup{pdfpagemode=FullScreen}
+
+\begin{document}
+
+% 0-1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\frame[plain]{
+
+\titlepage
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Data Preparation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 1-1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\frame{
+\frametitle{Data Preparation}
+\lstinputlisting[language=R, firstline=4, lastline=16]{data.prep_presentation.R}
+}
+
+\frame{
+\frametitle{Data Preparation}
+
+As we are only interested in companies with high percentage in the industry 
+composition we choose only companies belonging to the following sectors
+(according to German Classification of Economic Activities Standards (WZ 1993)):
+
+\begin{enumerate}
+\item Manufacturing (Man)
+\item Wholesale and Retail (WaR)
+\item Construction (Con)
+\item Real Estate (RE)
+\end{enumerate}
+
+}
+
+\frame{
+\frametitle{Data Preparation}
+\lstinputlisting[language=R, firstline=25, lastline=35]{data.prep_presentation.R}
+}
+
+\frame{
+\frametitle{Data Preparation}
+Remove data and data1 and bind the above datasets to get one dataset containing only companies of interest:
+
+\lstinputlisting[language=R, firstline=40, lastline=43]{data.prep_presentation.R}
+
+Furthermore we choose only companies whose total assets (\texttt{VAR26}) are in the range $10^5-10^8$.
+
+\lstinputlisting[language=R, firstline=47, lastline=47]{data.prep_presentation.R}
+}
+
+\frame{
+\frametitle{Data Preparation}
+Eliminate observations with 0 value for the following variables used as denominators 
+in calculation of financial ratios to be used in classification:
+\begin{itemize}
+\item total assets (\texttt{VAR6})
+\item total sales(\texttt{VAR16})
+\item cash (\texttt{VAR1})
+\item inventories (\texttt{VAR2})
+\item current liabilities (\texttt{VAR12})
+\item total liabilities (\texttt{VAR12 + VAR13})
+\item $total\ assets-intangible\ assets-cash-lands\ and\ buildings$ (\texttt{VAR6 - VAR5 - VAR1 - VAR8})
+\item interest expenses (\texttt{VAR19})
+\end{itemize}
+}
+
+\frame{
+\frametitle{Data Preparation}
+\lstinputlisting[language=R, firstline=62, lastline=69]{data.prep_presentation.R}
+
+Show table with number of solvent/insolvent companies:
+\lstinputlisting[language=R, firstline=72, lastline=72]{data.prep_presentation.R}
+}
+
+\frame{
+\frametitle{Data Preparation}
+\lstinputlisting{data_prep_output1.txt}
+}
+
+\frame{
+\frametitle{Data Preparation}
+Add columns with financial ratios:
+\lstinputlisting[language=R, firstline=77, lastline=88]{data.prep_presentation.R}
+...
+}
+
+
+\frame{
+\frametitle{Data Preparation}
+\lstinputlisting[language=R, firstline=89, lastline=101]{data.prep_presentation.R}
+}
+
+\frame{
+\frametitle{Data Preparation}
+...
+\lstinputlisting[language=R, firstline=102, lastline=113]{data.prep_presentation.R}
+...
+}
+\frame{
+\frametitle{Data Preparation}
+...
+\lstinputlisting[language=R, firstline=114, lastline=125]{data.prep_presentation.R}
+...
+}
+
+\frame{
+\frametitle{Data Preparation}
+...
+\lstinputlisting[language=R, firstline=126, lastline=136]{data.prep_presentation.R}
+
+}
+
+\frame{
+\frametitle{Data Preparation}
+Prepare dataframe containing relative variables: \texttt{ID, JAHR} and the financial ratios will be used for classification.
+
+\lstinputlisting[language=R, firstline=140, lastline=143]{data.prep_presentation.R}
+
+Result:
+\lstinputlisting{data_prep_output2.txt}
+Which is almost the same result as in Zhang, Hardle (2010)
+}
+
+
+\section{Evaluate Predictions}
+\frame{
+\frametitle{Evaluate Predictions}
+
+Intended Outcome:
+Function that takes labels and predictions as inputs
+and returns the following Measures, Plots and Tables:
+\begin{itemize}
+\item Confusion Matrix
+	\begin{itemize}
+	\item true positives
+	\item true negatives
+	\item false positives
+	\item false negatives
+\end{itemize}
+        
+\item ROC + AUC
+\item Accuracy
+\item Precision
+\item Sensitivity
+\end{itemize}    
+}
+
+\frame{
+\frametitle{Evaluate Predictions}
+Get predictions from fitted probabilities:
+\lstinputlisting[language=R, firstline=20, lastline=24]{Evaluate_Predictions_presentation.R}
+}
+
+
+\frame{
+\frametitle{Evaluate Predictions}
+Get TP, TN, FP, FN via a contingency table
+Set factor labels to avoid pitfalls if all predictions are the same.
+\lstinputlisting[language=R, firstline=26, lastline=35]{Evaluate_Predictions_presentation.R}
+}
+
+\frame{
+\frametitle{Evaluate Predictions}
+Calculate Measures: \\
+...
+\lstinputlisting[language=R, firstline=38, lastline=46]{Evaluate_Predictions_presentation.R}
+}
+
+\frame{
+\frametitle{Evaluate Predictions}
+\lstinputlisting[language=R, firstline=48, lastline=57]{Evaluate_Predictions_presentation.R}
+}
+
+\frame{
+\frametitle{Evaluate Predictions}
+Calculate Values for ROC:
+\lstinputlisting[language=R, firstline=59, lastline=61]{Evaluate_Predictions_presentation.R}
+
+Calculate AUC: \\
+Approximate area by by two sets of rectangles. One set systematically overestimates the area, the other systematically underestimates the area. Therefore take the average of both.
+\lstinputlisting[language=R, firstline=64, lastline=66]{Evaluate_Predictions_presentation.R}
+}
+
+\frame{
+\frametitle{Evaluate Predictions}
+Choose optimal threshold, specificity, sensitivity, predictions and confusion matrix:
+\lstinputlisting[language=R, firstline=69, lastline=75]{Evaluate_Predictions_presentation.R}
+}
+
+
+\frame{
+\frametitle{Evaluate Predictions}
+Plot ROC-Curve
+\lstinputlisting[language=R, firstline=78, lastline=87]{Evaluate_Predictions_presentation.R}
+}
+
+
+\frame{
+\frametitle{Evaluate Predictions}
+Return the Values:
+\lstinputlisting[language=R, firstline=89, lastline=95]{Evaluate_Predictions_presentation.R}
+}
+
+\section{Logit}
+\frame{
+\frametitle{Logit}
+Create a subset train- and testsets:
+\lstinputlisting[language=R, firstline=4, lastline=5]{Logit_Modell_Presentation.R}
+}
+
+\frame{
+\frametitle{Logit}
+Set up variables:
+\lstinputlisting[language=R, firstline=14, lastline=24]{Logit_Modell_Presentation.R}
+}
+
+\frame{
+\frametitle{Logit}
+Train the model:
+\lstinputlisting[language=R, firstline=26, lastline=33]{Logit_Modell_Presentation.R}
+}
+
+
+\frame{
+\frametitle{Logit}
+Train the model:
+\lstinputlisting[language=R, firstline=34, lastline=40]{Logit_Modell_Presentation.R}
+}
+
+\frame{
+\frametitle{Logit}
+Accuracy:
+\lstinputlisting[language=R, firstline=42, lastline=44]{Logit_Modell_Presentation.R}
+}
+
+\section{Cart}
+
+\frame{
+\frametitle{Cart}
+Create a subset train- and testsets:
+\lstinputlisting[language=R, firstline=7, lastline=8]{CART_Model_Presentation.R}
+}
+
+\frame{
+\frametitle{Cart}
+Since insolvent firms are underrepresented we need to oversample them in to balance the dataset.
+\lstinputlisting[language=R, firstline=32, lastline=36]{CART_Model_Presentation.R}
+
+Create a matrix for performance evaluation:
+\lstinputlisting[language=R, firstline=38, lastline=42]{CART_Model_Presentation.R}
+
+}
+
+\frame{
+
+\frametitle{Cart}
+For each bootstrap sample use all insolvent firms in the training set and randomly sample the same number of solvent firms from the training set.
+
+\lstinputlisting[language=R, firstline=49, lastline=55]{CART_Model_Presentation.R}
+...
+}
+
+\frame{
+
+\frametitle{Cart}
+\lstinputlisting[language=R, firstline=56, lastline=66]{CART_Model_Presentation.R}
+}
+
+\frame{
+
+\frametitle{Cart}
+Calculate accuracy rate
+\lstinputlisting[language=R, firstline=68, lastline=70]{CART_Model_Presentation.R}
+}
+
+
+\end{document}
+
