@@ -43,19 +43,16 @@ Humboldt--Universität zu Berlin \\}
 
 \begin{document}
 
-% 0-1
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \frame[plain]{
-
 \titlepage
 }
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Data Preparation}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\frame{
+\frametitle{Contents}
+\tableofcontents
+}
 
-% 1-1
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Data Preparation}
 \frame{
 \frametitle{Data Preparation}
 \lstinputlisting[language=R, firstline=4, lastline=16]{data.prep_presentation.R}
@@ -132,6 +129,7 @@ Add columns with financial ratios:
 
 \frame{
 \frametitle{Data Preparation}
+...
 \lstinputlisting[language=R, firstline=89, lastline=101]{data.prep_presentation.R}
 }
 
@@ -281,8 +279,8 @@ Accuracy:
 \section{Cart}
 
 \frame{
-\frametitle{Cart}
-Create a subset train- and testsets:
+\frametitle{Build the Cart Model}
+Create a subset to train and evaluate the model:
 \lstinputlisting[language=R, firstline=7, lastline=8]{CART_Model_Presentation.R}
 }
 
@@ -290,10 +288,14 @@ Create a subset train- and testsets:
 \frametitle{Cart}
 Since insolvent firms are underrepresented we need to oversample them in to balance the dataset.
 \lstinputlisting[language=R, firstline=32, lastline=36]{CART_Model_Presentation.R}
+}
 
-Create a matrix for performance evaluation:
-\lstinputlisting[language=R, firstline=38, lastline=42]{CART_Model_Presentation.R}
+\frame{
+Create a matrix for performance evaluation of binary classification, which will be filled with true positive/negative rates:
+\lstinputlisting[language=R, firstline=39, lastline=39]{CART_Model_Presentation.R}
 
+Create a matrix which will store the sum of all prediction outcomes:
+\lstinputlisting[language=R, firstline=41, lastline=42]{CART_Model_Presentation.R}
 }
 
 \frame{
@@ -318,6 +320,61 @@ Calculate accuracy rate
 \lstinputlisting[language=R, firstline=68, lastline=70]{CART_Model_Presentation.R}
 }
 
+\section{Random Forest}
+\frame{
+\frametitle{Random Forest: Training the model}
+\lstinputlisting[language=R, firstline=48, lastline=54]{Random_Forest_Modell_Presentation.R}
+}
 
+\frame{
+\frametitle{Validation- and Test-Phase}
+
+
+\lstinputlisting[language=R, firstline=56, lastline=59]{Random_Forest_Modell_Presentation.R}
+Calculate accuracy rate
+\lstinputlisting[language=R, firstline=58, lastline=58]{Random_Forest_Modell_Presentation.R}
+}
+
+\section{Gradient Descent}
+\frame{
+\frametitle{Theory}
+At starting point $a$ a (possibly multivariate) function $f(x)$ decays fastest if one follows the negative gradient of $f$ evaluated at a, thus we can update a by:
+\begin{equation}
+a_{n+1} = a + \eta \cdot \nabla f(a)
+\end{equation}
+}
+
+\frame{
+\frametitle{Implementation in R - Gradient}
+Approximate Gradient by taking finite differences:
+\lstinputlisting[language=R, firstline=122, lastline=135]{LDA/utils.R}
+}
+
+\frame{
+\frametitle{Choose Starting Point}
+\lstinputlisting[language=R, firstline=140, lastline=146]{LDA/utils.R}
+}
+
+\frame{
+\frametitle{Update Starting Point $a$}
+\lstinputlisting[language=R, firstline=152, lastline=163]{LDA/utils.R}
+}
+
+\frame[containsverbatim]{
+\frametitle{Example}
+Visualize the path of a one-dimensional Gradient-Descent:
+\begin{columns}
+\begin{column}{0.5\textwidth}
+	Continuously Differentiable Objective Function:	
+	\begin{equation}
+	f(x) = \frac{x^4}{10000} + 2
+	\end{equation}
+\end{column}
+\begin{column}{0.5\textwidth}
+	\includegraphics[scale=0.6]{LDA/gradient_descent.png}
+\end{column}
+\end{columns}
+
+}
 \end{document}
 
