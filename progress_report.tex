@@ -55,7 +55,9 @@ Humboldt--Universität zu Berlin \\}
 \section{Data Preparation}
 \frame{
 \frametitle{Data Preparation}
-\lstinputlisting[language=R, firstline=4, lastline=16]{data.prep_presentation.R}
+\lstinputlisting[language=R, firstline=4, lastline=5]{data.prep_presentation.R}
+Due to missing insolvencies in 1996 and missing data from 2003 onwards we choose data from 1997-2002
+\lstinputlisting[language=R, firstline=13, lastline=16]{data.prep_presentation.R}
 }
 
 \frame{
@@ -115,8 +117,22 @@ Show table with number of solvent/insolvent companies:
 }
 
 \frame{
-\frametitle{Data Preparation}
-\lstinputlisting{data_prep_output1.txt}
+\frametitle{Data Preparation: Results}
+
+\begin{center}
+\begin{tabular}{ccc} 
+\hline\hline
+Year & Solvent & Insolvent\\ 
+\hline
+1997 & 1084 & 126 \\
+1998 & 1175 & 114 \\
+1999 & 1277 & 147 \\
+2000 & 1592 & 135 \\
+2001 & 1920 & 132 \\
+2002 & 2543 & 129 \\
+\hline\hline
+\end{tabular}
+\end{center}
 }
 
 \frame{
@@ -347,17 +363,18 @@ a_{n+1} = a + \eta \cdot \nabla f(a)
 \frame{
 \frametitle{Implementation in R - Gradient}
 Approximate Gradient by taking finite differences:
-\lstinputlisting[language=R, firstline=122, lastline=135]{LDA/utils.R}
+\lstinputlisting[language=R, firstline=122, lastline=133]{LDA/utils.R}
 }
 
 \frame{
 \frametitle{Choose Starting Point}
-\lstinputlisting[language=R, firstline=140, lastline=146]{LDA/utils.R}
+Try different Points and chose the one that provides the lowest value:
+\lstinputlisting[language=R, firstline=139, lastline=146]{LDA/utils.R}
 }
 
 \frame{
 \frametitle{Update Starting Point $a$}
-\lstinputlisting[language=R, firstline=152, lastline=163]{LDA/utils.R}
+\lstinputlisting[language=R, firstline=150, lastline=163]{LDA/utils.R}
 }
 
 \frame[containsverbatim]{
