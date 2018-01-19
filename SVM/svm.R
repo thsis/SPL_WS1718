@@ -7,8 +7,8 @@ data = read.csv("Data/SPL_data.csv",
                 sep = ";",
                 dec = ".")
 data = data[complete.cases(data[, -36]), -36]
-summary(data)
 data$Insolvent = factor(data$T2, levels = c(0, 1), labels = c("solvent", "insolvent"))
+summary(data)
 
 train_indices = sample(1:dim(data)[1],
                        30000,

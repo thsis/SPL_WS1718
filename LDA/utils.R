@@ -119,8 +119,7 @@ gradientDescentMinimizer = function(obj, n_pars, epsilon_step = 0.001,
             report_freq > 0)
   
   # Approximate Gradient
-  get_gradient = function(x,
-                          d = n_pars,
+  get_gradient = function(x, d = n_pars,
                           objective = obj,
                           epsilon = epsilon_step){
     init = matrix(data = x, nrow = d, ncol = d, byrow = TRUE)
@@ -128,7 +127,6 @@ gradientDescentMinimizer = function(obj, n_pars, epsilon_step = 0.001,
     
     f_steps = apply(steps, 1, objective)
     f_comp =  apply(init, 1, objective)
-    
     D = (f_steps - f_comp) / epsilon
     # Trim D to limit the gradient:
     D_trimmed = ifelse(abs(D) <= 100, abs(D), 100) * sign(D)
