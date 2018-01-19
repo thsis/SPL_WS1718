@@ -14,7 +14,6 @@
 \usepackage{multirow}
 \usepackage{hyperref}
 \usepackage{booktabs}
-% \usepackage{bbm}
 \usepackage{cooltooltips}
 \usepackage{colordef}
 \usepackage{beamerdefs}
@@ -80,7 +79,7 @@ composition we choose only companies belonging to the following sectors
 \frametitle{Data Preparation}
 \lstinputlisting[language=R, firstline=25, lastline=35]{data.prep_presentation.R}
 }
-
+	
 \frame{
 \frametitle{Data Preparation}
 Remove data and data1 and bind the above datasets to get one dataset containing only companies of interest:
@@ -340,6 +339,8 @@ At starting point $a$ a (possibly multivariate) function $f(x)$ decays fastest i
 \begin{equation}
 a_{n+1} = a + \eta \cdot \nabla f(a)
 \end{equation}
+
+where $\eta$ describes the learning-rate.
 }
 
 \frame{
@@ -351,29 +352,28 @@ Approximate Gradient by taking finite differences:
 \frame{
 \frametitle{Choose Starting Point}
 Try different Points and chose the one that provides the lowest value:
-\lstinputlisting[language=R, firstline=139, lastline=146]{../LDA/utils.R}
+\lstinputlisting[language=R, firstline=138, lastline=144]{../LDA/utils.R}
 }
 
 \frame{
 \frametitle{Update Starting Point $a$}
-\lstinputlisting[language=R, firstline=150, lastline=163]{../LDA/utils.R}
+\lstinputlisting[language=R, firstline=150, lastline=161]{../LDA/utils.R}
 }
 
 \frame[containsverbatim]{
 \frametitle{Example}
 Visualize the path of a one-dimensional Gradient-Descent:
 \begin{columns}
-\begin{column}{0.5\textwidth}
+\begin{column}{0.4\textwidth}
 	Continuously Differentiable Objective Function:	
 	\begin{equation}
 	f(x) = \frac{x^4}{10000} + 2
 	\end{equation}
 \end{column}
-\begin{column}{0.5\textwidth}
-	\includegraphics[scale=0.6]{../LDA/gradient_descent.png}
+\begin{column}{0.4\textwidth}
+	\includegraphics[scale=0.55]{../LDA/gradient_descent.png}
 \end{column}
 \end{columns}
-
 }
 \end{document}
 

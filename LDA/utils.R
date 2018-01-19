@@ -124,14 +124,14 @@ gradientDescentMinimizer = function(obj, n_pars, epsilon_step = 0.001,
                           epsilon = epsilon_step){
     init = matrix(data = x, nrow = d, ncol = d, byrow = TRUE)
     steps = init + diag(x = epsilon, ncol = d, nrow = d)
-    
     f_steps = apply(steps, 1, objective)
     f_comp =  apply(init, 1, objective)
     D = (f_steps - f_comp) / epsilon
-    # Trim D to limit the gradient:
     D_trimmed = ifelse(abs(D) <= 100, abs(D), 100) * sign(D)
-    return(D_trimmed)
-  }
+    return(D_trimmed)}
+  
+  
+  
   
   # Draw multiple random starting points.
   # Use the one that provides the lowest value of the objective function.
