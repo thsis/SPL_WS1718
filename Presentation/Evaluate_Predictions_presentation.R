@@ -27,7 +27,7 @@ evaluate_predictions = function(labels, predictions, verbose = FALSE){
   ct = table(factor(x = labels, levels = c(0, 1)),
              factor(x = predictions, levels = c(0,1)))
   
-  if(any(dim(ct) != 2)) stop("Labels or Predictions contain more than 2 classes or both consist of only one class.")
+  if(any(dim(ct) != 2)) stop("Labels or Predictions contain more than 2 classes.")
   
   TN = ct[1, 1]
   TP = ct[2, 2]
@@ -70,8 +70,9 @@ evaluate_model = function(fitted_probs, labels){
   opt_sensitivity = sensitivities[opt_ind]
   opt_specificity = specificities[opt_ind]
   opt_threshold = seq(from = 0, to = 1, by = 0.0001)[opt_ind]
-  opt_predictions = get_prediction(fitted_probs = fitted_probs,
-                                   threshold = opt_threshold)
+  opt_predictions = get_prediction(
+    fitted_probs = fitted_probs,
+    threshold = opt_threshold)
   ct = table(factor(x = labels, levels = c(0, 1)),
              factor(x = opt_predictions, levels = c(0,1)))
 
@@ -85,7 +86,6 @@ evaluate_model = function(fitted_probs, labels){
        asp = TRUE,
        type = "l")
   abline(c(0, 0), c(1,1), col = "grey")
-  
   return(list(sensitivity = opt_sensitivity,
               specificity = opt_specificity,
               threshold = opt_threshold,

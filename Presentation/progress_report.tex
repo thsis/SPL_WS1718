@@ -112,7 +112,7 @@ in calculation of financial ratios to be used in classification:
 \lstinputlisting[language=R, firstline=62, lastline=69]{data.prep_presentation.R}
 
 Show table with number of solvent/insolvent companies:
-\lstinputlisting[language=R, firstline=72, lastline=72]{data.prep_presentation.R}
+\lstinputlisting[language=R, firstline=72, lastline=74]{data.prep_presentation.R}
 }
 
 \frame{
@@ -141,38 +141,98 @@ Add columns with financial ratios:
 ...
 }
 
-
 \frame{
 \frametitle{Data Preparation}
-...
-\lstinputlisting[language=R, firstline=89, lastline=101]{data.prep_presentation.R}
+\begin{center}
+\begin{tabular}{cc}
+
+\hline\hline
+Variable & Definition \\
+\hline
+x1 & Net income/total assets \\
+x2 & Net income/total sales \\
+x3 & Operating income/total assets \\
+x4 & Operating income/total sales \\
+x5 & Earnings before interest and tax/total assets \\
+
+\hline\hline
+\end{tabular}
+\end{center}
 }
 
+
 \frame{
 \frametitle{Data Preparation}
-...
-\lstinputlisting[language=R, firstline=102, lastline=113]{data.prep_presentation.R}
-...
+\begin{center}
+\begin{tabular}{cc}
+
+\hline\hline
+Variable & Definition \\
+\hline
+x6 & Earnings before interest, Tax, Depreciation and amortization/total assets \\
+x7 & Earnings before interest and tax/total sales \\
+x8 & Own funds/total assets \\
+x9 & $\frac{Own funds - intangible assets}{total assets - intangible assets - cash and cash equivalents - lands and buildings}$ \\
+x10 & Current liabilities/total assets \\
+
+\hline\hline
+\end{tabular}
+\end{center}
 }
+
+
 \frame{
 \frametitle{Data Preparation}
-...
-\lstinputlisting[language=R, firstline=114, lastline=125]{data.prep_presentation.R}
-...
+\begin{center}
+\begin{tabular}{cc}
+
+\hline\hline
+Variable & Definition \\
+\hline
+x11 & (Current liabilities - cash and cash equivalents)/total assets \\
+x12 & Total liabilities/total assets \\
+x13 & Debt/total assets \\
+x14 & Earnings before interest and tax/interest expense \\
+x15 & Cash and cash equivalents/total assets \\
+x16 & Cash and cash equivalents/current liabilities \\
+x17 & (Cash and cash equivalents - inventories)/current liabilities \\
+x18 & Current assets/current liabilities \\
+x19 & (Current assets - current liabilities)/total assets \\
+x20 & Current liabilities/total liabilities \\
+\hline\hline
+\end{tabular}
+\end{center}
 }
 
+
+
 \frame{
 \frametitle{Data Preparation}
-...
-\lstinputlisting[language=R, firstline=126, lastline=136]{data.prep_presentation.R}
-
+\begin{center}
+\begin{tabular}{cc}
+\hline\hline
+Variable & Definition \\
+\hline
+x21 & Total assets/total sales \\
+x22 & Inventories/total sales \\
+x23 & Accounts receivable/total sales \\
+x24 & Accounts payable/total sales \\
+x25 & log(total assets) \\
+x26 & Increase (decrease) in inventories/inventories \\
+x27 & Increase (decrease) in liabilities/total Liabilities \\
+x28 & Increase (decrease) in cash flow/cash and cash equivalents \\
+\hline\hline
+\end{tabular}
+\end{center}
 }
 
+
+
 \frame{
 \frametitle{Data Preparation}
-Prepare dataframe containing relative variables: \texttt{ID, JAHR} and the financial ratios will be used for classification.
+Prepare dataframe containing relative variables: \texttt{ID, T2, JAHR} and the financial ratios will be used for classification.
 
-\lstinputlisting[language=R, firstline=140, lastline=143]{data.prep_presentation.R}
+\lstinputlisting[language=R, firstline=140, lastline=145]{data.prep_presentation.R}
 
 Result:
 \lstinputlisting{data_prep_output2.txt}
@@ -212,7 +272,7 @@ Get predictions from fitted probabilities:
 
 \frame{
 \frametitle{Evaluate Predictions}
-Get TP, TN, FP, FN via a contingency table
+Get TP, TN, FP, FN via a contingency table.
 Set factor labels to avoid pitfalls if all predictions are the same.
 \lstinputlisting[language=R, firstline=26, lastline=35]{Evaluate_Predictions_presentation.R}
 }
@@ -235,21 +295,21 @@ Calculate Values for ROC:
 \lstinputlisting[language=R, firstline=59, lastline=61]{Evaluate_Predictions_presentation.R}
 
 Calculate AUC: \\
-Approximate area by by two sets of rectangles. One set systematically overestimates the area, the other systematically underestimates the area. Therefore take the average of both.
+Approximate area by two sets of rectangles. One set systematically overestimates the area, the other systematically underestimates the area. Therefore take the average of both.
 \lstinputlisting[language=R, firstline=64, lastline=66]{Evaluate_Predictions_presentation.R}
 }
 
 \frame{
 \frametitle{Evaluate Predictions}
 Choose optimal threshold, specificity, sensitivity, predictions and confusion matrix:
-\lstinputlisting[language=R, firstline=69, lastline=75]{Evaluate_Predictions_presentation.R}
+\lstinputlisting[language=R, firstline=69, lastline=77]{Evaluate_Predictions_presentation.R}
 }
 
 
 \frame{
 \frametitle{Evaluate Predictions}
 Plot ROC-Curve
-\lstinputlisting[language=R, firstline=78, lastline=87]{Evaluate_Predictions_presentation.R}
+\lstinputlisting[language=R, firstline=79, lastline=87]{Evaluate_Predictions_presentation.R}
 }
 
 
@@ -303,20 +363,6 @@ Calculate accuracy rate
 \lstinputlisting[language=R, firstline=68, lastline=70]{CART_Model_Presentation.R}
 }
 
-\section{Logit}
-\frame{
-\frametitle{Logit}
-Create a subset train- and testsets:
-\lstinputlisting[language=R, firstline=4, lastline=5]{Logit_Modell_Presentation.R}
-}
-
-\frame{
-\frametitle{Logit}
-Train the model:
-\lstinputlisting[language=R, firstline=35, lastline=40]{Logit_Modell_Presentation.R}
-}
-
-
 \section{Random Forest}
 \frame{
 \frametitle{Random Forest: Training the model}
@@ -332,7 +378,20 @@ Calculate accuracy rate
 \lstinputlisting[language=R, firstline=58, lastline=58]{Random_Forest_Modell_Presentation.R}
 }
 
-\section{Gradient Descent}
+\section{Logit}
+\frame{
+\frametitle{Logit}
+Create a subset train- and testsets:
+\lstinputlisting[language=R, firstline=4, lastline=5]{Logit_Modell_Presentation.R}
+}
+
+\frame{
+\frametitle{Logit}
+Train the model:
+\lstinputlisting[language=R, firstline=35, lastline=40]{Logit_Modell_Presentation.R}
+}
+
+\section{Gradient Descent Optimizer}
 \frame{
 \frametitle{Theory}
 At starting point $a$ a (possibly multivariate) function $f(x)$ decays fastest if one follows the negative gradient of $f$ evaluated at a, thus we can update a by:
@@ -344,20 +403,26 @@ where $\eta$ describes the learning-rate.
 }
 
 \frame{
+\frametitle{Implementation in R - Arguments}
+
+\lstinputlisting[language=R, firstline=110, lastline=114]{../LDA/utils.R}
+}
+
+\frame{
 \frametitle{Implementation in R - Gradient}
 Approximate Gradient by taking finite differences:
-\lstinputlisting[language=R, firstline=122, lastline=133]{../LDA/utils.R}
+\lstinputlisting[language=R, firstline=123, lastline=133]{../LDA/utils.R}
 }
 
 \frame{
 \frametitle{Choose Starting Point}
 Try different Points and chose the one that provides the lowest value:
-\lstinputlisting[language=R, firstline=138, lastline=144]{../LDA/utils.R}
+\lstinputlisting[language=R, firstline=139, lastline=144]{../LDA/utils.R}
 }
 
 \frame{
 \frametitle{Update Starting Point $a$}
-\lstinputlisting[language=R, firstline=150, lastline=161]{../LDA/utils.R}
+\lstinputlisting[language=R, firstline=151, lastline=161]{../LDA/utils.R}
 }
 
 \frame[containsverbatim]{

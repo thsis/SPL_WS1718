@@ -107,10 +107,11 @@ bivariateMinimizer = function(obj, epsilon_step = 0.001, max_iter = 10,
 
 # ==============================================================================
 # Multivariate Case:
-gradientDescentMinimizer = function(obj, n_pars, epsilon_step = 0.001,
-                                    max_iter = 10, precision = 1e-6, 
-                                    learn = 0.5, verbose = FALSE, 
-                                    report_freq = 100){
+gradientDescentMinimizer = function(
+  obj, n_pars, epsilon_step = 0.001,
+  max_iter = 10, precision = 1e-6, 
+  learn = 0.5, verbose = FALSE, 
+  report_freq = 100){
   # Check for invalid parameters:
   stopifnot(epsilon_step > 0,
             max_iter > 0,
