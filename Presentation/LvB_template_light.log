@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.11.4)  22 JAN 2018 15:14
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.11.4)  22 JAN 2018 14:33
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**progress_report.tex
-(./progress_report.tex
+**LvB_template_light.tex
+(./LvB_template_light.tex
 LaTeX2e <2016/02/01>
 Babel <3.9q> and hyphenation patterns for 81 language(s) loaded.
 (/usr/share/texlive/texmf-dist/tex/latex/beamer/beamer.cls
@@ -793,24 +793,32 @@ Package: cooltooltips 2006/03/07 v1.0 Cool PDF tooltips
 )
 (./colordef.sty) (./beamerdefs.sty
 \c@mexample=\count166
-) (./lvblisting.sty) (./progress_report.aux)
-\openout1 = `progress_report.aux'.
+) (./lvblisting.sty)
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
+Package pgf Warning: File "Figures/LOB_Logo" not found when defining image "log
+osmall". Tried all extensions in ".pdf:.jpg:.jpeg:.png:" on input line 24.
 
+
+Package pgf Warning: Missing width for image "logosmall" ("Figures/LOB_Logo") i
+n draft mode. Using 1cm instead on input line 24.
+
+No file LvB_template_light.aux.
+\openout1 = `LvB_template_light.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -875,7 +883,7 @@ e
 ))
 ABD: EveryShipout initializing macros
 \AtBeginShipoutBox=\box57
-Package hyperref Info: Link coloring OFF on input line 43.
+Package hyperref Info: Link coloring OFF on input line 44.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
@@ -885,71 +893,69 @@ Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
 \c@section@level=\count173
 )
-LaTeX Info: Redefining \ref on input line 43.
-LaTeX Info: Redefining \pageref on input line 43.
-LaTeX Info: Redefining \nameref on input line 43.
-
-(./progress_report.out) (./progress_report.out)
+LaTeX Info: Redefining \ref on input line 44.
+LaTeX Info: Redefining \pageref on input line 44.
+LaTeX Info: Redefining \nameref on input line 44.
 \@outlinefile=\write5
-\openout5 = `progress_report.out'.
+\openout5 = `LvB_template_light.out'.
 
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/cmr/m/n --> OT1/cmss/m/n on input line 43.
+(Font)                  OT1/cmr/m/n --> OT1/cmss/m/n on input line 44.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/cmr/bx/n --> OT1/cmss/bx/n on input line 43.
+(Font)                  OT1/cmr/bx/n --> OT1/cmss/bx/n on input line 44.
 \symnumbers=\mathgroup7
 \sympureletters=\mathgroup8
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
-(Font)                  OT1/cmss/m/n --> T1/cmr/m/n on input line 43.
-LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 43.
+(Font)                  OT1/cmss/m/n --> T1/cmr/m/n on input line 44.
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 44.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/cmr/bx/n --> T1/cmss/bx/n on input line 43.
+(Font)                  OT1/cmr/bx/n --> T1/cmss/bx/n on input line 44.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  OT1/cmr/bx/n --> T1/cmss/bx/n on input line 43.
-LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 43.
+(Font)                  OT1/cmr/bx/n --> T1/cmss/bx/n on input line 44.
+LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 44.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/cmss/m/n --> T1/cmss/m/n on input line 43.
+(Font)                  OT1/cmss/m/n --> T1/cmss/m/n on input line 44.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> T1/cmss/m/n on input line 43.
-LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 43.
+(Font)                  OT1/cmss/bx/n --> T1/cmss/m/n on input line 44.
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 44.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/cmr/m/it --> T1/cmss/m/it on input line 43.
+(Font)                  OT1/cmr/m/it --> T1/cmss/m/it on input line 44.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/cmr/bx/it --> T1/cmss/m/it on input line 43.
-LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 43.
+(Font)                  OT1/cmr/bx/it --> T1/cmss/m/it on input line 44.
+LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 44.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/cmtt/m/n --> T1/cmtt/m/n on input line 43.
+(Font)                  OT1/cmtt/m/n --> T1/cmtt/m/n on input line 44.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> T1/cmtt/m/n on input line 43.
+(Font)                  OT1/cmtt/m/n --> T1/cmtt/m/n on input line 44.
 LaTeX Font Info:    Overwriting symbol font `numbers' in version `bold'
-(Font)                  T1/cmss/m/n --> T1/cmss/bx/n on input line 43.
+(Font)                  T1/cmss/m/n --> T1/cmss/bx/n on input line 44.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
-(Font)                  T1/cmss/m/it --> T1/cmss/bx/it on input line 43.
+(Font)                  T1/cmss/m/it --> T1/cmss/bx/it on input line 44.
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `bold'
-(Font)                  OT1/cmss/bx/n --> T1/cmr/bx/n on input line 43.
+(Font)                  OT1/cmss/bx/n --> T1/cmr/bx/n on input line 44.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  T1/cmss/bx/n --> T1/cmss/bx/n on input line 43.
+(Font)                  T1/cmss/bx/n --> T1/cmss/bx/n on input line 44.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  T1/cmss/m/n --> T1/cmss/bx/n on input line 43.
+(Font)                  T1/cmss/m/n --> T1/cmss/bx/n on input line 44.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  T1/cmss/m/it --> T1/cmss/bx/it on input line 43.
+(Font)                  T1/cmss/m/it --> T1/cmss/bx/it on input line 44.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  T1/cmtt/m/n --> T1/cmtt/bx/n on input line 43.
-LaTeX Font Info:    Redeclaring symbol font `pureletters' on input line 43.
+(Font)                  T1/cmtt/m/n --> T1/cmtt/bx/n on input line 44.
+LaTeX Font Info:    Redeclaring symbol font `pureletters' on input line 44.
 LaTeX Font Info:    Encoding `T1' has changed to `OT1' for symbol font
-(Font)              `pureletters' in the math version `normal' on input line 43
+(Font)              `pureletters' in the math version `normal' on input line 44
 .
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `normal'
-(Font)                  T1/cmss/m/it --> OT1/mathkerncmss/m/sl on input line 43
+(Font)                  T1/cmss/m/it --> OT1/mathkerncmss/m/sl on input line 44
 .
 LaTeX Font Info:    Encoding `T1' has changed to `OT1' for symbol font
-(Font)              `pureletters' in the math version `bold' on input line 43.
+(Font)              `pureletters' in the math version `bold' on input line 44.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
 (Font)                  T1/cmss/bx/it --> OT1/mathkerncmss/m/sl on input line 4
-3.
+4.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
 (Font)                  OT1/mathkerncmss/m/sl --> OT1/mathkerncmss/bx/sl on inp
-ut line 43.
+ut line 44.
 
 (/usr/share/texlive/texmf-dist/tex/latex/beamer/translator/dicts/translator-bas
 ic-dictionary/translator-basic-dictionary-English.dict
@@ -975,599 +981,182 @@ Dictionary: translator-numbers-dictionary, Language: English
 orem-dictionary/translator-theorem-dictionary-English.dict
 Dictionary: translator-theorem-dictionary, Language: English 
 )
-LaTeX Info: Redefining \includegraphics on input line 43.
+LaTeX Info: Redefining \includegraphics on input line 44.
 \c@lstlisting=\count174
 
-(./progress_report.nav)
-LaTeX Font Info:    Try loading font information for U+msa on input line 43.
+No file LvB_template_light.nav.
+! Missing $ inserted.
+<inserted text> 
+                $
+l.44 \begin{document}
+                     
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
 
+LaTeX Font Info:    Try loading font information for U+msa on input line 44.
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 43.
+LaTeX Font Info:    Try loading font information for U+msb on input line 44.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Try loading font information for U+rsfs on input line 43.
+LaTeX Font Info:    Try loading font information for U+rsfs on input line 44.
 
 (/usr/share/texlive/texmf-dist/tex/latex/jknapltx/ursfs.fd
 File: ursfs.fd 1998/03/24 rsfs font definition file (jk)
 )
 LaTeX Font Info:    Try loading font information for OT1+mathkerncmss on input 
-line 43.
+line 44.
 
 (/usr/share/texlive/texmf-dist/tex/latex/sansmathaccent/ot1mathkerncmss.fd
 File: ot1mathkerncmss.fd 2013/03/27 Fontinst v1.933 font definitions for OT1/ma
 thkerncmss.
 )
+! Extra }, or forgotten $.
+<recently read> }
+                 
+l.44 \begin{document}
+                     
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
 
-Package hyperref Warning: Suppressing link with empty target on input line 47.
+! Missing $ inserted.
+<inserted text> 
+                $
+l.44 \begin{document}
+                     
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.44 \begin{document}
+                     
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
 
 
-Package hyperref Warning: Suppressing link with empty target on input line 47.
+Package hyperref Warning: Suppressing link with empty target on input line 51.
+
+
+Package hyperref Warning: Suppressing link with empty target on input line 51.
 
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./hulogo.pdf>]
-(./progress_report.toc)
 
 LaTeX Font Warning: Font shape `T1/cmss/m/n' in size <4> not available
-(Font)              size <5> substituted on input line 52.
+(Font)              size <5> substituted on input line 62.
 
-[2
+! Missing $ inserted.
+<inserted text> 
+                $
+l.62 }
+      
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
 
- <./LOB_Logo.pdf>]
-(/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
-File: lstlang1.sty 2015/06/04 1.6 listings language file
-)
-(/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang2.sty
-File: lstlang2.sty 2015/06/04 1.6 listings language file
-)
-(/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang3.sty
-File: lstlang3.sty 2015/06/04 1.6 listings language file
-)
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 60.
+! Extra }, or forgotten $.
+<recently read> }
+                 
+l.62 }
+      
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
 
-(/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
-File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-)
-(./data.prep_presentation.R) (./data.prep_presentation.R)
-Overfull \vbox (1.07614pt too high) has occurred while \output is active []
+! Missing $ inserted.
+<inserted text> 
+                $
+l.62 }
+      
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.62 }
+      
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
 
 pdfTeX warning (ext4): destination with the same identifier (name{Navigation1})
  has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.60 }
+l.62 }
       pdfTeX warning (ext4): destination with the same identifier (name{page.1}
 ) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.60 }
+l.62 }
        [1
 
 ]
-Overfull \vbox (1.07614pt too high) has occurred while \output is active []
-
-pdfTeX warning (ext4): destination with the same identifier (name{Navigation2})
- has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.76 }
-      pdfTeX warning (ext4): destination with the same identifier (name{page.2}
-) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.76 }
-       [2
-
-] (./data.prep_presentation.R)
-Overfull \vbox (1.07614pt too high) has occurred while \output is active []
-
-
-[3
-
-] (./data.prep_presentation.R) (./data.prep_presentation.R)
-Overfull \vbox (1.07614pt too high) has occurred while \output is active []
-
-
-[4
-
-]
-Overfull \vbox (1.07614pt too high) has occurred while \output is active []
-
-
-[5
-
-] (./data.prep_presentation.R) (./data.prep_presentation.R)
-Overfull \vbox (6.72676pt too high) detected at line 116
- []
-
-
-Overfull \vbox (1.07614pt too high) has occurred while \output is active []
-
-
-[6
-
-]
-Overfull \vbox (1.07614pt too high) has occurred while \output is active []
-
-
-[7
-
-] (./data.prep_presentation.R)
-Overfull \vbox (1.07614pt too high) has occurred while \output is active []
-
-
-[8
-
-]
-Overfull \vbox (1.07614pt too high) has occurred while \output is active []
-
-
-[9
-
-]
-Overfull \vbox (1.07614pt too high) has occurred while \output is active []
-
-
-[10
-
-]
-Overfull \hbox (22.84956pt too wide) in paragraph at lines 208--208
- [] 
- []
-
-
-Overfull \vbox (3.32666pt too high) detected at line 208
- []
-
-
-Overfull \vbox (1.07614pt too high) has occurred while \output is active []
-
-
-[11
-
-]
-Overfull \hbox (18.71524pt too wide) in paragraph at lines 230--230
- [] 
- []
-
-
-Overfull \vbox (1.07614pt too high) has occurred while \output is active []
-
-
-[12
-
-] (./data.prep_presentation.R) (./data_prep_output2.txt)
-Overfull \vbox (1.07614pt too high) has occurred while \output is active []
-
-
-[13
-
-]pdfTeX warning (ext4): destination with the same identifier (name{Navigation1}
-) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.267 }
-       pdfTeX warning (ext4): destination with the same identifier (name{page.1
-}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.267 }
-        [1
-
-] (./Evaluate_Predictions_presentation.R)pdfTeX warning (ext4): destination wit
-h the same identifier (name{Navigation2}) has been already used, duplicate igno
-red
-<to be read again> 
-                   \relax 
-l.273 }
-       pdfTeX warning (ext4): destination with the same identifier (name{page.2
-}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.273 }
-        [2
-
-] (./Evaluate_Predictions_presentation.R)
-Overfull \vbox (5.13379pt too high) detected at line 281
- []
-
-pdfTeX warning (ext4): destination with the same identifier (name{Navigation3})
- has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.281 }
-       pdfTeX warning (ext4): destination with the same identifier (name{page.3
-}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.281 }
-        [3
-
-] (./Evaluate_Predictions_presentation.R)pdfTeX warning (ext4): destination wit
-h the same identifier (name{Navigation4}) has been already used, duplicate igno
-red
-<to be read again> 
-                   \relax 
-l.288 }
-       pdfTeX warning (ext4): destination with the same identifier (name{page.4
-}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.288 }
-        [4
-
-] (./Evaluate_Predictions_presentation.R)pdfTeX warning (ext4): destination wit
-h the same identifier (name{Navigation5}) has been already used, duplicate igno
-red
-<to be read again> 
-                   \relax 
-l.293 }
-       pdfTeX warning (ext4): destination with the same identifier (name{page.5
-}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.293 }
-        [5
-
-] (./Evaluate_Predictions_presentation.R)
-(./Evaluate_Predictions_presentation.R)
-Overfull \vbox (14.3338pt too high) detected at line 303
- []
-
-pdfTeX warning (ext4): destination with the same identifier (name{Navigation6})
- has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.303 }
-       pdfTeX warning (ext4): destination with the same identifier (name{page.6
-}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.303 }
-        [6
-
-] (./Evaluate_Predictions_presentation.R)pdfTeX warning (ext4): destination wit
-h the same identifier (name{Navigation7}) has been already used, duplicate igno
-red
-<to be read again> 
-                   \relax 
-l.309 }
-       pdfTeX warning (ext4): destination with the same identifier (name{page.7
-}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.309 }
-        [7
-
-] (./Evaluate_Predictions_presentation.R)pdfTeX warning (ext4): destination wit
-h the same identifier (name{Navigation8}) has been already used, duplicate igno
-red
-<to be read again> 
-                   \relax 
-l.316 }
-       pdfTeX warning (ext4): destination with the same identifier (name{page.8
-}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.316 }
-        [8
-
-] (./Evaluate_Predictions_presentation.R)pdfTeX warning (ext4): destination wit
-h the same identifier (name{Navigation9}) has been already used, duplicate igno
-red
-<to be read again> 
-                   \relax 
-l.323 }
-       pdfTeX warning (ext4): destination with the same identifier (name{page.9
-}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.323 }
-        [9
-
-] (./CART_Model_Presentation.R)pdfTeX warning (ext4): destination with the same
- identifier (name{Navigation1}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.331 }
-       pdfTeX warning (ext4): destination with the same identifier (name{page.1
-}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.331 }
-        [1
-
-] (./CART_Model_Presentation.R)pdfTeX warning (ext4): destination with the same
- identifier (name{Navigation2}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.337 }
-       pdfTeX warning (ext4): destination with the same identifier (name{page.2
-}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.337 }
-        [2
-
-] (./CART_Model_Presentation.R) (./CART_Model_Presentation.R)pdfTeX warning (ex
-t4): destination with the same identifier (name{Navigation3}) has been already 
-used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.345 }
-       pdfTeX warning (ext4): destination with the same identifier (name{page.3
-}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.345 }
-        [3
-
-] (./CART_Model_Presentation.R)pdfTeX warning (ext4): destination with the same
- identifier (name{Navigation4}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.354 }
-       pdfTeX warning (ext4): destination with the same identifier (name{page.4
-}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.354 }
-        [4
-
-] (./CART_Model_Presentation.R)
-Overfull \vbox (10.93378pt too high) detected at line 360
- []
-
-pdfTeX warning (ext4): destination with the same identifier (name{Navigation5})
- has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.360 }
-       pdfTeX warning (ext4): destination with the same identifier (name{page.5
-}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.360 }
-        [5
-
-] (./CART_Model_Presentation.R)pdfTeX warning (ext4): destination with the same
- identifier (name{Navigation6}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.367 }
-       pdfTeX warning (ext4): destination with the same identifier (name{page.6
-}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.367 }
-        [6
-
-] (./Random_Forest_Modell_Presentation.R)pdfTeX warning (ext4): destination wit
-h the same identifier (name{Navigation1}) has been already used, duplicate igno
-red
-<to be read again> 
-                   \relax 
-l.373 }
-       pdfTeX warning (ext4): destination with the same identifier (name{page.1
-}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.373 }
-        [1
-
-] (./Random_Forest_Modell_Presentation.R)
-(./Random_Forest_Modell_Presentation.R)pdfTeX warning (ext4): destination with 
-the same identifier (name{Navigation2}) has been already used, duplicate ignore
-d
-<to be read again> 
-                   \relax 
-l.382 }
-       pdfTeX warning (ext4): destination with the same identifier (name{page.2
-}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.382 }
-        [2
-
-] (./Logit_Modell_Presentation.R)
-Overfull \vbox (1.07614pt too high) has occurred while \output is active []
-
-pdfTeX warning (ext4): destination with the same identifier (name{Navigation1})
- has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.389 }
-       pdfTeX warning (ext4): destination with the same identifier (name{page.1
-}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.389 }
-        [1
-
-] (./Logit_Modell_Presentation.R)
-Overfull \vbox (1.07614pt too high) has occurred while \output is active []
-
-pdfTeX warning (ext4): destination with the same identifier (name{Navigation2})
- has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.395 }
-       pdfTeX warning (ext4): destination with the same identifier (name{page.2
-}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.395 }
-        [2
-
-]
-Overfull \vbox (1.215pt too high) has occurred while \output is active []
-
-pdfTeX warning (ext4): destination with the same identifier (name{Navigation1})
- has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.406 }
-       pdfTeX warning (ext4): destination with the same identifier (name{page.1
-}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.406 }
-        [1
-
-] (../LDA/utils.R)
-Overfull \vbox (1.215pt too high) has occurred while \output is active []
-
-pdfTeX warning (ext4): destination with the same identifier (name{Navigation2})
- has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.412 }
-       pdfTeX warning (ext4): destination with the same identifier (name{page.2
-}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.412 }
-        [2
-
-] (../LDA/utils.R)
-Overfull \vbox (1.215pt too high) has occurred while \output is active []
-
-pdfTeX warning (ext4): destination with the same identifier (name{Navigation3})
- has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.418 }
-       pdfTeX warning (ext4): destination with the same identifier (name{page.3
-}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.418 }
-        [3
-
-] (../LDA/utils.R)
-Overfull \vbox (1.215pt too high) has occurred while \output is active []
-
-pdfTeX warning (ext4): destination with the same identifier (name{Navigation4})
- has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.424 }
-       pdfTeX warning (ext4): destination with the same identifier (name{page.4
-}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.424 }
-        [4
-
-] (../LDA/utils.R)
-Overfull \vbox (1.215pt too high) has occurred while \output is active []
-
-pdfTeX warning (ext4): destination with the same identifier (name{Navigation5})
- has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.429 }
-       pdfTeX warning (ext4): destination with the same identifier (name{page.5
-}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.429 }
-        [5
-
-] <../LDA/gradient_descent.png, id=302, 148.30406pt x 277.78781pt>
-File: ../LDA/gradient_descent.png Graphic file (type png)
-
-<use ../LDA/gradient_descent.png>
-Package pdftex.def Info: ../LDA/gradient_descent.png used on input line 442.
-(pdftex.def)             Requested size: 81.56747pt x 152.78375pt.
-
-Overfull \vbox (1.215pt too high) has occurred while \output is active []
-
-pdfTeX warning (ext4): destination with the same identifier (name{Navigation6})
- has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.445 }
-       pdfTeX warning (ext4): destination with the same identifier (name{page.6
-}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.445 }
-        [6
-
- <../LDA/gradient_descent.png (PNG copy)>]
-Overfull \vbox (1.215pt too high) has occurred while \output is active []
-
-pdfTeX warning (ext4): destination with the same identifier (name{Navigation7})
- has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.457 }
-       pdfTeX warning (ext4): destination with the same identifier (name{page.7
-}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.457 }
-        [7
-
-]
 \tf@nav=\write6
-\openout6 = `progress_report.nav'.
+\openout6 = `LvB_template_light.nav'.
 
 \tf@toc=\write7
-\openout7 = `progress_report.toc'.
+\openout7 = `LvB_template_light.toc'.
 
 \tf@snm=\write8
-\openout8 = `progress_report.snm'.
+\openout8 = `LvB_template_light.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 458.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 458.
- (./progress_report.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 458.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 458.
-Package rerunfilecheck Info: File `progress_report.out' has not changed.
-(rerunfilecheck)             Checksum: D05BF3F0B7EE890A5F37D19DF905159F;294.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 64.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 64.
+ (./LvB_template_light.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 64.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 64.
 
+
+Package rerunfilecheck Warning: File `LvB_template_light.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `LvB_template_light.out':
+(rerunfilecheck)             Before: <no file>
+(rerunfilecheck)             After:  B340711AA59207060021F2D932B13EDC;45.
 
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 1.0pt have occurred.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 458.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 64.
  ) 
 Here is how much of TeX's memory you used:
- 21832 strings out of 493029
- 385282 string characters out of 6136234
- 733027 words of memory out of 5000000
- 24769 multiletter control sequences out of 15000+600000
- 24866 words of font info for 77 fonts, out of 8000000 for 9000
+ 18700 strings out of 493029
+ 345229 string characters out of 6136234
+ 576027 words of memory out of 5000000
+ 21771 multiletter control sequences out of 15000+600000
+ 23611 words of font info for 73 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 56i,16n,55p,15154b,2744s stack positions out of 5000i,500n,10000p,200000b,80000s
-pdfTeX warning (dest): name{Navigation14} has been referenced but does not ex
-ist, replaced by a fixed one
+ 56i,19n,55p,15157b,515s stack positions out of 5000i,500n,10000p,200000b,80000s
+pdfTeX warning (dest): name{Navigation2} has been referenced but does not exi
+st, replaced by a fixed one
 
 {/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/share/texlive/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-
-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/share/texlive/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmss8.pfb></usr/share/texlive/texmf-dist/fonts/ty
-pe1/public/amsfonts/cm/cmssi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
-ublic/amsfonts/cm/cmssi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
-/amsfonts/cm/cmssi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfo
-nts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/sy
-mbols/msam10.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfit0900.pfb></u
-sr/share/texmf/fonts/type1/public/cm-super/sfss0800.pfb></usr/share/texmf/fonts
-/type1/public/cm-super/sfss0900.pfb></usr/share/texmf/fonts/type1/public/cm-sup
-er/sfss1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfss1095.pfb></us
-r/share/texmf/fonts/type1/public/cm-super/sfsx1440.pfb></usr/share/texmf/fonts/
-type1/public/cm-super/sftt0800.pfb></usr/share/texmf/fonts/type1/public/cm-supe
-r/sftt0900.pfb></usr/share/texmf/fonts/type1/public/cm-super/sftt1095.pfb>
-Output written on progress_report.pdf (41 pages, 346617 bytes).
+texmf-dist/fonts/type1/public/amsfonts/cm/cmssi8.pfb></usr/share/texmf/fonts/ty
+pe1/public/cm-super/sfss0600.pfb></usr/share/texmf/fonts/type1/public/cm-super/
+sfss0900.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfss1095.pfb></usr/s
+hare/texmf/fonts/type1/public/cm-super/sfsx1440.pfb>
+Output written on LvB_template_light.pdf (2 pages, 87555 bytes).
 PDF statistics:
- 381 PDF objects out of 1000 (max. 8388607)
- 305 compressed objects within 4 object streams
- 34 named destinations out of 1000 (max. 500000)
- 116 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 61 PDF objects out of 1000 (max. 8388607)
+ 41 compressed objects within 1 object stream
+ 5 named destinations out of 1000 (max. 500000)
+ 58 words of extra memory for PDF output out of 10000 (max. 10000000)
 
