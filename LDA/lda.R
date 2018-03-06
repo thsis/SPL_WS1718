@@ -1,2 +1,136 @@
-# Linear Discriminant Analysis
-source("utils.R")
+library("dplyr")
+library("geigen")
+
+# Import custom optimization routines
+source("LDA/utils.R")
+
+# Create objective-function for Fisher's Linear Discriminant
+get_LDA_objective = function(data, by){
+  # Check prerequisites
+  num = get_numeric_cols(data = data)
+  num_classes = length(unique(data[, by]))
+  
+  stopifnot(
+    length(num) > 0,
+    num_classes == 2)
+  
+  mu = get_class_means(Data = data, By = by, na.rm = TRUE)
+  S = get_class_cov(Data = data, By = by, use = "complete.obs")
+  
+  # Compute overall mean:
+  x_bar = colMeans(data[, num], na.rm = TRUE)
+  
+  # Compute between class scatter matrix:
+  Sb1 = n[1] * (mu[, 1] - x_bar) %*% t(mu[, 1] - x_bar)
+  Sb2 = n[2] * (mu[, 2] - x_bar) %*% t(mu[, 2] - x_bar)
+  S_b = Sb1 + Sb2
+  
+  # Compute within class scatter matrix:
+  S_w = S[[1]] + S[[2]]
+  
+  res = function(x){
+    # Compute Raleygh-Coefficient:
+    (t(x) %*% S_b %*% x) / (t(x) %*% S_w %*% x)
+  }
+  
+  return(res)
+}
+
+LDA = function(X, label, ...){
+  num_pars = sum(get_numeric_cols(data = X))
+  lda_obj = get_LDA_objective(data = X, by = label)
+  gradientDescentMinimizer(obj = lda_obj,
+                           n_pars = num_pars,
+                           ...)
+}
+
+# alternative using closed form solution:
+lda = function(data, by){
+  # Closed form solution of LDA: 
+  # w = S_b^-0.5 * largest_eigenvector(S_b^0.5 * S_w^-1 * S_b^0.5) 
+
+  # Check prerequisites
+  num = get_numeric_cols(data = data)
+  classes = unique(data[, by])
+  
+  stopifnot(
+    length(num) > 0,
+    length(classes) == 2)
+  
+  mu = get_class_means(Data = data, By = by, na.rm = TRUE)
+  S = get_class_cov(Data = data, By = by, use = "complete.obs")
+  
+  # Compute overall mean:
+  x_bar = colMeans(data[, num], na.rm = TRUE)
+  
+  # Compute between class scatter matrix:
+  n = sapply(X = classes, FUN = function(x){sum(data[, by] == x)})
+  
+  # Compute between class scatter matrix:
+  Sb1 = n[1] * (mu[, 1] - x_bar) %*% t(mu[, 1] - x_bar)
+  Sb2 = n[2] * (mu[, 2] - x_bar) %*% t(mu[, 2] - x_bar)
+  S_b = Sb1 + Sb2
+  
+  # Compute within class scatter matrix:
+  S_w = S[[1]] + S[[2]]
+
+  # Extract eigenvector corresponding to largest eigenvalue
+  # geigen solves the generalized eigenvalue problem of:
+  # A*x = lambda B*x
+  # We want eigenvalues of: 
+  # (S_w^-1 * S_b) * v = lambda v
+  # multiply both sides by S_w
+  V = geigen(S_b, S_w, symmetric = TRUE)
+  
+  # Extract (absolutely) largest eigenvalue
+  ev_order = order(abs(V[["values"]]), decreasing = TRUE)
+  v = V[["vectors"]][ev_order[1:2], ]
+  
+  # Percent of variance explained:
+  inertia = (V[["values"]][ev_order[1:2]])^2 / sum(V[["values"]]^2)
+  
+  # Compute rotations
+  lda1 = apply(X = data[, num], MARGIN = 1, FUN = function(x){sum(x * v[1, ])})
+  lda2 = apply(X = data[, num], MARGIN = 1, FUN = function(x){sum(x * v[2, ])})
+  
+  out = list(
+    X = data.frame("lda1" = lda1,
+                   "lda2" = lda2,
+                   "labels" = data[, by]),
+    classes = classes,
+    class_means = mu,
+    scalings = v,
+    explained_var = inertia)
+  
+  return(structure(out, class = "flda"))
+}
+
+plot.flda = function(model){
+  
+  p = ggplot2::ggplot(data = model$X, aes_string(x = "lda1", y = "lda2", color = "labels")) +
+    ggplot2::geom_point(alpha = 0.5, shape=21) +
+    ggplot2::ggtitle("Projection on the first 2 linear discriminants") +
+    ggplot2::xlab("First linear discriminant") +
+    ggplot2::ylab("Second linear discriminant") +
+    theme_bw()
+  return(p)
+}
+
+predict.flda = function(model, data){
+  v = model$scalings[1, ]
+  num = get_numeric_cols(data)
+  
+  Data = data[, num]
+  dims = dim(Data)
+  stopifnot(dims[2] == length(v))
+  
+  # Compute discriminant as the dot product of every observation
+  # with the scaling vector v:
+  discr = apply(X = Data, MARGIN = 1, FUN = function(x){sum(x * v)})
+  
+  # Compute cutoff threshold:
+  c = 0.5 * t(v) %*% (rowSums(model$class_means))
+  predictions = ifelse(discr <= as.numeric(c), model$classes[1], model$classes[2])
+  
+  return(predictions)
+}

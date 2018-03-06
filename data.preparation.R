@@ -1,63 +1,60 @@
-#set working directory
-setwd("C:/Users/Maiko/Downloads/university/Statistical Programming Languages/seminar")
-
 library("dplyr")
 
 #import data
-data= read.csv("SPL_data.csv", sep = ";", dec = '.', header = TRUE, 
+data= read.csv("Data/SPL_data.csv", sep = ";", dec = '.', header = TRUE, 
                stringsAsFactors = TRUE)
 
-#Due to missing insolvencies in 1996 and missing data from 2003 onwards,
+# Due to missing insolvencies in 1996 and missing data from 2003 onwards,
 # we choose only the data of the period 1997-2002
 #data1 = data 1997-2002
 data1 = filter(data, JAHR>= 1997 & JAHR<=2002)
 
-#Extract the industry class of companies 
+# Extract the industry class of companies 
 data1$Ind.Klasse = substring(data1$VAR26, 1, 2)
 
 # As we are only interested in companies with high percentage in the industry 
-#  composition we choose only companies belonging to the following sectors
-#  (according to German Classification of Economic Activities Standards (WZ 1993)):
+# composition we choose only companies belonging to the following sectors
+# (according to German Classification of Economic Activities Standards (WZ 1993)):
 #    1. Manufacturing (Man)
 #    2. Wholesale and Retail (WaR)
 #    3. Construction (Con)
 #    4. Real Estate (RE)
-Man = filter (data1, Ind.Klasse %in% as.character(15:37))
+Man = filter(data1, Ind.Klasse %in% as.character(15:37))
 Man$Ind.Klasse = "Man"
 
-WaR = filter (data1, Ind.Klasse %in% as.character (50:52))
+WaR = filter(data1, Ind.Klasse %in% as.character (50:52))
 WaR$Ind.Klasse = "WaR"
 
-Con = filter (data1, Ind.Klasse == "45")
+Con = filter(data1, Ind.Klasse == "45")
 Con$Ind.Klasse = "Con"
 
-RE = filter (data1, Ind.Klasse %in% as.character(70:74))
+RE = filter(data1, Ind.Klasse %in% as.character(70:74))
 RE$Ind.Klasse = "RE"
 
-#Remove data and data1 & bind the above subsets to get one dataset containing
+# Remove data and data1 & bind the above subsets to get one dataset containing
 # only companies of interest
 
 rm(data, data1)
 
 data = rbind(Man, WaR, Con, RE)
 
-#Furthermore we choose only companies whose total assets (VAR6) are in the range
+# Furthermore we choose only companies whose total assets (VAR6) are in the range
 # 10^5 - 10^8
 
 data = data[data$VAR6 >= 10^5 & data$VAR6<= 10^8,]
 
 ############################################################################
-#Eliminate observations with 0 value for the following variables used as denominators 
+# Eliminate observations with 0 value for the following variables used as denominators 
 # in calculation of financial ratios to be used in classification:
 
-#total assets (VAR6)
-#total sales(VAR16)
-#cash (VAR1)
-#inventories (VAR2)
-#current liabilities (VAR12)
-#total liabilities (VAR12 + VAR13)
-#total assets-intangibe assets-cash-lands and buildings (VAR6 - VAR5 - VAR1 - VAR8)
-#interest expenses (VAR19)
+# total assets (VAR6)
+# total sales(VAR16)
+# cash (VAR1)
+# inventories (VAR2)
+# current liabilities (VAR12)
+# total liabilities (VAR12 + VAR13)
+# total assets-intangibe assets-cash-lands and buildings (VAR6 - VAR5 - VAR1 - VAR8)
+# interest expenses (VAR19)
 
 
 data_clean = data %>% filter(VAR6 != 0,
@@ -91,7 +88,7 @@ replace_extreme_values = function(x, ...){
 }
 
 
-#add columns with financial ratios for each firm to the dataset
+# add columns with financial ratios for each firm to the dataset
 test_data = data_clean %>%
   mutate(x1 = VAR22/VAR6, # NetIncome/TotalAssets,
          x2 = VAR22/VAR16, # NetIncome/TotalSales,
@@ -123,13 +120,13 @@ test_data = data_clean %>%
          x27 = VAR24/(VAR12+VAR13), # IncreaseDecreaseLiabilities/TotalLiabilities,
          x28 = VAR25/VAR1) # IncreaseDecreaseCashFlow/Cash)
 
-#Prepare data frame containing relative variables:
-#  ID, T2, JAHR and financial ratios to be used for classification
+# Prepare data frame containing relative variables:
+#   ID, T2, JAHR and financial ratios to be used for classification
 
 test_data_rel = select(test_data,
                        ID, T2, JAHR, x1:x28)
 
-#Prepare subsets of solvent and insolvent companies
+# Prepare subsets of solvent and insolvent companies
 # and replace extreme values 
 test_data_insolvent = test_data_rel %>% filter(T2 == 1)
 test_data_solvent = test_data_rel %>% filter(T2 == 0)
@@ -144,7 +141,7 @@ test_data_solvent[, -c(1:3)] = apply(X = test_data_solvent[, -c(1:3)],
                                      FUN = replace_extreme_values,
                                      probs = c(0.05, 0.95))
 
-#Print descriptive statistics 
+# Print descriptive statistics 
 print("Solvent:")
 print(round(t(apply(X = test_data_solvent[, -c(1:3)],
               MARGIN = 2, 

@@ -3,6 +3,13 @@
 #     - bivariate Case.
 #     - multivariate Case.
 
+# Define Other helper-functions:
+#     - get all numeric columns of a dataframe
+#     - get mean vector, grouped by class label
+#     - get covariance matrix, grouped by class label
+
+# ==============================================================================
+## Optimization Routines
 # ==============================================================================
 # Univariate Case:
 univariateMinimizer = function(obj, learn_rate = 1, epsilon = 1e-3,
@@ -131,9 +138,6 @@ gradientDescentMinimizer = function(
     D_trimmed = ifelse(abs(D) <= 100, abs(D), 100) * sign(D)
     return(D_trimmed)}
   
-  
-  
-  
   # Draw multiple random starting points.
   # Use the one that provides the lowest value of the objective function.
   a = matrix(data = runif(1000 * n_pars, 
@@ -171,4 +175,63 @@ gradientDescentMinimizer = function(
   if(i >= max_iter){
     warning("Maximum number of iterations reached.")}
   return(a)
+}
+
+# ==============================================================================
+## Other helpers
+# ==============================================================================
+
+get_numeric_cols = function(data){
+  numerics = sapply(data, is.numeric)
+  return(numerics)
+}
+
+get_group = function(data, by, group){
+  num = get_numeric_cols(data)
+  x = subset(data, data[, by] == group,
+             select = num)
+  return(x)
+}
+
+get_class_means = function(Data, By, ...){
+  groups = unique(Data[, By])
+  grp = as.list(groups)
+  sub_data = lapply(X = grp, FUN = get_group, 
+               by = By, data = Data)
+  # Get list of means.
+  means = sapply(X = sub_data, FUN = colMeans, ...)
+  colnames(means) = as.character(groups)
+  return(means)
+}
+
+get_class_cov = function(Data, By, ...){
+  groups = unique(Data[, By])
+  grp = as.list(groups)
+  sub_data = lapply(X = grp, FUN = get_group,
+                    by = By, data = Data)
+  # Get list of covariance matrices.
+  covs = lapply(X = sub_data, FUN = cov, ...)
+  names(covs) = as.character(groups)
+  return(covs)
+}
+
+get_matrix_power = function(mat, pow){
+  stopifnot(is.matrix(mat), is.numeric(pow))
+  
+  # Get spectral decomposition of matrix
+  Eigen = eigen(mat, symmetric = TRUE)
+  Eivec = Eigen$vectors
+  
+  # Numerically computed eigenvalues can sometimes become negative 
+  # (if they are close to zero).
+  # This needs to be corrected, to compute some powers of a matrix.
+  Eival = Eigen$values
+  if(any(Eival < 0) & abs(min(Eival)) <= 0.0001){
+    Eival = abs(Eival)
+  }
+  
+  lambda_p = diag(Eival ^ pow)
+  
+  res = Eivec %*% (lambda_p) %*% t(Eivec)
+  return(res)
 }
