@@ -1,8 +1,5 @@
-#set working directory
-setwd("C:/Users/Maiko/Downloads/university/Statistical Programming Languages/seminar")
-
 #import data
-data= read.csv("SPL_data.csv", sep = ";", dec = '.', header = TRUE, 
+data= read.csv("Data/SPL_data.csv", sep = ";", dec = '.', header = TRUE, 
                stringsAsFactors = TRUE)
 
 #Due to missing insolvencies in 1996 and missing data from 2003 onwards,
