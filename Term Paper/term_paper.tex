@@ -1,0 +1,97 @@
+\documentclass{article}
+
+\usepackage{graphicx}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{eso-pic}
+\usepackage{mathrsfs}
+\usepackage{url}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{multirow}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{bbm}
+\usepackage{cooltooltips}
+
+\usepackage{colordef}
+\usepackage{lvblisting}
+
+\begin{document}
+\section{Binary Response Models}
+\subsection{Theory}
+
+The outcome of interest in the Creditreform-dataset is of binary nature. Firms can either go bankrupt or not. This behavior is commonly modeled by Binary Response Models like the probit or the logit model. Binary response variables follow a Bernoulli probability function
+
+\begin{equation}
+f(y|x) = P(y=1|x)^y\left(1-P(y=1|x)\right)^{1-y},\qquad y\in \{0,1\},\; x\in \mathbb{R}^d, d \in \mathbb{N},
+\end{equation}
+
+where $P(y=1|x)$ stands for the conditional probability of observing $y=1$ given $x$. Both probit and logit models have in common that $P(y=1|x)$ is modeled by a monotonic transformation of a linear function
+
+\begin{equation}
+P(y=1|x) = G(x \prime \beta), \qquad \beta \in \mathbb{R}^d,
+\end{equation}
+
+where $x \prime \beta$ is the scalar product of $x$ and $\beta$. Additionally we require that $0 \leq G(x \prime \beta) \leq 1$, since it denotes a probability.
+
+For the probit model $G$ will be the cumulative density function of the normal distribution
+
+\begin{equation}
+P(y=1|x) = G(x \prime \beta) = \Phi(x \prime \beta) = \int_{-\inf}^{x \prime \beta} \frac{1}{\sqrt{2\pi}}exp\left[-(\frac{t^2}{2})\right]dt.
+\end{equation}
+
+Here $\Phi(x \prime \beta)$ stands for the cumulative density function of the normal distribution.
+
+For the logit model $G$ will be replaced by the cumulative density function of the logistic distribution $\Lambda(x \prime \beta)$:
+
+\begin{equation}
+P(y=1|x) = G(x \prime \beta) = \Lambda(x \prime \beta) = \frac{exp(x \prime \beta)}{1+exp(x \prime \beta)}
+\end{equation}\cite{winkel09}
+
+The parameter vector $\beta$ is obtained by the Maximum-Likelihood method. Given independent and identically distributed samples, the Likelihood function can be written as
+
+\begin{equation}
+\begin{split}
+L(\beta;y x) &= \prod_{i=1}^{n} f(y_i | x_i)
+              =\prod_{i=1}^{n} P(y_i=1|x_i)^y_i\left(1-P(y_i=1|x_i)\right)^{1-y_i} \\
+            & =\prod_{i=1}^{n} G(x_i\prime \beta)^y_i\left(1-G(x_i\prime \beta)\right)^{1-y_i}
+\end{split}
+\end{equation}
+
+where we just take the product over all individual Bernoulli-functions.
+
+The log-Likelihood can thus be written as
+\begin{equation}
+\label{logL}
+l = \log L(\beta;y x) = \sum_{i=1}^{n} y_i \log G(x_i\prime \beta) +(1-y_i) \log (1-G(x_i\prime \beta))
+\end{equation}
+
+The Maximum-Likelihood estimators $\beta_ML$ are calculated as
+
+\begin{equation}
+\beta_ML = argmax(l)
+\frac{\partial l}{\partial \beta} \stackrel{!}{=}
+\end{equation}
+
+and solve the first order conditions for a maximum. In general, the resulting
+\subsection{Implementation}
+
+\subsection{Unit Tests}
+
+
+\section{Linear Discriminant Analysis}
+\subsection{Theory}
+
+\subsection{Implementation}
+
+\subsection{Unit Tests}
+
+\begin{thebibliography}{9}
+\bibitem{winkel09}
+  Winkelmann, R., Boes, S. (2009): \textit{"Analysis of Microdata"}, 2nd edition.
+\end{thebibliography}
+\end{document}
