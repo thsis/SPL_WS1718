@@ -48,7 +48,7 @@ LDA = function(X, label, ...){
 lda = function(data, by){
   # Closed form solution of LDA: 
   # w = S_b^-0.5 * largest_eigenvector(S_b^0.5 * S_w^-1 * S_b^0.5) 
-
+   
   # Check prerequisites
   num = get_numeric_cols(data = data)
   classes = unique(data[, by])
@@ -107,12 +107,12 @@ lda = function(data, by){
 
 plot.flda = function(model){
   
-  p = ggplot2::ggplot(data = model$X, aes_string(x = "lda1", y = "lda2", color = "labels")) +
+  p = ggplot2::ggplot(data = model$X, ggplot2::aes_string(x = "lda1", y = "lda2", color = "labels")) +
     ggplot2::geom_point(alpha = 0.5, shape=21) +
     ggplot2::ggtitle("Projection on the first 2 linear discriminants") +
     ggplot2::xlab("First linear discriminant") +
     ggplot2::ylab("Second linear discriminant") +
-    theme_bw()
+    ggplot2::theme_bw()
   return(p)
 }
 
