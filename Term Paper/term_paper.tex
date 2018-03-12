@@ -20,6 +20,13 @@
 \usepackage{colordef}
 \usepackage{lvblisting}
 
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+
+\makeatletter
+\def\BState{\State\hskip-\ALG@thistlm}
+\makeatother
+
 \begin{document}
 \section{Binary Response Models}
 \subsection{Theory}
@@ -73,18 +80,180 @@ l = \log L(\beta;y x) = \sum_{i=1}^{n} y_i \log G(x_i\prime \beta) +(1-y_i) \log
 The Maximum-Likelihood estimators $\beta_ML$ are calculated as
 
 \begin{equation}
-\beta_ML = argmax(l)
-\frac{\partial l}{\partial \beta} \stackrel{!}{=}
+\beta_ML = argmax(l) \\
 \end{equation}
 
-and solve the first order conditions for a maximum. In general, the resulting
+and solve the first order conditions for a maximum.
+
+\begin{equation}
+\frac{\partial l}{\partial \beta} \stackrel{!}{=} 0
+\end{equation}
+
+In general, the resulting system of equations has no closed-form solution for $\beta_ML$ and numerical solutions are needed which can be obtained by iterative optimization techniques, one we will implement in the next section.\cite{winkel09}
+
 \subsection{Implementation}
+
+The architecture of the \texttt{brm}-class follows the general structure outlined in the chapter before. First, it generates a log-Likelihood-function, which it then optimizes using a Gradient-Descent-Algorithm. After training the model it is possible for the user to very easily obtain predictions by invoking the \texttt{predict()}-function, which has been augmented with a method for the \texttt{brm}-class.
+
+\subsubsection{Obtaining the Likelihood}
+
+The first task is to define a function that accepts a distribution and yet undefined data as it's input and first extracts all suitable variables, then expresses the Likelihood-function from \ref{logL} and finally returns another function which depends only on the weights $\beta$. This task is performed by the \texttt{get\_likehood()}-function. We outline the function pass of \texttt{get\_likehood()} first in pseudo-code followed by a look on the implementation in the \texttt{R} language.
+
+\begin{algorithm}
+\caption{get\_likehood()}\label{getllog}
+\begin{algorithmic}[1]
+\Procedure{Set up auxiliary variables}{}
+\State $\textit{grp} \gets \text{unique labels}$
+\State $\textit{nums} \gets \text{extract numeric columns}$
+\State $\textit{Xy\_mat} \gets \text{bind numeric variables as a matrix}$
+\State $\textit{y\_pos} \gets \text{cache position of the outcome variable}$
+\EndProcedure
+
+\Procedure{Set up log-Likelihood}{}
+\State $\textit{l} \gets 0$
+\State \textbf{for}: $x_i, y_i \text{in data}:$
+\State \qquad $\textbf{calculate}: j = y_i \log G(x_i\prime \beta) +
+               (1-y_i) \log (1-G(x_i\prime \beta)$
+\State \qquad $\textbf{update}: l \gets l + j$
+\State $\textbf{return}: l(\beta)$
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+The heavy lifting in this function is done by this \texttt{R}-snippet:
+\lstinputlisting[language=R, firstline=15, lastline=25, firstnumber=15]{../BRM/logit.R}
+
+The \texttt{for}-loop from the pseudo code is implemented as an \texttt{apply}-call to \texttt{Xy\_mat}, which in turn is a matrix of numeric columns. The \texttt{apply}-function initially selects each row in \texttt{Xy\_mat} and extracts the outcome-variable \texttt{Xy\_mat[y\_pos]} which corresponds to $y_i$ from \ref{logL}. It then computes the scalar product between the regressors of \texttt{Xy\_mat}'s row, which plays the role of $x_i \prime \beta$ in \ref{logL}. The scalar product is wrapped in \texttt{dist} which represents the cumulative distribution function $G(x\prime\beta)$ and is one of the arguments to \texttt{get\_loglikelihood()}.
+
+\lstinputlisting[language=R, firstline=30, lastline=33, firstnumber=30]{../BRM/logit.R}
+
+This way \texttt{dist} will point to the built-in functions for computing probabilities, depending if the user wishes to train a logit or a probit model. The arguments \texttt{lower.tail=TRUE} and \texttt{lower.tail=FALSE} stand for $G(x\prime \beta)$ and $G(x\prime \beta)= 1 - G(x\prime \beta))$ respectively. Finally the resulting vector is summed up and multiplied by $-1$. This is done because of the way we implemented the Gradient Descent algorithm. Currently \texttt{gradientDescentMinimizer()} can only find minima. However, Maximum-Likelihood estimation poses a maximization problem. Luckily, we can transform any maximization problem into a minimization problem by multiplying with minus one.
+
+\subsubsection{Gradient Descent}
+
+Since we now have a log-Likelihood function, the next step is to optimize it. To this effect we deploy a Gradient Descent algorithm. Theory tells us that in order to reach the minimum of a function $f(x)$ starting at a particular $x \in \mathbb{R}^d, d \in \mathbb{N}$ one needs to follow the negative gradient $\nabla f(x)$ of $f$ evaluated at $x$. This leads to the iterative rule we can exploit
+
+\begin{equation}
+\label{gradientDescent}
+x_{t+1} = x_t - \eta \cdot \nabla f(x_t), \qquad t \in \mathbb{N}, \eta \in \mathbb{R}^+
+\end{equation}
+
+where $\eta$ is the learning rate. To this standard method of performing a Gradient Descent routine we will also make some minor modifications. First of all, we will approximate the gradients by taking finite differences, which is easier to implement albeit computationally inefficient. Finite differences are computed by
+
+\begin{equation}
+\label{finDiff}
+\nabla f(x_t) \approx \frac{f(x_{t+1}) - f(x_t)}{\epsilon}, \qquad \epsilon > 0
+\end{equation}
+
+Secondly, we will before we initialize the algorithm, try a set of random points and chose the one that provides the lowest value of the objective function as a starting point for the Gradient Descent Routine. This also ensures to an extend that the algorithm, if it reaches convergence, finds the global minimum. The final modification will be to prune the gradients. When computing gradients using finite differences, it may happen that the gradient's values can become extremely high for large denominators and very small $\epsilon$. In fact, they can become high enough for \texttt{R} to treat them as \texttt{Inf} which results in the gradients being treated as \texttt{NaN} (not a number). To counteract that, we will limit the gradients to the interval $[-100, 100]$. 
+
+\begin{algorithm}
+\caption{gradientDescentMinimizer()}\label{GDM}
+\begin{algorithmic}[1]
+\Procedure{Set up auxiliary variables}{}
+\State $\textit{learn\_rates}\gets \text{descending sequence from \texttt{learn} to 0}$
+\State $\textit{a} \gets \text{matrix of 1000 randomly initialized points}$
+\State $\textit{f\_a} \gets \text{vector of function values for each element of a}$
+\State $\textbf{update:} a \gets \text{argmin(f\_a)}$
+\State $\textit{gradient} \gets \textbf{compute gradient evaluated at a}$
+\State $\textit{i} \gets 0$
+\EndProcedure
+
+\Procedure{Perform Gradient Descent}{}
+\State $\textit{l} \gets 0$
+\State \textbf{while}: $i \leq \textit{max\_iter} \text{ and any element of gradient} > 0:$
+\State \qquad $\textbf{update}: a = a - \texttt{learn\_rates[i]} \cdot gradient$
+\State \qquad $\textbf{calculate}: \textit{gradient} = \textbf{calculate gradient}$
+
+\If {\text{i} = \text{max\_iter}} \textbf{raise} warning
+\EndIf
+\State $\textbf{return}: a$
+\EndProcedure
+\end{algorithmic}
+\end{algorithm} 
+
+The \texttt{gradientDescentMinimizer()}-function accepts following arguments:
+\begin{enumerate}
+
+\item \texttt{obj}: an objective function, that accepts exactly one argument called 'x'.
+\item \texttt{n\_pars}: an integer specifying the dimensions of the objective.
+\item \texttt{epsilon\_step}: a float defining the stepwidth used for computing the finite differences.
+\item \texttt{max\_iter}: an integer for the maximum number of iteration before the algorithm aborts.
+\item \texttt{precision}: a float defining the precision of the solution. All elements of the gradient have to be absolutely lower than \texttt{precision} for the algorithm to converge.
+\item \texttt{learn}: a positive float representing the learning rate.
+\item \texttt{verbose}: a boolean indicating if additional information during training is desired. The default is \texttt{FALSE}
+\item \texttt{report\_freq}: If \texttt{verbose} is \texttt{TRUE}, define how often to print the logstring. The default is 10 which corresponds to a console output being printed every 10 steps.
+
+\end{enumerate}
+
+\lstinputlisting[language=R, firstline=143, lastline=148, firstnumber=143]{../BRM/utils.R}
+
+We begin by filling the matrix \texttt{a} with 1000 \texttt{n\_pars}-dimensional points which we draw from the uniform distribution, making use of \texttt{R}'s built-in \texttt{runif}-function. We draw random numbers within the range of $[-100, 100]$ to cover a wide part of the objective function's domain.  
+
+The workhorse in this routine is the \texttt{get\_gradient()}-function, which computes the finite differences. First we need to compute the values of the objective function at the current and next step (lines 146 and 147). Then we can apply the current and next step as inputs to the objective function and compute the difference $f(x_{t+1}) - f(x_t)$. The current step is provided as the \texttt{x} argument to the function call. The next steps need to be inferred by the function. If $f(x_t)$ is multidimensional we need to perform an $\epsilon$-step in each dimension of the vector, since we want to approximate the partial derivatives of $f(x)$ evaluated at $x_t$. I.e. first we want to increment just the first element of $x$ and store the result, then just the second element, and repeat the process until we reach the last element. If we stack these vectors, we get a matrix of one-directional $\epsilon$-steps that are essentially updates of the starting point $x_t$ with which it is easy to compute the gradients as their element-wise difference, normalized by \texttt{epsilon\_step}. The gradients are finally trimmed if necessary and returned.
+
+\lstinputlisting[language=R, firstline=130, lastline=139, firstnumber=130]{../BRM/utils.R}
+
+\begin{algorithm}
+\caption{get\_gradient()}\label{getGrad}
+\begin{algorithmic}[1]
+\Procedure{Set up auxiliary variables}{}
+\State $\textit{init} \gets \begin{bmatrix}
+x_1 & x_2 & \cdots\\
+x_1 & x_2 & \cdots\\
+x_1 & x_2 & \cdots\\
+\vdots & \ddots & \cdots
+\end{bmatrix} $
+
+\State $\textit{steps} \gets 
+\begin{bmatrix}
+x_1 + \epsilon & x_2 & \cdots\\
+x_1 & x_2 + \epsilon & \cdots\\
+x_1 & x_2 & \cdots\\
+\vdots & \ddots & \cdots
+\end{bmatrix}$
+
+\State $\textit{f\_comp} \gets \textbf{apply row-wise:} \text{ objective function to} \textit{init}$
+\State $\textit{f\_steps} \gets \textbf{apply row-wise:} \text{ objective function to} \textit{steps}$
+\EndProcedure
+
+\Procedure{Compute finite differences}{}
+\State $\textit{D} \gets \frac{f\_steps - f\_comp}{\epsilon}$
+\If{$any d \in D \notin [-100; 100]$} \textbf{replace} \text{d by 100 $\cdot$ sign(d)}
+\EndIf
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+\lstinputlisting[language=R, firstline=155, lastline=178, firstnumber=155]{../BRM/utils.R}
+
+In each iteration the \texttt{while}-loop ensures that convergence has not been reached. This is implemented by a call to \texttt{any} wrapped around a vector of logical expressions. If any element of the gradient is still greater than the specified precision, the call to \texttt{any} will evaluate to \texttt{TRUE}. The second breaking criterion is a safeguard for the loop not to run infinite times. If the current iteration is larger than \texttt{max\_iter} the algorithm will break and the user will receive a warning (lines 175-176). If the user wishes to receive information about the status of the algorithm during runtime, the optional argument \texttt{verbose} can be set to \texttt{TRUE} which will print a logstring to the console in regular intervals (lines 156-161).
+
+\subsection{Predictions}
+
+In order to facilitate making predictions based on the \texttt{brm}-class we augmented the built-in function \texttt{predict()} with a method that works on our custom class in a predefined way.
+
+\lstinputlisting[language=R, firstline=61, lastline=68, firstnumber=61]{../BRM/logit.R}
+
+A call to \texttt{predict()} on a \texttt{brm}-model will add a column of ones to the provided \texttt{data} and multiply the matrix with the weights calculated during training of the model (line 62). Finally these scores of the index-function $X\beta$ will be applied to the correct distribution. The distribution is stored inside \texttt{model\$distribution} which points to \texttt{pnorm} in case of \texttt{brm}-model of \texttt{mode} "probit" and a pointer to \texttt{plogis} if the \texttt{mode} is equal to "logit". 
 
 \subsection{Unit Tests}
 
 
 \section{Linear Discriminant Analysis}
 \subsection{Theory}
+
+Linear Discriminant Analysis (LDA) is a technique for dimensionality reduction that encorporates information on class-labels of the different observations. In contrast to  Principal Component Analysis, which is a unsupervised dimensionality reduction technique, it finds the rotation that ensures the highest separability between classes. It accomplishes this goal by trying to maximize between class variance while simultaneously minimizing within class variance.
+
+\begin{equation}
+max\ J_{b}(w) = w \prime S_{b} w, \qquad w \in \mathbb{R}^d, d \in \mathbb{N}
+\end{equation}
+
+\begin{equation}
+min\ J_{w}(w) = w \prime S_{w} w
+\end{equation}
+
+This is done by maximizing the so called 
 
 \subsection{Implementation}
 

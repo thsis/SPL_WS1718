@@ -140,9 +140,9 @@ gradientDescentMinimizer = function(
   
   # Draw multiple random starting points.
   # Use the one that provides the lowest value of the objective function.
-  a = matrix(data = runif(10000 * n_pars, 
-                          min = -100,
-                          max = 100),
+  a = matrix(data = runif(1000 * n_pars, 
+                          min = -10,
+                          max = 10),
              ncol = n_pars)
   f_a = apply(a, 1, obj)
   a = a[which.min(f_a), ]
@@ -152,7 +152,7 @@ gradientDescentMinimizer = function(
   i = 0
   learn_rates = seq(from = learn, to = 0, length.out = max_iter + 1)
   
-  while(i <= max_iter & any(abs(gradient) >= precision)){
+  while(any(abs(gradient) >= precision) & i <= max_iter){
     if(i %% report_freq == 0 & verbose) {
       cat("\nStep:\t\t", i,
           "\nx:\t\t", a,
