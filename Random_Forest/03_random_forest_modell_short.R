@@ -54,4 +54,4 @@ for (i in 1:30){#30x Modell mit Zufallszahlen bilden:
   FN=FN+conf_mat_rf[2,1]
   }
 pred_rf=as.data.frame(predict(mod_forest_I, validierung_rf, type = "prob"))
-write.csv(cbind(label=validierung_rf$status,pred_rf),file="rf_pred.csv")
+write.csv(cbind(label=validierung_rf$status,pred_rf),file="Random_Forest/rf_pred.csv")
