@@ -52,4 +52,4 @@ for (i in 1:30){#30x Modell mit Zufallszahlen bilden:
 }
 
 pred_logit=predict(glm_mod, newdata=validierung_logit,type="prob")
-write.csv(cbind(labels=validierung_logit$status,pred_logit),file="logit_pred.csv")
+write.csv(cbind(labels=validierung_logit$status,pred_logit),file="Logit/logit_pred.csv")
