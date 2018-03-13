@@ -27,6 +27,8 @@
 \def\BState{\State\hskip-\ALG@thistlm}
 \makeatother
 
+\DeclareMathOperator*{\argmin}{arg\,min}
+
 \begin{document}
 \section{Binary Response Models}
 \subsection{Theory}
@@ -63,7 +65,7 @@ The parameter vector $\beta$ is obtained by the Maximum-Likelihood method. Given
 
 \begin{equation}
 \begin{split}
-L(\beta;y x) &= \prod_{i=1}^{n} f(y_i | x_i)
+L(\beta;y, x) &= \prod_{i=1}^{n} f(y_i | x_i)
               =\prod_{i=1}^{n} P(y_i=1|x_i)^y_i\left(1-P(y_i=1|x_i)\right)^{1-y_i} \\
             & =\prod_{i=1}^{n} G(x_i\prime \beta)^y_i\left(1-G(x_i\prime \beta)\right)^{1-y_i}
 \end{split}
@@ -253,7 +255,41 @@ max\ J_{b}(w) = w \prime S_{b} w, \qquad w \in \mathbb{R}^d, d \in \mathbb{N}
 min\ J_{w}(w) = w \prime S_{w} w
 \end{equation}
 
-This is done by maximizing the so called 
+This is done by maximizing the so called Raleigh coefficient
+\begin{equation}
+\label{LDA}
+max J = \frac{J_b(w)}{J_w(w)} = \frac{w \prime S_{b} w}{w \prime S_{w} w}.
+\end{equation}
+
+The matrices for between and within class variance are defined as
+\begin{equation}
+S_b = \sum_{c=1}^{C}(\mu_c - \mu)(\mu_c - \mu)\prime
+\end{equation}
+
+\begin{equation}
+S_w = \sum_{c=1}^{C}\sum_{i \in c}(x_i - \mu_c)(x_i - \mu_c)\prime
+\end{equation} 
+
+where $C$ is the number of classes, $\mu_c$ is the vector of sample means for each class respectively and $\mu$ is the vector of sample means for the full dataset. For identification purposes we can always chose weights $w$ such that $w\prime S_w w = 1$, since $J$ is constant with regards to rescalings. We can therefore replace $w$ by $\alpha w$ which will result in the constant $\alpha$ canceling out. This way the initial optimization problem can be formulated as
+
+\begin{equation}
+\argmin_{w} -\frac{1}{2} w\prime S_b w \quad s.t. \quad w \prime S_w w = 1
+\end{equation}
+
+with the lagrangian being
+
+\begin{equation}
+\mathcal{L} = -\frac{1}{2} w\prime S_b w + \frac{1}{2}\lambda\left(w\prime S_w w - 1\right).
+\end{equation}
+
+The halves are added for more convenient matrix derivatives. The Karush-Kuhn-Tucker conditions imply that the solution to this maximization problem and subsequently the vector of weights we want to find needs to fulfill
+
+\begin{equation}
+\label{LDAsolution}
+S_b w = \lambda S_w w.
+\end{equation}
+
+This is a generalized eigenvalue problem for which there exists a convenient \texttt{R}-solution in the form of the \texttt{geigen}-package.
 
 \subsection{Implementation}
 
