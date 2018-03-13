@@ -1,50 +1,8 @@
-library("dplyr")
 library("geigen")
 
-# Import custom optimization routines
+# Import helpers
 source("LDA/utils.R")
 
-# Create objective-function for Fisher's Linear Discriminant
-get_LDA_objective = function(data, by){
-  # Check prerequisites
-  num = get_numeric_cols(data = data)
-  num_classes = length(unique(data[, by]))
-  
-  stopifnot(
-    length(num) > 0,
-    num_classes == 2)
-  
-  mu = get_class_means(Data = data, By = by, na.rm = TRUE)
-  S = get_class_cov(Data = data, By = by, use = "complete.obs")
-  
-  # Compute overall mean:
-  x_bar = colMeans(data[, num], na.rm = TRUE)
-  
-  # Compute between class scatter matrix:
-  Sb1 = n[1] * (mu[, 1] - x_bar) %*% t(mu[, 1] - x_bar)
-  Sb2 = n[2] * (mu[, 2] - x_bar) %*% t(mu[, 2] - x_bar)
-  S_b = Sb1 + Sb2
-  
-  # Compute within class scatter matrix:
-  S_w = S[[1]] + S[[2]]
-  
-  res = function(x){
-    # Compute Raleygh-Coefficient:
-    (t(x) %*% S_b %*% x) / (t(x) %*% S_w %*% x)
-  }
-  
-  return(res)
-}
-
-LDA = function(X, label, ...){
-  num_pars = sum(get_numeric_cols(data = X))
-  lda_obj = get_LDA_objective(data = X, by = label)
-  gradientDescentMinimizer(obj = lda_obj,
-                           n_pars = num_pars,
-                           ...)
-}
-
-# alternative using closed form solution:
 lda = function(data, by){
   # Closed form solution of LDA: 
   # w = S_b^-0.5 * largest_eigenvector(S_b^0.5 * S_w^-1 * S_b^0.5) 
@@ -77,9 +35,6 @@ lda = function(data, by){
   # Extract eigenvector corresponding to largest eigenvalue
   # geigen solves the generalized eigenvalue problem of:
   # A*x = lambda B*x
-  # We want eigenvalues of: 
-  # (S_w^-1 * S_b) * v = lambda v
-  # multiply both sides by S_w
   V = geigen(S_b, S_w, symmetric = TRUE)
   
   # Extract (absolutely) largest eigenvalue
@@ -106,7 +61,6 @@ lda = function(data, by){
 }
 
 plot.flda = function(model){
-  
   p = ggplot2::ggplot(data = model$X, ggplot2::aes_string(x = "lda1", y = "lda2", color = "labels")) +
     ggplot2::geom_point(alpha = 0.5, shape=21) +
     ggplot2::ggtitle("Projection on the first 2 linear discriminants") +
