@@ -14,8 +14,7 @@
 ##    - Precision
 ##    - sensitivity
 #=====================================================================
-setwd("~/SPL_WS1718/Random/")
-# Get toy example from unit-tests.R
+
 
 get_prediction = function(fitted_probs, threshold){
   predictions = ifelse(fitted_probs > threshold, 1, 0)
@@ -81,6 +80,8 @@ evaluate_model = function(fitted_probs, labels){
   
   ct = table(factor(x = labels, levels = c(0, 1)),
              factor(x = opt_predictions, levels = c(0,1)))
+  
+  opt_accuracy = (ct[1, 1] + ct[2, 2]) / sum(ct)
 
   plot(x = 1 - specificities,
        y = sensitivities,
@@ -95,6 +96,7 @@ evaluate_model = function(fitted_probs, labels){
   
   return(list(sensitivity = opt_sensitivity,
               specificity = opt_specificity,
+              accuracy = opt_accuracy,
               threshold = opt_threshold,
               predictions = opt_predictions,
               auc = auc,
