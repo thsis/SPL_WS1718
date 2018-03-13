@@ -22,11 +22,8 @@ lda = function(data, by){
   x_bar = colMeans(data[, num], na.rm = TRUE)
   
   # Compute between class scatter matrix:
-  n = sapply(X = classes, FUN = function(x){sum(data[, by] == x)})
-  
-  # Compute between class scatter matrix:
-  Sb1 = n[1] * (mu[, 1] - x_bar) %*% t(mu[, 1] - x_bar)
-  Sb2 = n[2] * (mu[, 2] - x_bar) %*% t(mu[, 2] - x_bar)
+  Sb1 = (mu[, 1] - x_bar) %*% t(mu[, 1] - x_bar)
+  Sb2 = (mu[, 2] - x_bar) %*% t(mu[, 2] - x_bar)
   S_b = Sb1 + Sb2
   
   # Compute within class scatter matrix:

@@ -29,6 +29,8 @@
 
 \DeclareMathOperator*{\argmin}{arg\,min}
 
+\usepackage{tabto}
+
 \begin{document}
 \section{Binary Response Models}
 \subsection{Theory}
@@ -200,27 +202,27 @@ The workhorse in this routine is the \texttt{get\_gradient()}-function, which co
 \caption{get\_gradient()}\label{getGrad}
 \begin{algorithmic}[1]
 \Procedure{Set up auxiliary variables}{}
-\State $\textit{init} \gets \begin{bmatrix}
+\State $$\textit{init} \gets \begin{bmatrix}
 x_1 & x_2 & \cdots\\
 x_1 & x_2 & \cdots\\
 x_1 & x_2 & \cdots\\
 \vdots & \ddots & \cdots
-\end{bmatrix} $
+\end{bmatrix} $$
 
-\State $\textit{steps} \gets 
+\State $$\textit{steps} \gets 
 \begin{bmatrix}
 x_1 + \epsilon & x_2 & \cdots\\
 x_1 & x_2 + \epsilon & \cdots\\
 x_1 & x_2 & \cdots\\
 \vdots & \ddots & \cdots
-\end{bmatrix}$
+\end{bmatrix}$$
 
-\State $\textit{f\_comp} \gets \textbf{apply row-wise:} \text{ objective function to} \textit{init}$
-\State $\textit{f\_steps} \gets \textbf{apply row-wise:} \text{ objective function to} \textit{steps}$
+\State $\textit{f\_comp} \gets \textbf{apply row-wise:} \text{ objective function to } \textit{init}$
+\State $\textit{f\_steps} \gets \textbf{apply row-wise:} \text{ objective function to } \textit{steps}$
 \EndProcedure
 
 \Procedure{Compute finite differences}{}
-\State $\textit{D} \gets \frac{f\_steps - f\_comp}{\epsilon}$
+\State $$\textit{D} \gets \frac{f\_steps - f\_comp}{\epsilon}$$
 \If{$any d \in D \notin [-100; 100]$} \textbf{replace} \text{d by 100 $\cdot$ sign(d)}
 \EndIf
 \EndProcedure
@@ -238,9 +240,6 @@ In order to facilitate making predictions based on the \texttt{brm}-class we aug
 \lstinputlisting[language=R, firstline=61, lastline=68, firstnumber=61]{../BRM/logit.R}
 
 A call to \texttt{predict()} on a \texttt{brm}-model will add a column of ones to the provided \texttt{data} and multiply the matrix with the weights calculated during training of the model (line 62). Finally these scores of the index-function $X\beta$ will be applied to the correct distribution. The distribution is stored inside \texttt{model\$distribution} which points to \texttt{pnorm} in case of \texttt{brm}-model of \texttt{mode} "probit" and a pointer to \texttt{plogis} if the \texttt{mode} is equal to "logit". 
-
-\subsection{Unit Tests}
-
 
 \section{Linear Discriminant Analysis}
 \subsection{Theory}
@@ -293,7 +292,34 @@ This is a generalized eigenvalue problem for which there exists a convenient \te
 
 \subsection{Implementation}
 
+The result from \ref{LDAsolution}, which is essentially the rotation of the underlying data's column space that ensures the highest separability, is implemented in the \texttt{lda}-class for the two-class case. The \texttt{lda()} function accepts two arguments:
+
+\begin{enumerate}
+\item \texttt{data}: a \texttt{data.frame} containing at least one column of factors indicating the class label.
+\item \texttt{by}: a \texttt{character}-string equal to the column's name containing the class labels. Note that all other non-numerical columns will be ignored by the function, since LDA is only meaningful for continuous variables.
+\end{enumerate} 
+
+The function in a first step extracts the useable columns and the number of classes provided in \texttt{data}. It then performs a quick check if the prerequisites are met and then continues with the calculation of the class-means $\mu_1$ and $mu_2$, the overall mean $\mu$, as well as the scatter-matrices $S_b$ and $S_w$. With these we can solve the generalized eigenvalue problem from \ref{LDAsolution}.
+
+\begin{algorithm}
+\caption{\texttt{lda()}} \label{lda-function}
+\begin{algorithmic}[1]
+\Procedure{Set up Auxiliary Variables}{}
+\State $\textit{num}$
+\State $\textit{classes}$
+\State $\textit{mu}$
+\State $\textit{x\_bar}$
+\State $\textit{S}$
+\EndProcedure
+
+
+\end{algorithmic}
+\end{algorithm}
+
+\section{Appendix}
+
 \subsection{Unit Tests}
+
 
 \begin{thebibliography}{9}
 \bibitem{winkel09}
