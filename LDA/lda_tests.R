@@ -16,6 +16,7 @@ ggplot(iris_test, aes(x = Sepal.Length,
                       y = Sepal.Width,
                       color = is_setosa)) +
   geom_point() +
+  ggtitle("Setosa vs. others", subtitle = "The Setosa-Species is already in the normal space almost separable.") +
   theme_bw()
 
 # We see that the data is already linear separable.

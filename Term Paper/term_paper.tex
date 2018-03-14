@@ -1,5 +1,13 @@
 \documentclass{article}
 
+\usepackage{geometry}
+  \geometry{
+    a4paper,
+    right=25mm
+  }
+
+\usepackage{wrapfig}
+
 \usepackage{graphicx}
 \usepackage[latin1]{inputenc}
 \usepackage[T1]{fontenc}
@@ -28,8 +36,6 @@
 \makeatother
 
 \DeclareMathOperator*{\argmin}{arg\,min}
-
-\usepackage{tabto}
 
 \begin{document}
 \section{Binary Response Models}
@@ -61,7 +67,7 @@ For the logit model $G$ will be replaced by the cumulative density function of t
 
 \begin{equation}
 P(y=1|x) = G(x \prime \beta) = \Lambda(x \prime \beta) = \frac{exp(x \prime \beta)}{1+exp(x \prime \beta)}
-\end{equation}\cite{winkel09}
+\end{equation}
 
 The parameter vector $\beta$ is obtained by the Maximum-Likelihood method. Given independent and identically distributed samples, the Likelihood function can be written as
 
@@ -93,7 +99,7 @@ and solve the first order conditions for a maximum.
 \frac{\partial l}{\partial \beta} \stackrel{!}{=} 0
 \end{equation}
 
-In general, the resulting system of equations has no closed-form solution for $\beta_ML$ and numerical solutions are needed which can be obtained by iterative optimization techniques, one we will implement in the next section.\cite{winkel09}
+In general, the resulting system of equations has no closed-form solution for $\beta_ML$ and numerical solutions are needed which can be obtained by iterative optimization techniques, one we will implement in the next section.
 
 \subsection{Implementation}
 
@@ -229,11 +235,11 @@ x_1 & x_2 & \cdots\\
 \end{algorithmic}
 \end{algorithm}
 
-\lstinputlisting[language=R, firstline=155, lastline=178, firstnumber=155]{../BRM/utils.R}
+\lstinputlisting[language=R, firstline=155, lastline=177, firstnumber=155]{../BRM/utils.R}
 
 In each iteration the \texttt{while}-loop ensures that convergence has not been reached. This is implemented by a call to \texttt{any} wrapped around a vector of logical expressions. If any element of the gradient is still greater than the specified precision, the call to \texttt{any} will evaluate to \texttt{TRUE}. The second breaking criterion is a safeguard for the loop not to run infinite times. If the current iteration is larger than \texttt{max\_iter} the algorithm will break and the user will receive a warning (lines 175-176). If the user wishes to receive information about the status of the algorithm during runtime, the optional argument \texttt{verbose} can be set to \texttt{TRUE} which will print a logstring to the console in regular intervals (lines 156-161).
 
-\subsection{Predictions}
+\subsubsection{Predictions}
 
 In order to facilitate making predictions based on the \texttt{brm}-class we augmented the built-in function \texttt{predict()} with a method that works on our custom class in a predefined way.
 
@@ -266,6 +272,7 @@ S_b = \sum_{c=1}^{C}(\mu_c - \mu)(\mu_c - \mu)\prime
 \end{equation}
 
 \begin{equation}
+\label{Sw}
 S_w = \sum_{c=1}^{C}\sum_{i \in c}(x_i - \mu_c)(x_i - \mu_c)\prime
 \end{equation} 
 
@@ -305,21 +312,109 @@ The function in a first step extracts the useable columns and the number of clas
 \caption{\texttt{lda()}} \label{lda-function}
 \begin{algorithmic}[1]
 \Procedure{Set up Auxiliary Variables}{}
-\State $\textit{num}$
-\State $\textit{classes}$
-\State $\textit{mu}$
-\State $\textit{x\_bar}$
-\State $\textit{S}$
+\State $\textit{num} \gets \textbf{extract numeric columns}$
+\State $\textit{classes} \gets \textbf{extract class labels}$
+\State $\textit{mu} \gets \textbf{calculate class means}$
+\State $\textit{x\_bar} \gets \textbf{calculate overall means}$
+\State $\textit{S} \gets \textbf{calculate variance per group}$
+\State $\textit{S\_b1 \& S\_b2} \gets \textbf{get summands for between class scatter matrix}$
 \EndProcedure
 
+\Procedure{Calculate Scatter Matrices}{}
+\State $\textit{S\_b} \gets \texttt{S\_b1 + S\_b2}$
+\State $\textit{S\_w} \gets \texttt{S[[[1]] + S[[2]]}$
+\EndProcedure
+
+\Procedure{Solve Generalized Eigenvalue Problem}{}
+\State $\textit{V} \gets \textbf{calculate Eigenvectors and Eigenvalues}$
+\State $\textit{v} \gets \textbf{extract 2 Eigenvectors associated to largest Eigenvalues}$
+\State $\textit{lda1 \& lda2} \gets \textbf{calculate first two LDA-Components}$
+\State $\textit{inertia} \gets \textbf{calculate percentage of explained variance}$
+\State $\textbf{return: } \texttt{lda1, lda2, classes, mu, v, inertia}$
+\EndProcedure
 
 \end{algorithmic}
 \end{algorithm}
 
+The first task of the \texttt{lda()}-function is to determine, if the prerequisites for further computation are met. To this avail it first asserts that the user provided a dataframe that contains at least one numeric column and a column that contains exactly two distinct class labels (lines 11-17). In a second step it calculates all required variables such as the class means $\mu_1$ and $\mu_2$, the overall mean $\mu$ and the covariance matrices for each group (lines 18-19). The class specific metrics are computed by calls to custom made functions defined in the \texttt{utils.R}-file of the \texttt{LDA}-directory. Essentially these functions are wrappers for subsetting a provided dataframe by a provided key, here this is the class-label, and and an \texttt{apply} call looping over the respective subset's columns. The \texttt{get\_class\_means()} calculates the mean inside the \texttt{apply}-function whereas \texttt{get\_class\_cov()} uses a call to the built-in \texttt{cov}-function. However note that \texttt{cov} calculates 
+
+$$\hat{cov}(X) = \frac{1}{N-1} \sum_{i = 1}^{N}(x_i - \bar{x})(x_i - \bar{x})\prime.$$
+
+Unfortunately this is not exactly what we want for the scatter matrix defined in \ref{Sw}. We need to multiply the resulting list of covariance matrices elementwise by the number of observations in each class minus one. We correct this before calculating the within class scatter matrix on line 31. 
+
+\lstinputlisting[language=R, firstline=6, lastline=31, firstnumber=6]{../LDA/lda.R}
+
+With the \texttt{matrix}-object \texttt{S\_w} storing the within-scatter-matrix $S_w$ and \texttt{S\_b} storing $S_b$ we can continue by solving the generalized Eigenvalue problem posed in \ref{LDAsolution}. This is done by the \texttt{geigen()} function from the \texttt{geigen} package.
+
+\lstinputlisting[language=R, firstline=36, lastline=43, firstnumber=36]{../LDA/lda.R}
+
+We extract the eigenvectors and eigenvalues from \texttt{V} (line 36) in form of a list. However, caution is required because the eigenvectors are not ordered, which is different to the implementation of eigenvalues in the \texttt{base}-function \texttt{eigen()}. Therefore we rearrange the eigenvectors according to their absolute eigenvalues (line 39). We extract only the first two eigenvectors, because we require the most informative rotations in order to produce two-dimensional plots. Additionally we compute the percentage of explained variance as 
+
+\begin{equation}
+intertia_i = \frac{\lambda_i^2}{\sum_{j=1}^{d}\lambda_{j}^{2}}.
+\end{equation}
+
+The rotations \texttt{lda1} and \texttt{lda2} are computed by an \texttt{apply}-call (lines 45-46) to an anonymous function which emulates a scalar product by multiplying the two vectors \texttt{v[, i]}, which is the $i$-th eigenvector $i \in \{1, 2\}$, with each observation in the provided dataset. Computationally this is equivalent to the matrix multiplication $Xv_i$, where $X$ is the data matrix and $v_i$ is the eigenvector.
+
+Finally we gather the results into a \texttt{list} and sets it's class to \texttt{flda}. This allows us to augment pre-existing functions with a custom method for predicting and plotting for future objects of the\texttt{flda}-class in an object-oriented fashion.
+
+\subsubsection{Plotting}
+
+With a trained model of the \texttt{flda}-class it may be of interest to plot the rotations in order to get a visualisable idea of the separability of the two classes. To make this as easy as possible for the end-user we implemented a \texttt{plot} method for each instance of a \texttt{flda}-class. This means that a user can simply store a call to the \texttt{lda}-function inside a variable, called \texttt{model} for example. To plot the rotations one can simply invoke \texttt{plot} on \texttt{model} as easy as with any other model class by typing \texttt{plot(model)}.
+
+This is done by augmenting \texttt{R}'s \texttt{plot}-function using the \texttt{plot.\_\_className\_\_} syntax. Here we replace \texttt{\_\_className\_\_} by \texttt{flda}
+
+\lstinputlisting[language=R, firstline=61, lastline=69, firstnumber=61]{../LDA/lda.R}
+
+We overwrite the behavior of \texttt{plot} in order to accomodate \texttt{flda}-objects. Here we pass the model's precomputed rotations to the \texttt{ggplot2} function. The \texttt{ggplot2::\_\_function\_\_} makes it explicit that we want the \texttt{\_\_function\_\_} from the \texttt{ggplot2} package. Another benefit of this syntax is that this way we do not implicitly change a users namespace, which may potentially hide some functions by overwriting them with \texttt{ggplot2} routines and therefore may result in unexpected behavior.
+
+Looking at the creditreform dataset we can apply our custom routines by creating a train-set first and then visualizing the results. This reveals already why LDA's predictive results are of poor quality. The feature space spanned by the financial ratios is simply not linearly separable.
+
+
+\lstinputlisting[language=R, firstline=19, lastline=21, firstnumber=19]{../LDA/creditLDA.R}
+
+\begin{figure}
+\caption{Using Linear Discriminant Analysis on the Creditreform Database}
+\centering
+\includegraphics{../LDA/creditLDA.png}
+\end{figure}
+
+\subsubsection{Predictions}
+
+To make predicting with the \texttt{flda}-class as easy as plotting we augment the standard \texttt{predict} function in a similar fashion. We expect the user to have already trained an \texttt{flda}-model to which she or he wishes to apply new data and obtain predictions on the class labels. 
+
+\lstinputlisting[language=R, firstline=71, lastline=88, firstnumber=71]{../LDA/lda.R}
+
+The provided new data should have a similar structure to the training data. This means that especially the order of the columns should be the same. We check for obviously non-conforming data in line 77 but we do not perform explicit tests on the order of columns. If the data has the required shape we calculate the discriminant function for each observation, which is the scalar product of the observation's data vector and the first eigenvector from the trained model. We then proceed calculating a threshold $c$ for being able to discriminate between the two groups by following the rule
+
+\begin{equation}
+c = \frac{1}{2} v \prime \left(\mu_1 + \mu_2\right) 
+\end{equation}
+
+predictions are made according to the threshold, if the value of the discriminant function is smaller than the threshold we assign the label of the first class and the second class otherwise. 
+ 
 \section{Appendix}
 
 \subsection{Unit Tests}
+\subsubsection{LDA}
 
+\begin{wrapfigure}{r}{0.3\textwidth}
+\label{iris}
+\begin{center}
+\includegraphics[scale=0.3, trim={10mm 20mm 30mm 30mm}]{../LDA/iris.png}
+\end{center}
+\caption{The Setosa-Species is already almost separable, even in the normal space.}
+\end{wrapfigure}
+
+
+In order to test the \texttt{lda}-function we take a dataset from which we know that it is linearly separable already and see if we can reproduce the results. Since Linear Discriminant Analysis was first proposed by Sir Ronald A. Fisher it is only fitting that we test it on his famous \texttt{iris} dataset. The \texttt{iris} dataset contains measurements for the sepal and petal length and width of three different species of iris flowers. We know that the sepal length and the petal length are sufficient variables to create a obviously visible separation line in figure \ref{iris} which discriminates the Setosa-species almost perfectly from the rest. 
+
+Should the \texttt{lda}-function work as intended we would expect this result only to become better, i.e. the points being perfectly separable.
+
+The \texttt{iris}
+
+\subsubsection{Binary Response Models}
+\subsubsection{Evaluation}
 
 \begin{thebibliography}{9}
 \bibitem{winkel09}

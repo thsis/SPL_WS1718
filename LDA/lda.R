@@ -17,6 +17,7 @@ lda = function(data, by){
   
   mu = get_class_means(Data = data, By = by, na.rm = TRUE)
   S = get_class_cov(Data = data, By = by, use = "complete.obs")
+  n = sapply(classes, function(x){sum(data[, by] == x)})
   
   # Compute overall mean:
   x_bar = colMeans(data[, num], na.rm = TRUE)
@@ -27,7 +28,7 @@ lda = function(data, by){
   S_b = Sb1 + Sb2
   
   # Compute within class scatter matrix:
-  S_w = S[[1]] + S[[2]]
+  S_w = (n[1]-1)*S[[1]] + (n[2]-1)*S[[2]]
 
   # Extract eigenvector corresponding to largest eigenvalue
   # geigen solves the generalized eigenvalue problem of:
