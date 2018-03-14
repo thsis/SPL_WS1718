@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.11.4)  14 MAR 2018 15:16
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.11.4)  14 MAR 2018 19:04
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -522,31 +522,64 @@ LaTeX Info: Redefining \nameref on input line 40.
 \@outlinefile=\write3
 \openout3 = `term_paper.out'.
 
-LaTeX Font Info:    Try loading font information for U+rsfs on input line 46.
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 45.
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
+File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Try loading font information for U+rsfs on input line 58.
 
 (/usr/share/texlive/texmf-dist/tex/latex/jknapltx/ursfs.fd
 File: ursfs.fd 1998/03/24 rsfs font definition file (jk)
 )
-LaTeX Font Info:    Try loading font information for U+msa on input line 46.
+LaTeX Font Info:    Try loading font information for U+msa on input line 58.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 46.
+LaTeX Font Info:    Try loading font information for U+msb on input line 58.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 106.
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (../Preparation/data.prepa
+ration.R) [2pdfTeX warning (ext4): destination with the same identifier (name{t
+able.1}) has been already used, duplicate ignored
 
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.93 
+     ] [3pdfTeX warning (ext4): destination with the same identifier (name{tabl
+e.2}) has been already used, duplicate ignored
 
-(/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
-File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.127  A
+        nother type of ratios which deliver important information on insolve...
+] [4pdfTeX warning (ext4): destination with the same identifier (name{table.3})
+ has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.175 
+      ] [5pdfTeX warning (ext4): destination with the same identifier (name{tab
+le.4}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.225 
+      ]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 227.
+
+ (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
+File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 227.
+ [6] [7]
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 113.
+put line 317.
 
 (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2015/06/04 1.6 listings language file
@@ -556,74 +589,115 @@ File: lstlang2.sty 2015/06/04 1.6 listings language file
 )
 (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang3.sty
 File: lstlang3.sty 2015/06/04 1.6 listings language file
-) (../BRM/logit.R) (../BRM/logit.R [2]) [3] (../BRM/utils.R) (../BRM/utils.R) [
-4]
-(../BRM/utils.R) [5] (../BRM/logit.R) [6] [7] (../LDA/lda.R) (../LDA/lda.R
-[8]) (../LDA/lda.R) [9] (../LDA/creditLDA.R)
-<../LDA/creditLDA.png, id=283, 413.29407pt x 286.06876pt>
+) (../BRM/logit.R) [8] (../BRM/logit.R) [9] (../BRM/utils.R) [10] (../BRM/utils
+.R)
+(../BRM/utils.R [11]) (../BRM/logit.R) [12] [13] (../LDA/lda.R [14])
+(../LDA/lda.R) [15] (../LDA/lda.R) (../LDA/creditLDA.R)
+<../LDA/creditLDA.png, id=338, 413.29407pt x 286.06876pt>
 File: ../LDA/creditLDA.png Graphic file (type png)
 
 <use ../LDA/creditLDA.png>
-Package pdftex.def Info: ../LDA/creditLDA.png used on input line 379.
+Package pdftex.def Info: ../LDA/creditLDA.png used on input line 583.
 (pdftex.def)             Requested size: 413.29305pt x 286.06805pt.
- (../LDA/lda.R [10pdfTeX warning (ext4): destination with the same identifier (
-name{figure.1}) has been already used, duplicate ignored
+ (../LDA/lda.R) [16] [17pdfTeX warning (ext4): destination with the same identi
+fier (name{figure.1}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.84   c 
-         = 0.5 * t(v) %*% (rowSums(model$class_means)) <../LDA/creditLDA.png (P
-NG copy)>]) <../LDA/iris.png, id=305, 413.29407pt x 428.35031pt>
+l.593 
+       <../LDA/creditLDA.png (PNG copy)>]
+<../LDA/iris.png, id=382, 413.29407pt x 428.35031pt>
 File: ../LDA/iris.png Graphic file (type png)
-
-<use ../LDA/iris.png>
-Package pdftex.def Info: ../LDA/iris.png used on input line 404.
+ <use ../LDA/iris.png>
+Package pdftex.def Info: ../LDA/iris.png used on input line 608.
 (pdftex.def)             Requested size: 89.84561pt x 85.82663pt.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 423.
- [11pdfTeX warning (ext4): destination with the same identifier (name{figure.2}
-) has been already used, duplicate ignored
+
+(../LDA/lda_tests.R) <../LDA/irisLDA.png, id=384, 413.29407pt x 428.35031pt>
+File: ../LDA/irisLDA.png Graphic file (type png)
+
+<use ../LDA/irisLDA.png>
+Package pdftex.def Info: ../LDA/irisLDA.png used on input line 623.
+(pdftex.def)             Requested size: 89.84561pt x 85.82663pt.
+
+Underfull \hbox (badness 1038) in paragraph at lines 625--625
+\T1/cmr/m/n/10 the first LDA-component is
+ []
+
+
+Package wrapfig Warning: Stationary wrapfigure forced to float on input line 62
+8.
+
+
+Package wrapfig Warning: Stationary wrapfigure forced to float on input line 62
+9.
+
+
+Package wrapfig Warning: Stationary wrapfigure forced to float on input line 63
+1.
+
+[18pdfTeX warning (ext4): destination with the same identifier (name{figure.2})
+ has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.423 \end{document}
-                     <../LDA/iris.png (PNG copy)>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 423.
+l.686 \bibitem {fawcett06}
+                          pdfTeX warning (ext4): destination with the same iden
+tifier (name{figure.3}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.686 \bibitem {fawcett06}
+                           <../LDA/iris.png (PNG copy)> <../LDA/irisLDA.png (PN
+G copy)>] [19pdfTeX warning (ext4): destination with the same identifier (name{
+table.5}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.686 \bibitem {fawcett06}
+                          ]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 695.
+ [20]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 695.
  (./term_paper.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 423.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 423.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 695.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 695.
 Package rerunfilecheck Info: File `term_paper.out' has not changed.
-(rerunfilecheck)             Checksum: 9B5615A041E7D79696644EC4ABE78DA0;1042.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 423.
+(rerunfilecheck)             Checksum: 43F45B7D4E556E39FEFF8B27F54E1953;1377.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 695.
  ) 
 Here is how much of TeX's memory you used:
- 11148 strings out of 493029
- 153166 string characters out of 6136234
- 526520 words of memory out of 5000000
- 14271 multiletter control sequences out of 15000+600000
- 18614 words of font info for 45 fonts, out of 8000000 for 9000
+ 12854 strings out of 493029
+ 175497 string characters out of 6136234
+ 528520 words of memory out of 5000000
+ 15927 multiletter control sequences out of 15000+600000
+ 22043 words of font info for 59 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 32i,15n,42p,15149b,1911s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 32i,15n,42p,15149b,2822s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/share/texliv
 e/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist
 /fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
-ublic/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cms
-y7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm1
-0.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1000.pfb></usr/share/te
-xmf/fonts/type1/public/cm-super/sfbx1200.pfb></usr/share/texmf/fonts/type1/publ
-ic/cm-super/sfbx1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfcc1000
-.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfit0800.pfb></usr/share/tex
-mf/fonts/type1/public/cm-super/sfrm0800.pfb></usr/share/texmf/fonts/type1/publi
-c/cm-super/sfrm1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti1000.
-pfb></usr/share/texmf/fonts/type1/public/cm-super/sftt0800.pfb></usr/share/texm
-f/fonts/type1/public/cm-super/sftt1000.pfb>
-Output written on term_paper.pdf (11 pages, 450418 bytes).
+type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr
+6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></
+usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/sh
+are/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/tex
+live/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texm
+f/fonts/type1/public/cm-super/sfbx1000.pfb></usr/share/texmf/fonts/type1/public
+/cm-super/sfbx1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1440.p
+fb></usr/share/texmf/fonts/type1/public/cm-super/sfcc1000.pfb></usr/share/texmf
+/fonts/type1/public/cm-super/sfit0800.pfb></usr/share/texmf/fonts/type1/public/
+cm-super/sfrm0700.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm0800.pf
+b></usr/share/texmf/fonts/type1/public/cm-super/sfrm1000.pfb></usr/share/texmf/
+fonts/type1/public/cm-super/sfti1000.pfb></usr/share/texmf/fonts/type1/public/c
+m-super/sftt0800.pfb></usr/share/texmf/fonts/type1/public/cm-super/sftt1000.pfb
+>
+Output written on term_paper.pdf (20 pages, 586246 bytes).
 PDF statistics:
- 428 PDF objects out of 1000 (max. 8388607)
- 389 compressed objects within 4 object streams
- 203 named destinations out of 1000 (max. 500000)
- 149 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 539 PDF objects out of 1000 (max. 8388607)
+ 485 compressed objects within 5 object streams
+ 235 named destinations out of 1000 (max. 500000)
+ 202 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -24,8 +24,8 @@ ggplot(iris_test, aes(x = Sepal.Length,
 # From that we would expect to get a missclassification-rate of 0%.
 
 irisLDA = lda(iris_test, "is_setosa")
-irisLDA
 plot(irisLDA)
+
 predictions = predict(irisLDA, iris_test)
 predictions = factor(predictions,
                      levels = c(1, 2),
