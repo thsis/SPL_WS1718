@@ -1,8 +1,0 @@
-\beamer@endinputifotherversion {3.36pt}
-\select@language {english}
-\beamer@sectionintoc {1}{Data Preparation}{3}{0}{1}
-\beamer@sectionintoc {2}{Evaluate Predictions}{14}{0}{2}
-\beamer@sectionintoc {3}{Cart}{10}{0}{3}
-\beamer@sectionintoc {4}{Random Forest}{7}{0}{4}
-\beamer@sectionintoc {5}{Logit}{3}{0}{5}
-\beamer@sectionintoc {6}{Gradient Descent Optimizer}{3}{0}{6}
