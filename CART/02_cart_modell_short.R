@@ -45,12 +45,12 @@ for (i in 1:30){
   #print(modfit)
   modfit=train(status~.,method="rpart",data=training_complete)
   
-  #fancyRpartPlot(modfit$finalModel)#Plot des Modells zur Übersicht.
-  #train.cart=predict(modfit,newdata=training_complete)#Vorhersagefunktion, um die Güte des Modells zu messen: Das Modell wird auf den gleichen Datensatz angewendet, aus dem es entstanden ist.
-  #table(train.cart,training_complete$status)#Anzeigen der Übereinstimmungen und Missinterpretationen zwischen Modell und Datensatz in einer Tabelle.
+  #fancyRpartPlot(modfit$finalModel)#Plot des Modells zur ?bersicht.
+  #train.cart=predict(modfit,newdata=training_complete)#Vorhersagefunktion, um die G?te des Modells zu messen: Das Modell wird auf den gleichen Datensatz angewendet, aus dem es entstanden ist.
+  #table(train.cart,training_complete$status)#Anzeigen der ?bereinstimmungen und Missinterpretationen zwischen Modell und Datensatz in einer Tabelle.
   
   #Anwenden des Modells:
-  #Da die Anwendung des Modell auf den Datensatz, aus dem es entstanden es, ein Zirkelschluss wäre, wird das Modell nun auf den Validierungsdatensatz angewendet:
+  #Da die Anwendung des Modell auf den Datensatz, aus dem es entstanden es, ein Zirkelschluss w?re, wird das Modell nun auf den Validierungsdatensatz angewendet:
   pred.cart=predict(modfit,newdata=validierung_cart)
   conf_mat_cart=table(pred.cart,validierung_cart$status)
   TN=TN+conf_mat_cart[1,1]
@@ -73,4 +73,4 @@ highlyCorrelated = findCorrelation(correlation, cutoff=0.75)
 print(highlyCorrelated)
 
 pred_cart=predict(mod_fit,newdata=validierung_cart,type="prob")
-write.csv(cbind(label=as.numeric(levels(validierung_cart$status)),pred_cart),file="CART/cart_pred.csv")
+write.csv(cbind(label=as.numeric(as.character(validierung_cart$status)), pred_cart),file="CART/cart_pred.csv")
