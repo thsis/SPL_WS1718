@@ -18,7 +18,7 @@ lda = function(data, by){
   mu = get_class_means(Data = data, By = by, na.rm = TRUE)
   S = get_class_cov(Data = data, By = by, use = "complete.obs")
   n = sapply(classes, function(x){sum(data[, by] == x)})
-  
+  print(n)
   # Compute overall mean:
   x_bar = colMeans(data[, num], na.rm = TRUE)
   

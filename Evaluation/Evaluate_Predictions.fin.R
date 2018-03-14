@@ -91,7 +91,7 @@ evaluate_model = function(fitted_probs, labels){
        xlim = c(0, 1),
        ylim = c(0, 1),
        asp = TRUE,
-       type = "l")
+       type = "s")
   abline(c(0, 0), c(1,1), col = "grey")
   
   return(list(sensitivity = opt_sensitivity,
