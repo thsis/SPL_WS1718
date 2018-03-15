@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.11.4)  14 MAR 2018 19:14
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.11.4)  15 MAR 2018 19:54
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -425,20 +425,20 @@ Document Style - pseudocode environments for use with the `algorithmicx' style
 ) (./term_paper.aux)
 \openout1 = `term_paper.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 40.
-LaTeX Font Info:    ... okay on input line 40.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 40.
-LaTeX Font Info:    ... okay on input line 40.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 40.
-LaTeX Font Info:    ... okay on input line 40.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 40.
-LaTeX Font Info:    ... okay on input line 40.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 40.
-LaTeX Font Info:    ... okay on input line 40.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 40.
-LaTeX Font Info:    ... okay on input line 40.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 40.
-LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 44.
+LaTeX Font Info:    ... okay on input line 44.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -504,7 +504,7 @@ e
 ))
 \c@lstlisting=\count142
 \AtBeginShipoutBox=\box35
-Package hyperref Info: Link coloring OFF on input line 40.
+Package hyperref Info: Link coloring OFF on input line 44.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
@@ -514,74 +514,81 @@ Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
 \c@section@level=\count143
 )
-LaTeX Info: Redefining \ref on input line 40.
-LaTeX Info: Redefining \pageref on input line 40.
-LaTeX Info: Redefining \nameref on input line 40.
+LaTeX Info: Redefining \ref on input line 44.
+LaTeX Info: Redefining \pageref on input line 44.
+LaTeX Info: Redefining \nameref on input line 44.
 
 (./term_paper.out) (./term_paper.out)
 \@outlinefile=\write3
 \openout3 = `term_paper.out'.
 
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 45.
 
-(/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
-File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-)
-LaTeX Font Info:    Try loading font information for U+rsfs on input line 58.
+<hulogo.pdf, id=94, 130.88197pt x 130.88197pt>
+File: hulogo.pdf Graphic file (type pdf)
+ <use hulogo.pdf>
+Package pdftex.def Info: hulogo.pdf used on input line 48.
+(pdftex.def)             Requested size: 163.60204pt x 163.60204pt.
+ [1
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./hulogo.pdf>] (./term_pap
+er.toc
+LaTeX Font Info:    Try loading font information for U+rsfs on input line 5.
 
 (/usr/share/texlive/texmf-dist/tex/latex/jknapltx/ursfs.fd
 File: ursfs.fd 1998/03/24 rsfs font definition file (jk)
 )
-LaTeX Font Info:    Try loading font information for U+msa on input line 58.
+LaTeX Font Info:    Try loading font information for U+msa on input line 5.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 58.
+LaTeX Font Info:    Try loading font information for U+msb on input line 5.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-) [1
+))
+\tf@toc=\write4
+\openout4 = `term_paper.toc'.
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (../Preparation/data.prepa
-ration.R) [2pdfTeX warning (ext4): destination with the same identifier (name{t
-able.1}) has been already used, duplicate ignored
+pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
+been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.68 \newpage
+              [1]
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 74.
+ (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
+File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+[2] (../Preparation/data.preparation.R) [3pdfTeX warning (ext4): destination wi
+th the same identifier (name{table.1}) has been already used, duplicate ignored
+
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.93 
-     ] [3pdfTeX warning (ext4): destination with the same identifier (name{tabl
-e.2}) has been already used, duplicate ignored
+l.122 
+      ] [4pdfTeX warning (ext4): destination with the same identifier (name{tab
+le.2}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.127  A
-        nother type of ratios which deliver important information on insolve...
-] [4pdfTeX warning (ext4): destination with the same identifier (name{table.3})
- has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.175 
+l.157 
       ] [5pdfTeX warning (ext4): destination with the same identifier (name{tab
+le.3}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.204 
+      ] [6pdfTeX warning (ext4): destination with the same identifier (name{tab
 le.4}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.225 
-      ]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 227.
-
- (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
-File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-)
-LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 227.
- [6] [7]
+l.264 
+      ] [7]
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 317.
-
-(/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
+put line 320.
+ (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2015/06/04 1.6 listings language file
 )
 (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang2.sty
@@ -589,88 +596,92 @@ File: lstlang2.sty 2015/06/04 1.6 listings language file
 )
 (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang3.sty
 File: lstlang3.sty 2015/06/04 1.6 listings language file
-) (../BRM/logit.R) [8] (../BRM/logit.R) [9] (../BRM/utils.R) [10] (../BRM/utils
-.R)
-(../BRM/utils.R [11]) (../BRM/logit.R) [12] [13] (../LDA/lda.R [14])
-(../LDA/lda.R) [15] (../LDA/lda.R) (../LDA/creditLDA.R)
-<../LDA/creditLDA.png, id=338, 413.29407pt x 286.06876pt>
+) (../BRM/logit.R) (../BRM/logit.R) [8] [9] (../BRM/utils.R) (../BRM/utils.R) (
+../BRM/utils.R
+[10]) (../BRM/logit.R [11]) [12] [13] (../LDA/lda.R) (../LDA/lda.R) [14]
+(../LDA/lda.R) (../LDA/creditLDA.R)
+<../LDA/creditLDA.png, id=369, 413.29407pt x 286.06876pt>
 File: ../LDA/creditLDA.png Graphic file (type png)
 
 <use ../LDA/creditLDA.png>
-Package pdftex.def Info: ../LDA/creditLDA.png used on input line 583.
+Package pdftex.def Info: ../LDA/creditLDA.png used on input line 586.
 (pdftex.def)             Requested size: 413.29305pt x 286.06805pt.
- (../LDA/lda.R) [16] [17pdfTeX warning (ext4): destination with the same identi
-fier (name{figure.1}) has been already used, duplicate ignored
+ (../LDA/lda.R [15] [16pdfTeX warning (ext4): destination with the same identif
+ier (name{figure.1}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.593 
-       <../LDA/creditLDA.png (PNG copy)>]
-<../LDA/iris.png, id=382, 413.29407pt x 428.35031pt>
+l.75   Data 
+            = data[, num] <../LDA/creditLDA.png (PNG copy)>]) [17] [18]
+<../LDA/iris.png, id=429, 413.29407pt x 428.35031pt>
 File: ../LDA/iris.png Graphic file (type png)
  <use ../LDA/iris.png>
-Package pdftex.def Info: ../LDA/iris.png used on input line 608.
+Package pdftex.def Info: ../LDA/iris.png used on input line 636.
 (pdftex.def)             Requested size: 89.84561pt x 85.82663pt.
 
-(../LDA/lda_tests.R) <../LDA/irisLDA.png, id=384, 413.29407pt x 428.35031pt>
+(../LDA/lda_tests.R) <../LDA/irisLDA.png, id=431, 413.29407pt x 428.35031pt>
 File: ../LDA/irisLDA.png Graphic file (type png)
 
 <use ../LDA/irisLDA.png>
-Package pdftex.def Info: ../LDA/irisLDA.png used on input line 623.
+Package pdftex.def Info: ../LDA/irisLDA.png used on input line 651.
 (pdftex.def)             Requested size: 89.84561pt x 85.82663pt.
 
-Underfull \hbox (badness 1038) in paragraph at lines 625--625
+Underfull \hbox (badness 1038) in paragraph at lines 653--653
 \T1/cmr/m/n/10 the first LDA-component is
  []
 
 
-Package wrapfig Warning: Stationary wrapfigure forced to float on input line 62
-8.
+Package wrapfig Warning: Stationary wrapfigure forced to float on input line 65
+6.
 
 
-Package wrapfig Warning: Stationary wrapfigure forced to float on input line 62
+Package wrapfig Warning: Stationary wrapfigure forced to float on input line 65
+7.
+
+
+Package wrapfig Warning: Stationary wrapfigure forced to float on input line 65
 9.
 
-
-Package wrapfig Warning: Stationary wrapfigure forced to float on input line 63
-1.
-
-[18pdfTeX warning (ext4): destination with the same identifier (name{figure.2})
+[19pdfTeX warning (ext4): destination with the same identifier (name{figure.2})
  has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.686 \bibitem {fawcett06}
-                          pdfTeX warning (ext4): destination with the same iden
-tifier (name{figure.3}) has been already used, duplicate ignored
+l.707 \begin{thebibliography}{9}
+                                 <../LDA/iris.png (PNG copy)>] [20pdfTeX warnin
+g (ext4): destination with the same identifier (name{table.5}) has been already
+ used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.686 \bibitem {fawcett06}
-                           <../LDA/iris.png (PNG copy)> <../LDA/irisLDA.png (PN
-G copy)>] [19pdfTeX warning (ext4): destination with the same identifier (name{
-table.5}) has been already used, duplicate ignored
+l.707 \begin{thebibliography}{9}
+                                ]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 723.
+ [21pdfTeX warning (ext4): destination with the same identifier (name{figure.3}
+) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.686 \bibitem {fawcett06}
-                          ]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 695.
- [20]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 695.
+l.723 \end{document}
+                     <../LDA/irisLDA.png (PNG copy)>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 723.
  (./term_paper.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 695.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 695.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 723.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 723.
 Package rerunfilecheck Info: File `term_paper.out' has not changed.
-(rerunfilecheck)             Checksum: 43F45B7D4E556E39FEFF8B27F54E1953;1377.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 695.
+(rerunfilecheck)             Checksum: 06A6F645E6765AA249E947C2A55FD19E;1377.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 723.
  ) 
 Here is how much of TeX's memory you used:
- 12854 strings out of 493029
- 175497 string characters out of 6136234
- 528520 words of memory out of 5000000
- 15927 multiletter control sequences out of 15000+600000
- 22043 words of font info for 59 fonts, out of 8000000 for 9000
+ 12865 strings out of 493029
+ 175522 string characters out of 6136234
+ 551520 words of memory out of 5000000
+ 15926 multiletter control sequences out of 15000+600000
+ 25630 words of font info for 64 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  32i,15n,42p,15149b,2822s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/share/texliv
@@ -687,17 +698,21 @@ are/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/tex
 live/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texm
 f/fonts/type1/public/cm-super/sfbx1000.pfb></usr/share/texmf/fonts/type1/public
 /cm-super/sfbx1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1440.p
-fb></usr/share/texmf/fonts/type1/public/cm-super/sfcc1000.pfb></usr/share/texmf
-/fonts/type1/public/cm-super/sfit0800.pfb></usr/share/texmf/fonts/type1/public/
-cm-super/sfrm0700.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm0800.pf
-b></usr/share/texmf/fonts/type1/public/cm-super/sfrm1000.pfb></usr/share/texmf/
-fonts/type1/public/cm-super/sfti1000.pfb></usr/share/texmf/fonts/type1/public/c
-m-super/sftt0800.pfb></usr/share/texmf/fonts/type1/public/cm-super/sftt1000.pfb
->
-Output written on term_paper.pdf (20 pages, 586246 bytes).
+fb></usr/share/texmf/fonts/type1/public/cm-super/sfbx2074.pfb></usr/share/texmf
+/fonts/type1/public/cm-super/sfcc1000.pfb></usr/share/texmf/fonts/type1/public/
+cm-super/sfcc1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfcc1728.pf
+b></usr/share/texmf/fonts/type1/public/cm-super/sfit0800.pfb></usr/share/texmf/
+fonts/type1/public/cm-super/sfrm0700.pfb></usr/share/texmf/fonts/type1/public/c
+m-super/sfrm0800.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1000.pfb
+></usr/share/texmf/fonts/type1/public/cm-super/sfrm1200.pfb></usr/share/texmf/f
+onts/type1/public/cm-super/sfrm1440.pfb></usr/share/texmf/fonts/type1/public/cm
+-super/sfti1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti1440.pfb>
+</usr/share/texmf/fonts/type1/public/cm-super/sftt0800.pfb></usr/share/texmf/fo
+nts/type1/public/cm-super/sftt1000.pfb>
+Output written on term_paper.pdf (22 pages, 689303 bytes).
 PDF statistics:
- 539 PDF objects out of 1000 (max. 8388607)
- 485 compressed objects within 5 object streams
- 235 named destinations out of 1000 (max. 500000)
- 202 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 604 PDF objects out of 1000 (max. 8388607)
+ 539 compressed objects within 6 object streams
+ 241 named destinations out of 1000 (max. 500000)
+ 207 words of extra memory for PDF output out of 10000 (max. 10000000)
 

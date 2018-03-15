@@ -37,7 +37,36 @@
 
 \DeclareMathOperator*{\argmin}{arg\,min}
 
+\title{Credit Default Prediction}
+\author{Valeryia Mosinzova, Michail Psarakis, Thomas Siskos}
+\date{ }
+
 \begin{document}
+\begin{titlepage}
+  \begin{center}
+  
+  \includegraphics[scale=1.25]{hulogo.pdf} \par\vspace{1cm}
+  {\scshape\LARGE Humboldt University Berlin \par}
+  \vspace{1cm}
+  {\scshape\Large Term paper\par}
+  \vspace{1.5cm}
+  {\huge\bfseries Credit Default Prediction\par}
+  \vspace{1cm}
+  {\Large\itshape Valeryia Mosinzova, Michail Psarakis, Thomas Siskos \par}
+  \vspace{1cm}
+  {\Large\scshape Statistical Programming Languages\par}
+  \vspace{1cm}
+  \vfill
+  supervised by \par
+  {\Large Alla~\scshape Petukhina \par}
+  \vfill
+  {\large \today\par}
+  \end{center}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
 \section{Introduction}
 
 The term default probability is a financial term which describes the likelihood that a borrower will fail to make scheduled repayments over a specific time horizon, which is usually a year. The effective estimation and prediction of corporate defaults are crucial for asset pricing, credit risk assessment of loan portfolios as well as the valuation of other financial products exposed to corporate defaults (Miao et al., 2018). Several studies have dealt with this issue. The two basic approaches to deal with default risk analysis are the market-based model (a.k.a. structural model) and the statistical approach determined through the empirical analysis of historical data like accounting data (H{\"a}rdle et al., 2012).
@@ -94,8 +123,8 @@ The Creditreform database contains many financial statement variables for each c
 Profitability ratios have appeared in many studies to be strong predictors for bankruptcy (Chen et al., 2011). They measure the ability of a firm to generate revenue relative to its costs over a specific time period. We calculate 7 ratios belonging to this group (ratios x1-x7). The return on assets ratio (x1), for example, provides information on how effective is a firm in making use of its assets to create income. A higher ratio signals that a firm is able to earn more money on less investment (Chen et al., 2011). 
 
 \begin{table}
-\caption{Variables used for the calculation of financial ratios and their description}
 \begin{center}
+\caption{Variables used for the calculation of financial ratios and their description}
 \footnotesize
 \begin{tabular}{cccc} 
 \hline\hline
@@ -129,10 +158,10 @@ Another ratio belonging to the profitability ratios is the net profit margin rat
  As in Chen et al. (2011), we also compute an indicator of size risk which is the logarithm of total assets (x25) in order to study the insolvency risk of small, medium and large firms. Finally, we calculate the ratios of the percentage change of incremental inventories, liabilities and cash flow (x26-x28). As the increased cash flow is the additional operating cash flow that an entity receives from taking on a new project, a positive incremental cash flow means that the firm's cash flow will increase with the acceptance of a project, the ratio of which indicates that the firm should invest time and money in the project (Chen et al., 2011). 
  
  Table 3 presents all the financial ratios used in the current study, the formulas used for their calculation and their category. In our code, the calculation procedure of the financial ratios can be found in lines 95-124 of the quantlet "data.preparation", where the ratios for each firm are computed and added as columns to the dataset by using the mutate() command of the dplyr package. Then we create a dataset (test\_data\_rel) where only relevant variables are kept, i.e. ID of the firm, solvency status, year and the 28 financial ratios. 
-\begin{table}
 
-\caption{Definitions of financial ratios}
+\begin{table}
 \begin{center}
+\caption{Definitions of financial ratios}
 \scriptsize
 \begin{tabular}{cccc} 
 \hline\hline
@@ -174,8 +203,8 @@ x28 & VAR25/VAR1 & Percentage of incremental cash flow & Percentage\\
  In order to avoid sensitivity to outliers in applying the Random Forest, CART and the logit model, we follow the methodogy of Chen et al. (2011) and we replace extreme ratio values according to the following rule: For i = 1,...,28, if $x_i<q_{0.05}(x_i)$, then $x_i=q_{0.05}(x_i)$, and if $x_i>q_{0.95}(x_i)$, then $x_i=q_{0.95}(x_i)$, where $q_{0.05}(x_i)$ and $q_{0.95}(x_i)$ refer to the 0.05 and 0.95 quantiles of the ratio $x_i$ respectively. This will make our results robust and insensitive to outliers. For that purpose we create the function "replace\_extreme\_values()" (lines 83-91 of the "data.preparation" quantlet), which is then separately applied to the subsets of solvent and insolvent companies (lines 134-145). The lower and upper quantile as well as the median of the financial ratios for solvent and insolvent firms are presented in table 4. Our results coincide almost entirely with those of Chen et al. (2011).  The final clean dataset to be used in further analysis is then created by binding the two subsets of solvent and insolvent firms and is saved as "data\_clean".
 
 \begin{table}
-\caption{Three number summary (lower quantile, median, upper quantile) of the financial ratios for solvent and insolvent firms.}
- \begin{center}
+\begin{center}
+\caption{Three number summary of the financial ratios for solvent and insolvent firms.}
 \footnotesize
 \begin{tabular}{c|ccc|ccc} 
 \hline\hline
@@ -215,32 +244,6 @@ x28 & -12.17 & 0.00 & 0.94 & -7.03 & 0.00 & 0.91\\
 \end{tabular}
 \end{center}
 \end{table}
-
-
-\section{Evaluation of predictions}
-
-In this section we explain the steps followed in the "evaluate\_predictions" quantlet, which can be found in the Appendix. Purpose of this quantlet is to create a function that will take labels (actual solvency status) and predictions about the solvency status of firms and will return the confusion matrix, the ROC curve and the AUC as well as some evaluation metrics like sensitivity, specificity, precision and accuracy.
-
-The confusion matrix, also known as error matrix, is a matrix that illustrates the performance of a classification model on a set of test data with known true values (labels). Each row of the matrix corresponds to a case of a predicted class while each column corresponds to a case of an actual class. It is called confusion matrix because it depicts whether the classifier is confusing the two classes, i.e. if it is wrongly labelling one class as another. It is a special case of contingency table, with two dimensions ("actual" and "predicted") and two "classes" (solvent and insolvent in our case) in each dimension. The cells of our confusion matrix will present the number of:
-
-\begin{itemize}
-\item True Positives (TP), i.e. cases that firms predicted to be insolvent were indeed insolvent (hits)
-\item False Positives (FP), i.e. solvent firms were wrongly predicted to be insolvent (false alarm or Type I error)
-\item False Negatives (FN), i.e. insolvent firms were wrongly predicted to be solvent (mass or Type II error)
-\item True Negatives (TN), i.e. firms were correctly predicted to be solvent (correct rejection) 
-\end{itemize}
-
-These values will then be used to get some important metrics which are described next.
-
-Sensitivity and specificity are assessment metrics of the discriminative power of classification methods (H{\"a}rdle et al., 2012). Sensitivity (also known as the true positive rate) measures the proportion of positives (defaulted firms in our case) that are correctly identified as such (Fawcett, 2006). It is defined as $TPR=TP/(TP+FN)$. Specificity (or true negative rate) measures the proportion of negatives (solvent firms in our case) that are correctly identified as such (Fawcett, 2006). It is defined as $TNR=TN/(TN+FP)$. Precision is analogous to the positive predictive value (PPV) and is a measure of exactness (H{\"a}rdle et al., 2012). It is defined as $PPV=TP/(TP+FP)$. Finally accuracy measures the fraction of correct predictions and is defined as $(TP+TN)/(TP+TN+FP+FN)$.
-
-The values of specificity and sensitivity will allow us to plot the ROC curve. The ROC curve (Receiver Operating Characteristic curve) is a graphical plot which depicts the diagnostic ability of a binary classification model for different values of its discrimination threshold. In our case, this threshold refers to the probability value above of which a firm is predicted to be insolvent. It is created by plotting the sensitivity values(y axis) against their corresponding $1-specifity$ values (x axis) as the threshold varies (Fawcett, 2006). The area under the ROC curve (AUC) can be interpreted as the average power of the test on default or non-default corresponding to all discrimination thresholds (H\"ardle et al.(2012)). A larger AUC corresponds to a better classification result. A model with perfect discriminative power will have an AUC value of 1, while a random model without discriminative power will have an AUC value of 0.5, i.e. its ROC curve will be the 45 degree line. Thus, any reasonable rating model is expected to have an AUC value above 0.5, while AUC values close to 1 will indicate models with high diagnostic ability.  
-
-The first function we created in this quantlet is the get\_prediction() function (lines $19-22$). This function takes as inputs the fitted probabilities for insolvency and the threshold above of which a firm would be predicted to be defaulted. Using the ifelse() function in the body of this function, get\_prediction() will return predictions for the solvency status of each firm. We construct then the evaluate\_predictions() function (lines $24-47$). Inputs of this function are the actual solvency status of each company (labels), the corresponding predictions about the status and the "verbose" parameter which is equal to FALSE by default. In the body of the function we create first the previously mentioned confusion matrix which we expect to be a 2x2 matrix. If it is not the case, the test in line 30 will show us a warning message. Then we get the values of TP, TN, FP and FN and we compute the values of sensitivity, specificity, precision and accuracy, which are then saved as a list in "reports". The function will also print a data frame with those reports if we change the logical value of "verbose" to TRUE. The two previously mentioned functions are used in the body of the last function which completes the task of the quantlet. 
-
-The final function created in this quantlet is the evaluate\_model() function (lines $49-101$), which takes the fitted probabilities for bankruptcy and the actual status (labels) as inputs. At first we create a threshold list in the body of the function with threshold values varying from 0 to 1 by tiny steps. Then we apply the get\_prediction() function to this list in order to get a list of predictions for each threshold value which we store as "pred\_list". Afterwards we apply the evaluate\_predictions() function to pred\_list and we get a list of reports. We use then the values of sensitivity and specificity from reports in order to compute the ROC curve and the area under it (AUC) (lines $58-70$). For calculating the AUC we create the function get\_auc() which takes the values of $1-specificities$ and sensitivities as inputs. This function uses the trapezoidal method to approximate the AUC (solution found in \href{https://stackoverflow.com/questions/4954507/calculate-the-area-under-a-curve}{stackoverflow.com}). For each difference in $1-specificities$ there is one rectangle which underestimates the area under curve (corresponding to the "left" value of sensitivities) and one rectangle that overestimates it (corresponding to the "right" value of sensitivities). Therefore the function approximates the AUC by taking the average of the two rectangles. 
-
-We are next interested in finding the values of sensitivities and specificities for which the distance between the ROC curve and the 45-degree line (i.e. the ROC curve of a model with no discriminative power) is maximized. We use the index of these values in order to find the optimal values of sensitivity, specificity and the threshold, which is then used to compute the optimal predictions. These predictions are then used to create the optimal confusion matrix and get the optimal accuracy (lines $73-84$). In the final part of the evaluate\_model() function the ROC curve is plotted and the function returns a list with the optimal measures calculated above.
 
 \section{Binary Response Models}
 \subsection{Theory}
@@ -596,6 +599,31 @@ c = \frac{1}{2} v \prime \left(\mu_1 + \mu_2\right)
 \end{equation}
 
 predictions are made according to the threshold, if the value of the discriminant function is smaller than the threshold we assign the label of the first class and the second class otherwise. 
+
+\section{Evaluation of predictions}
+
+In this section we explain the steps followed in the "evaluate\_predictions" quantlet. Purpose of this quantlet is to create a function that will take labels (actual solvency status) and predictions about the solvency status of firms and will return the confusion matrix, the ROC curve and the AUC as well as some evaluation metrics like sensitivity, specificity, precision and accuracy.
+
+The confusion matrix, also known as error matrix, is a matrix that illustrates the performance of a classification model on a set of test data with known true values (labels). Each row of the matrix corresponds to a case of a predicted class while each column corresponds to a case of an actual class. It is called confusion matrix because it depicts whether the classifier is confusing the two classes, i.e. if it is wrongly labelling one class as another. It is a special case of contingency table, with two dimensions ("actual" and "predicted") and two "classes" (solvent and insolvent in our case) in each dimension. The cells of our confusion matrix will present the number of:
+
+\begin{enumerate}
+\item True Positives (TP): firms who are correctly predicted to be insolvent (hits).
+\item False Positives (FP): solvent firms were wrongly predicted to be insolvent (false alarm or Type I error)
+\item False Negatives (FN): insolvent firms were wrongly predicted to be solvent (mass or Type II error)
+\item True Negatives (TN): firms were correctly predicted to be solvent (correct rejection) 
+\end{enumerate}
+
+These values will then be used to get some important metrics which are described next.
+
+Sensitivity and specificity are assessment metrics of the discriminative power of classification methods (H{\"a}rdle et al., 2012). Sensitivity (also known as the true positive rate) measures the proportion of positives (defaulted firms in our case) that are correctly identified as such (Fawcett, 2006). It is defined as $$TPR=\frac{TP}{TP+FN}.$$ Specificity (or true negative rate) measures the proportion of negatives (solvent firms in our case) that are correctly identified as such (Fawcett, 2006). It is defined as $$TNR=\frac{TN}{TN+FP}.$$ Precision is analogous to the positive predictive value (PPV) and is a measure of exactness (H{\"a}rdle et al., 2012). It is defined as $$PPV=\frac{TP}{TP+FP}.$$ Finally accuracy measures the fraction of correct predictions and is defined as $$ACC = \frac{TP+TN}{TP+TN+FP+FN}.$$
+
+The values of specificity and sensitivity will allow us to plot the ROC curve. The ROC curve (Receiver Operating Characteristic curve) is a graphical plot which depicts the diagnostic ability of a binary classification model for different values of its discrimination threshold. In our case, this threshold refers to the probability value above of which a firm is predicted to be insolvent. It is created by plotting the sensitivity values(y axis) against their corresponding $1-specifity$ values (x axis) as the threshold varies (Fawcett, 2006). The area under the ROC curve (AUC) can be interpreted as the average power of the test on default or non-default corresponding to all discrimination thresholds (H\"ardle et al.(2012)). A larger AUC corresponds to a better classification result. A model with perfect discriminative power will have an AUC value of 1, while a random model without discriminative power will have an AUC value of 0.5, i.e. its ROC curve will be the 45 degree line. Thus, any reasonable rating model is expected to have an AUC value above 0.5, while AUC values close to 1 will indicate models with high diagnostic ability.  
+
+The first function we created in this quantlet is the get\_prediction() function (lines $19-22$). This function takes as inputs the fitted probabilities for insolvency and the threshold above of which a firm would be predicted to be defaulted. Using the ifelse() function in the body of this function, get\_prediction() will return predictions for the solvency status of each firm. We construct then the evaluate\_predictions() function (lines $24-47$). Inputs of this function are the actual solvency status of each company (labels), the corresponding predictions about the status and the "verbose" parameter which is equal to FALSE by default. In the body of the function we create first the previously mentioned confusion matrix which we expect to be a 2x2 matrix. If it is not the case, the test in line 30 will show us a warning message. Then we get the values of TP, TN, FP and FN and we compute the values of sensitivity, specificity, precision and accuracy, which are then saved as a list in "reports". The function will also print a data frame with those reports if we change the logical value of "verbose" to TRUE. The two previously mentioned functions are used in the body of the last function which completes the task of the quantlet. 
+
+The final function created in this quantlet is the evaluate\_model() function (lines $49-101$), which takes the fitted probabilities for bankruptcy and the actual status (labels) as inputs. At first we create a threshold list in the body of the function with threshold values varying from 0 to 1 by tiny steps. Then we apply the get\_prediction() function to this list in order to get a list of predictions for each threshold value which we store as "pred\_list". Afterwards we apply the evaluate\_predictions() function to pred\_list and we get a list of reports. We use then the values of sensitivity and specificity from reports in order to compute the ROC curve and the area under it (AUC) (lines $58-70$). For calculating the AUC we create the function get\_auc() which takes the values of $1-specificities$ and sensitivities as inputs. This function uses the trapezoidal method to approximate the AUC (solution found in \href{https://stackoverflow.com/questions/4954507/calculate-the-area-under-a-curve}{stackoverflow.com}). For each difference in $1-specificities$ there is one rectangle which underestimates the area under curve (corresponding to the "left" value of sensitivities) and one rectangle that overestimates it (corresponding to the "right" value of sensitivities). Therefore the function approximates the AUC by taking the average of the two rectangles. 
+
+We are next interested in finding the values of sensitivities and specificities for which the distance between the ROC curve and the 45-degree line (i.e. the ROC curve of a model with no discriminative power) is maximized. We use the index of these values in order to find the optimal values of sensitivity, specificity and the threshold, which is then used to compute the optimal predictions. These predictions are then used to create the optimal confusion matrix and get the optimal accuracy (lines $73-84$). In the final part of the evaluate\_model() function the ROC curve is plotted and the function returns a list with the optimal measures calculated above.
  
 \section{Appendix}
 
