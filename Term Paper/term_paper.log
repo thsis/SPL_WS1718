@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.11.4)  15 MAR 2018 19:54
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.11.4)  16 MAR 2018 17:49
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -523,7 +523,7 @@ LaTeX Info: Redefining \nameref on input line 44.
 \openout3 = `term_paper.out'.
 
 
-<hulogo.pdf, id=94, 130.88197pt x 130.88197pt>
+<hulogo.pdf, id=110, 130.88197pt x 130.88197pt>
 File: hulogo.pdf Graphic file (type pdf)
  <use hulogo.pdf>
 Package pdftex.def Info: hulogo.pdf used on input line 48.
@@ -555,40 +555,25 @@ been already used, duplicate ignored
 <to be read again> 
                    \relax 
 l.68 \newpage
-              [1]
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 74.
- (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
+              [1] (./term_paper.lot)
+\tf@lot=\write5
+\openout5 = `term_paper.lot'.
+
+ (./term_paper.lof
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 7.
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-)
-[2] (../Preparation/data.preparation.R) [3pdfTeX warning (ext4): destination wi
-th the same identifier (name{table.1}) has been already used, duplicate ignored
+))
+\tf@lof=\write6
+\openout6 = `term_paper.lof'.
+
+ (./term_paper.loa)
+\tf@loa=\write7
+\openout7 = `term_paper.loa'.
 
 
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.122 
-      ] [4pdfTeX warning (ext4): destination with the same identifier (name{tab
-le.2}) has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.157 
-      ] [5pdfTeX warning (ext4): destination with the same identifier (name{tab
-le.3}) has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.204 
-      ] [6pdfTeX warning (ext4): destination with the same identifier (name{tab
-le.4}) has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.264 
-      ] [7]
-Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 320.
- (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
+[2] [3] [4] (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2015/06/04 1.6 listings language file
 )
 (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang2.sty
@@ -596,94 +581,195 @@ File: lstlang2.sty 2015/06/04 1.6 listings language file
 )
 (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang3.sty
 File: lstlang3.sty 2015/06/04 1.6 listings language file
-) (../BRM/logit.R) (../BRM/logit.R) [8] [9] (../BRM/utils.R) (../BRM/utils.R) (
-../BRM/utils.R
-[10]) (../BRM/logit.R [11]) [12] [13] (../LDA/lda.R) (../LDA/lda.R) [14]
-(../LDA/lda.R) (../LDA/creditLDA.R)
-<../LDA/creditLDA.png, id=369, 413.29407pt x 286.06876pt>
-File: ../LDA/creditLDA.png Graphic file (type png)
-
-<use ../LDA/creditLDA.png>
-Package pdftex.def Info: ../LDA/creditLDA.png used on input line 586.
-(pdftex.def)             Requested size: 413.29305pt x 286.06805pt.
- (../LDA/lda.R [15] [16pdfTeX warning (ext4): destination with the same identif
-ier (name{figure.1}) has been already used, duplicate ignored
+)
+(../Preparation/data.preparation.R) (../Preparation/data.preparation.R)
+(../Preparation/data.preparation.R) [5] (../Preparation/data.preparation.R)
+[6pdfTeX warning (ext4): destination with the same identifier (name{table.1}) h
+as been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.75   Data 
-            = data[, num] <../LDA/creditLDA.png (PNG copy)>]) [17] [18]
-<../LDA/iris.png, id=429, 413.29407pt x 428.35031pt>
-File: ../LDA/iris.png Graphic file (type png)
- <use ../LDA/iris.png>
-Package pdftex.def Info: ../LDA/iris.png used on input line 636.
-(pdftex.def)             Requested size: 89.84561pt x 85.82663pt.
+l.176 \newpage
+              ] (../Preparation/data.preparation.R) [7pdfTeX warning (ext4): de
+stination with the same identifier (name{table.2}) has been already used, dupli
+cate ignored
 
-(../LDA/lda_tests.R) <../LDA/irisLDA.png, id=431, 413.29407pt x 428.35031pt>
-File: ../LDA/irisLDA.png Graphic file (type png)
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.184 
+      ] [8pdfTeX warning (ext4): destination with the same identifier (name{tab
+le.3}) has been already used, duplicate ignored
 
-<use ../LDA/irisLDA.png>
-Package pdftex.def Info: ../LDA/irisLDA.png used on input line 651.
-(pdftex.def)             Requested size: 89.84561pt x 85.82663pt.
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.232 
+      ] [9pdfTeX warning (ext4): destination with the same identifier (name{tab
+le.4}) has been already used, duplicate ignored
 
-Underfull \hbox (badness 1038) in paragraph at lines 653--653
-\T1/cmr/m/n/10 the first LDA-component is
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.282 
+      ] [10]
+Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
+put line 352.
+ (../BRM/logit.R) [11] (../BRM/logit.R) [12] (../BRM/utils.R)
+(../BRM/utils.R [13]) (../BRM/utils.R) [14] (../BRM/logit.R)
+(../Logit/logit_model_fin.R) (../Logit/logit_model_fin.R) [15]
+(../CART/cart_modell_fin.R [16])
+<../CART/fancyRpartPlot.pdf, id=470, 505.89pt x 505.89pt>
+File: ../CART/fancyRpartPlot.pdf Graphic file (type pdf)
+
+<use ../CART/fancyRpartPlot.pdf>
+Package pdftex.def Info: ../CART/fancyRpartPlot.pdf used on input line 521.
+(pdftex.def)             Requested size: 505.88875pt x 505.88875pt.
+
+Overfull \hbox (69.13985pt too wide) in paragraph at lines 521--522
+[][] 
  []
 
+<../CART/CorrPlot.pdf, id=471, 505.89pt x 505.89pt>
+File: ../CART/CorrPlot.pdf Graphic file (type pdf)
+ <use ../CART/CorrPlot.pdf>
+Package pdftex.def Info: ../CART/CorrPlot.pdf used on input line 537.
+(pdftex.def)             Requested size: 505.88875pt x 505.88875pt.
 
-Package wrapfig Warning: Stationary wrapfigure forced to float on input line 65
-6.
+Overfull \hbox (69.13985pt too wide) in paragraph at lines 537--538
+[][] 
+ []
 
+<../CART/VarImp_top_10.png, id=472, 458.46281pt x 216.81pt>
+File: ../CART/VarImp_top_10.png Graphic file (type png)
 
-Package wrapfig Warning: Stationary wrapfigure forced to float on input line 65
-7.
+<use ../CART/VarImp_top_10.png>
+Package pdftex.def Info: ../CART/VarImp_top_10.png used on input line 545.
+(pdftex.def)             Requested size: 458.46169pt x 216.80946pt.
 
+Overfull \hbox (21.71278pt too wide) in paragraph at lines 545--546
+[][] 
+ []
 
-Package wrapfig Warning: Stationary wrapfigure forced to float on input line 65
-9.
+[17] [18pdfTeX warning (ext4): destination with the same identifier (name{figur
+e.1}) has been already used, duplicate ignored
 
-[19pdfTeX warning (ext4): destination with the same identifier (name{figure.2})
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.552 
+       <../CART/fancyRpartPlot.pdf>] [19pdfTeX warning (ext4): destination with
+ the same identifier (name{figure.2}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.552 
+       <../CART/CorrPlot.pdf>] (../Random_Forest/random_forest_modell_fin.R)
+[20pdfTeX warning (ext4): destination with the same identifier (name{figure.3})
  has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.707 \begin{thebibliography}{9}
-                                 <../LDA/iris.png (PNG copy)>] [20pdfTeX warnin
-g (ext4): destination with the same identifier (name{table.5}) has been already
- used, duplicate ignored
+l.565 
+       <../CART/VarImp_top_10.png>]
+<../Random_Forest/Rplot.pdf, id=519, 614.295pt x 794.97pt>
+File: ../Random_Forest/Rplot.pdf Graphic file (type pdf)
+
+<use ../Random_Forest/Rplot.pdf>
+Package pdftex.def Info: ../Random_Forest/Rplot.pdf used on input line 575.
+(pdftex.def)             Requested size: 460.72011pt x 596.22604pt.
+ [21] [22pdfTeX warning (ext4): destination with the same identifier (name{figu
+re.4}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.707 \begin{thebibliography}{9}
-                                ]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 723.
- [21pdfTeX warning (ext4): destination with the same identifier (name{figure.3}
-) has been already used, duplicate ignored
+l.589 
+       <../Random_Forest/Rplot.pdf>] [23] [24] (../LDA/lda.R) (../LDA/lda.R)
+[25] (../LDA/lda.R) (../LDA/creditLDA.R)
+<../LDA/creditLDA.png, id=597, 413.29407pt x 286.06876pt>
+File: ../LDA/creditLDA.png Graphic file (type png)
+
+<use ../LDA/creditLDA.png>
+Package pdftex.def Info: ../LDA/creditLDA.png used on input line 714.
+(pdftex.def)             Requested size: 413.29305pt x 286.06805pt.
+ (../LDA/lda.R [26] [27pdfTeX warning (ext4): destination with the same identif
+ier (name{figure.5}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.723 \end{document}
-                     <../LDA/irisLDA.png (PNG copy)>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 723.
+l.83   #
+         Compute cutoff threshold: <../LDA/creditLDA.png (PNG copy)>]) [28]
+[29] <../LDA/iris.png, id=654, 413.29407pt x 428.35031pt>
+File: ../LDA/iris.png Graphic file (type png)
+
+<use ../LDA/iris.png>
+Package pdftex.def Info: ../LDA/iris.png used on input line 764.
+(pdftex.def)             Requested size: 89.84561pt x 85.82663pt.
+ (../LDA/lda_tests.R)
+<../LDA/irisLDA.png, id=656, 413.29407pt x 428.35031pt>
+File: ../LDA/irisLDA.png Graphic file (type png)
+
+<use ../LDA/irisLDA.png>
+Package pdftex.def Info: ../LDA/irisLDA.png used on input line 779.
+(pdftex.def)             Requested size: 89.84561pt x 85.82663pt.
+
+Underfull \hbox (badness 1038) in paragraph at lines 781--781
+\T1/cmr/m/n/10 the first LDA-component is
+ []
+
+
+Package wrapfig Warning: Stationary wrapfigure forced to float on input line 78
+4.
+
+
+Package wrapfig Warning: Stationary wrapfigure forced to float on input line 78
+5.
+
+[30pdfTeX warning (ext4): destination with the same identifier (name{figure.6})
+ has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.787 \newpage
+               <../LDA/iris.png (PNG copy)>]
+
+Package wrapfig Warning: Stationary wrapfigure forced to float on input line 78
+8.
+
+
+Package wrapfig Warning: Stationary wrapfigure forced to float on input line 83
+5.
+
+[31pdfTeX warning (ext4): destination with the same identifier (name{table.5}) 
+has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.842 \bibitem{moro11}
+                      pdfTeX warning (ext4): destination with the same identifi
+er (name{figure.7}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.842 \bibitem{moro11}
+                       <../LDA/irisLDA.png (PNG copy)>]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 853.
+ [32]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 853.
  (./term_paper.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 723.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 723.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 853.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 853.
 Package rerunfilecheck Info: File `term_paper.out' has not changed.
-(rerunfilecheck)             Checksum: 06A6F645E6765AA249E947C2A55FD19E;1377.
-
+(rerunfilecheck)             Checksum: E4C839199A1A41D1E93F9D8AA3DF1962;1669.
 
 LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 723.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 853.
  ) 
 Here is how much of TeX's memory you used:
- 12865 strings out of 493029
- 175522 string characters out of 6136234
+ 13145 strings out of 493029
+ 179561 string characters out of 6136234
  551520 words of memory out of 5000000
- 15926 multiletter control sequences out of 15000+600000
+ 16046 multiletter control sequences out of 15000+600000
  25630 words of font info for 64 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 32i,15n,42p,15149b,2822s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 32i,15n,42p,15149b,2701s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/share/texliv
 e/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist
@@ -709,10 +795,10 @@ onts/type1/public/cm-super/sfrm1440.pfb></usr/share/texmf/fonts/type1/public/cm
 -super/sfti1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti1440.pfb>
 </usr/share/texmf/fonts/type1/public/cm-super/sftt0800.pfb></usr/share/texmf/fo
 nts/type1/public/cm-super/sftt1000.pfb>
-Output written on term_paper.pdf (22 pages, 689303 bytes).
+Output written on term_paper.pdf (33 pages, 807242 bytes).
 PDF statistics:
- 604 PDF objects out of 1000 (max. 8388607)
- 539 compressed objects within 6 object streams
- 241 named destinations out of 1000 (max. 500000)
- 207 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 852 PDF objects out of 1000 (max. 8388607)
+ 766 compressed objects within 8 object streams
+ 366 named destinations out of 1000 (max. 500000)
+ 259 words of extra memory for PDF output out of 10000 (max. 10000000)
 

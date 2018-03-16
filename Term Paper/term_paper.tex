@@ -67,39 +67,65 @@
 \tableofcontents
 \newpage
 
+\listoftables
+\listoffigures
+\listofalgorithms
+\newpage
+
 \section{Introduction}
 
-The term default probability is a financial term which describes the likelihood that a borrower will fail to make scheduled repayments over a specific time horizon, which is usually a year. The effective estimation and prediction of corporate defaults are crucial for asset pricing, credit risk assessment of loan portfolios as well as the valuation of other financial products exposed to corporate defaults (Miao et al., 2018). Several studies have dealt with this issue. The two basic approaches to deal with default risk analysis are the market-based model (a.k.a. structural model) and the statistical approach determined through the empirical analysis of historical data like accounting data (H{\"a}rdle et al., 2012).
+The term default probability is a financial term which describes the likelihood that a borrower will fail to make scheduled repayments over a specific time horizon, 
+which is usually a year. The effective estimation and prediction of corporate defaults are crucial for asset pricing, credit risk assessment of loan portfolios as 
+well as the valuation of other financial products exposed to corporate defaults (Miao et al., 2018). This issue has been considered in several studies. There are two 
+basic approaches to deal with default risk analysis: the market-based model (a.k.a. structural model) and the statistical approach, determined through the empirical 
+analysis of historical data like accounting data (H{\"a}rdle et al., 2012).
 
-In the current paper we use a dataset which provides several financial statement variables of  German firms in order to perform default prediction analysis. We apply models like logit, probit, CART (Classification And Regression Tree) and LDA (Linear Discriminant Analysis) and compare their results. Our project is mainly based on the articles of H{\"a}rdle et al. (2012), Chen et al. (2011) and Zhang \& H{\"a}rdle (2010). We follow the methodologies of those papers and try to replicate some of their results with the help of the programming language \texttt{R}.
+In our paper we aim to perform default prediction analysis by following the methodologies of H{\"a}rdle et al. (2012), Chen et al. (2011) and Zhang \& H{\"a}rdle (2010) We 
+seek to replicate some of their results with the help of the R programming language. Our analysis is based on the Creditreform-database, which provides several 
+financial statement variables of German firms. In our work we perform linear and nonlinear techniques for predicting bankruptcy based on financial ratios. We compare 
+the predictive performance between following models: logit, probit, CART (Classification and Regression Tree), random forest and LDA (Linear Discriminant Analysis). 
 
-\section{Data description}
+The rest of the paper is organized as follows. In the next section we describe the creditreform-dataset. In Section 3 we explain the data preparation procedures as well as the variables and ratios used in this paper. Section 4 contains a brief introduction to Binary Response Models, with a custom implementation and an application of a Logit model to the creditreform-dataset. In Section 5 we apply Classification and Regression Trees (CART), which is followed by a Section about Random Forests (RF). Linear Discriminant Analysis (LDA) is briefly explained and applied in Section 6. In Section 7, we present the steps we take to evaluate predictions of the selected models and the suitable performance measures. Section 8 summarises the conclusions we draw from our analysis.
 
-For the purpose of the default prediction analysis we used  the Creditreform database obtained from the Laboratory for Empirical and Quantitative Research (LEQR) of the Humboldt University of Berlin \href{https://leqr.wiwi.hu-berlin.de/leqr/content/databaseInformation/creditreform/creditreform.htm}{(leqr.wiwi.hu-berlin.de)}. This dataset contains a sample of 20,000 solvent and 1,000 insolvent German firms for the period 1996-2007 (except 2004). 
-Due to incomplete data from 2003 onwards and missing data for insolvent firms in 1996 we will focus our analysis on the data of the period 1997 to 2002. About half of the data refers to the years 2001 and 2002. The majority of firms appear several times in different years in the dataset, while the data for defaulted firms were collected two years before the default (Chen et al. (2011)). Each firm is described by several financial statement variables as those in balance sheets and income statements. A complete list of all variables of the Creditreform database as well as their descriptions is provided in table \ref{creditVars} in the Appendix. 
+\section{The dataset}
 
-The firms of the database are classified into economic activity sectors according to the German Classification of Economic Activities, Edition 1993 (WZ93) issued by the German Federal Statistical Office \href{https://www.destatis.de/DE/Methoden/Klassifikationen/GueterWirtschaftklassifikationen/Content75/KlassifikationWZ93.html}{(destatis.de)}. This classification method uses a five-digit code (\texttt{VAR26} in the dataset), where the first two digits correspond to 17 broad sectors of the economy and the other three are used for a more precise classification into subsectors.
+We used the creditreform database obtained from the Laboratory for Empirical and Quantitative Research (LEQR) of the Humboldt University of Berlin \href{https://leqr.wiwi.hu-berlin.de/leqr/content/databaseInformation/creditreform/creditreform.htm}{(leqr.wiwi.hu-berlin.de)} to analyse a sample of 20,000 solvent and 1,000 insolvent German firms from the period of 1996-2007. 
+Due to incomplete data from 2003 onwards and missing data for insolvent firms in 1996 we will focus our analysis on the data of the period 1997 to 2002. About half of the data refers to the years 2001 and 2002. The majority of firms appear several times in different years in the dataset, while the data for the insolvent firms was collected two years prior to the default (Chen et al. (2011)). Each firm is described by several financial statement variables as those in balance sheets and income statements. A complete list of all variables of the Creditreform database as well as their descriptions is provided in table \ref{creditVars} in the Appendix. 
 
-The insolvent firms are divided into the sectors of construction (39.7\%), manufacturing (25.7\%), wholesale and retail trade (20.1\%), real estate (9.4\%) and others (5.1\%) (including agriculture, mining, electricity, gas and water supply, hotels and restaurants, transport and communication, financial intermediation and social service activities. The respective composition of solvent firms is manufacturing (27.4\%), wholesale and retail trade(24.8\%), real estate (16.9\%), construction (13.9\%) and others (17.1\%), including publishing, administration and defence, education and health (Chen et al. 2011). In our project we focus on the four largest industry sectors.
+%The firms of the database are classified into economic activity sectors according to the German Classification of Economic Activities, Edition 1993 (WZ93) issued by the German Federal Statistical Office \href{https://www.destatis.de/DE/Methoden/Klassifikationen/GueterWirtschaftklassifikationen/Content75/KlassifikationWZ93.html}{(destatis.de)}. This classification method uses a five-digit code (\texttt{VAR26} in the dataset), where the first two digits correspond to 17 broad sectors of the economy and the other three are used for a more precise classification into subsectors.
+
+The firms are divided into the sectors of construction (39.7\%), manufacturing (25.7\%), wholesale and retail trade (20.1\%), real estate (9.4\%) and others (5.1\%) (including agriculture, mining, electricity, gas and water supply, hotels and restaurants, transport and communication, financial intermediation and social service activities. The respective composition of solvent firms is manufacturing (27.4\%), wholesale and retail trade(24.8\%), real estate (16.9\%), construction (13.9\%) and others (17.1\%), including publishing, administration and defence, education and health (Chen et al. 2011). In our project we focus on the four largest industry sectors.
 
 \section{Data preparation}
 
-In the current project the free programming language R was used for the purpose of the task mentioned in the previous section. \texttt{R} is a free programming language and software environment for statistical computing and graphics that is supported by the R Foundation for Statistical Computing (for more information on R see \url{www.r-project.org}).
+We used the free programming language \texttt{R} for our analysis. For cleaning the data we use primarily the \texttt{dplyr} package, which allows us to manipulate data easier than with base \texttt{R} allowing for less verbose, i.e. more easily readable code. 
 
-We use the \texttt{dplyr} package, which allows us to manipulate data easier than with base R resulting in less verbose, i.e. more easily readable code. In order to clean the data we load the Creditreform dataset into \texttt{R} with the read.csv() command and store it as "data". Using \texttt{dplyrs}'s \texttt{filter()} command we choose only those observations from the years between 1997-2002 and store them as \texttt{data1}.
+In order to clean the data we load the Creditreform dataset into \texttt{R} with the read.csv() command and store it as "data". Using \texttt{dplyrs}'s \texttt{filter()} command we choose only those observations from the years between 1997-2002 and store them as \texttt{data1}.
 
-Then we want to choose only those observations belonging to the four industry sectors with the higher percentages in the industry composition for both solvent and insolvent firms, i.e manufacturing, wholesale and retail trade, real estate and construction. We extract the industry class of firms by using the substring() command and save it in a new column of data1 as follows:
+\newpage
+\lstinputlisting[language=R, firstline=4, lastline=10, firstnumber=4]{../Preparation/data.preparation.R}
+
+Then we want to choose only those observations belonging to the four most prevalent industry sectors in both solvent and insolvent firms, i.e manufacturing, wholesale and retail trade, real estate and construction. We extract the industry class of firms by using the substring() command and save it in a new column of data1 as follows:
 
 \lstinputlisting[firstline=13, lastline=13, firstnumber=13]{../Preparation/data.preparation.R}
 
-These two digits contained in the variable "Ind.Klasse" are then used to identify in which of the 17 broad industry sectors each firm belongs. If the value of the variable is in the range 15-37 then the firm belongs to the manufacturing sector. Accordingly the ranges 50-52 and 70-74 correspond to "Wholesale and Retail Trade" and "Real Estate" respectively, while the value 45 corresponds to "Construction". We create four subsets of data1 for each of the above mentioned sectors by using the filter() command again and remove data and data1 with the rm() command as we do not need them anymore. The 4 subsets are then bound with rbind() into a new dataset with the name "data". 
+These two digits contained in the variable "Ind.Klasse" are then used to identify in which of the 17 broad industry sectors, defined in the German Classification of Economic Activities Edition 1993 (WZ93), issued by the German Federal Statistical Office \href{https://www.destatis.de/DE/Methoden/Klassifikationen/GueterWirtschaftklassifikationen/Content75/KlassifikationWZ93.html}{(destatis.de)}, each firm belongs. If the value of the variable is in the range 15-37 then the firm belongs to the manufacturing sector. Accordingly the ranges 50-52 and 70-74 correspond to "Wholesale and Retail Trade" and "Real Estate" respectively, while the value 45 corresponds to "Construction". We create four subsets of data1 for each of the above mentioned sectors by using the filter() command again and remove data and data1 with the rm() command as we do not need them anymore. The 4 subsets are then bound with rbind() into a new dataset with the name "data". 
 
-Then we turn our interest on the size of the companies and specifically the distribution of total assets which can be considered to be representative of the distribution of the companies' size (Chen et al., 2011). Following the methodology of Zhang \& H{\"a}rdle (2010), we keep in our study only firms with total assets (VAR6 in the dataset) in the range of $10^5 - 10^8$ Euros, because the credit quality of small firms often depends as much on the finances of a key individual (e.g. the owner) as on the firm itself and largest firms rarely default in Germany.
+\lstinputlisting[language=R, firstline=22, lastline=39, firstnumber=22]{../Preparation/data.preparation.R}
 
-Finally, we eliminate observations with zero values in variables used as denominators in the calculation of the financial ratios that will be used for the classification of the companies (lines $63-70$ in the code) and save the result as "data\_clean". We end up with 9591 solvent and 783 insolvent firms, which is similar result to Chen et al.(2010). The number of solvent and insolvent firms per year is shown in table 1.
-\vskip 0.2in
+Then we turn our interest on the size of the companies. Specifically the distribution of total assets which can be considered to be representative of the distribution of the companies' size (Chen et al., 2011). Following the methodology of Zhang \& H{\"a}rdle (2010), we keep only firms with total assets (VAR6 in the dataset) in the range of $10^5 - 10^8$ Euros, since the credit quality of small firms often depends mostly on the finances of a key individual (e.g. the owner).
+
+Finally, we eliminate observations with zero values in variables used as denominators in the calculation of the financial ratios that will be used for the classification of the companies (lines 60-67 in the code) and save the result as "data\_clean". 
+
+\newpage
+
+\lstinputlisting[language=R, firstline=60, lastline=67, firstnumber=60]{../Preparation/data.preparation.R}
+
+We end up with 9591 solvent and 783 insolvent firms, which is a similar result as in Chen et al. (2010). 
+
 \begin{table}
 \caption{Number of solvent and insolvent companies per year in the dataset}
+\label{finRatios}
 \begin{center}
 \begin{tabular}{ccc} 
 \hline\hline
@@ -118,11 +144,11 @@ Year & Solvent & Insolvent\\
 
 \subsection{Financial Ratios}
 
-The Creditreform database contains many financial statement variables for each company. Such statements are often used by investors to evaluate firms in two basic ways. A firm is either compared with itself by analysing how it has changed over time, or the firm is compared to other similar firms by means of a common set of financial ratios (Berk \& DeMarzo, 2016).  We follow the methodology of Chen et al. (2011) and use 23 financial statement variables to create 28 financial ratios to be used in classification. The variables used in the creation of the financial ratios are summarized in table 2. These financial ratios can be divided into six main groups (risk factors): profitability, leverage, liquidity, activity, firm size and percentage change for some variables. In the next paragraphs we give a brief description for each of the six groups followed by some examples.
+The Creditreform database contains many financial statement variables for each company. Such statements are often used by investors to evaluate firms in two basic ways. A firm is either compared with itself by analysing how it has changed over time, or the firm is compared to other similar firms by means of a common set of financial ratios (Berk \& DeMarzo, 2016).  We follow the methodology of Chen et al. (2011) and use 23 financial statement variables to create 28 financial ratios to be used in classification. The variables used in the creation of the financial ratios are summarized in table \ref{finRatios}. These financial ratios can be divided into six main groups (risk factors): profitability, leverage, liquidity, activity, firm size and percentage change for some variables.
 
-Profitability ratios have appeared in many studies to be strong predictors for bankruptcy (Chen et al., 2011). They measure the ability of a firm to generate revenue relative to its costs over a specific time period. We calculate 7 ratios belonging to this group (ratios x1-x7). The return on assets ratio (x1), for example, provides information on how effective is a firm in making use of its assets to create income. A higher ratio signals that a firm is able to earn more money on less investment (Chen et al., 2011). 
+Table \ref{finRatios} presents all the financial ratios used in the current study, the formulas used for their calculation and their category. In our code, the calculation procedure of the financial ratios can be found in lines 92-121 where we add the ratios for each firm to the dataset by using the \texttt{dplyr}'s \texttt{mutate()}- command. Then we create a dataset (test\_data\_rel) where only relevant variables are kept, i.e. ID of the firm, solvency status, year and the 28 financial ratios. 
 
-\begin{table}
+\begin{table}[b]
 \begin{center}
 \caption{Variables used for the calculation of financial ratios and their description}
 \footnotesize
@@ -147,19 +173,21 @@ VAR3 - VAR12 & Working capital & &\\
 \end{center}
 \end{table}
 
-Another ratio belonging to the profitability ratios is the net profit margin ratio (x2). It shows the percentage of sales that the firm actually keeps in earnings. A high ratio corresponds to a firm with more profitability and better control over its costs compared to the other firms (Chen et al., 2011).  
- 
- Another important factor of risk measurement is leverage. It refers to the extent that a firm relies on debt as a source of financing (Berk \& DeMarzo, 2016). As firms combine debt and equity to finance their operations, leverage ratios are useful in evaluating a firm's ability to meet its financial obligations. We calculate 7 ratios belonging to this group (ratios x8-x14). An example of a leverage ratio is the net indebtedness (x11) which measures the level of short term liabilities not covered by the firm's most liquid assets as a proportion to the firm's total assets. Except from measuring the short term leverage of a firm, this ratio provides a measure of liquidity as well. Another popular leverage ratio is the debt ratio (x13), which is defined as the debt of a company divided by its total assets. While this ratio performs well for public firms, it performs  considerably worse for private firms compared to the total liabilities to total assets ratio (x12). The reason for that is that liabilities is a more inclusive term which includes debt, deferred taxes, minority interest, accounts payable and other liabilities (Chen et al.,2011).
+\newpage
+\lstinputlisting[language=R, firstline=92, lastline=121, firstnumber=92]{../Preparation/data.preparation.R}
+
+Profitability ratios have appeared in many studies to be strong predictors for bankruptcy (Chen et al., 2011). They measure the ability of a firm to generate revenue relative to its costs over a specific time period. We calculate 7 ratios belonging to this group (ratios x1-x7). The return on assets ratio (x1), for example, provides information on how effective a firm is in making use of its assets to create income. A higher ratio signals that a firm is able to earn more money on less investment (Chen et al., 2011). 
+
+Among the profitability ratios, the net profit margin ratio (x2) shows the percentage of sales which the firm keeps in earnings. A high ratio corresponds to a firm with more profitability and better control over its costs (Chen et al., 2011).  
+
+Another important factor of risk measurement is leverage. It refers to the extent that a firm relies on debt as a source of financing (Berk \& DeMarzo, 2016). As firms combine debt and equity to finance their operations, leverage ratios are useful in evaluating a firm's ability to meet its financial obligations. We calculate 7 ratios belonging to this group (ratios x8-x14). An example of a leverage ratio is the net indebtedness (x11) which measures the level of short term liabilities not covered by the firm's most liquid assets as a proportion to the firm's total assets. Except from measuring the short term leverage of a firm, this ratio provides a measure of liquidity as well. Another popular leverage ratio is the debt ratio (x13), which is defined as the debt of a company divided by its total assets. While this ratio performs well for public firms, it performs  considerably worse for private firms compared to the total liabilities to total assets ratio (x12). The reason for that is that liabilities is a more inclusive term which includes debt, deferred taxes, minority interest, accounts payable and other liabilities (Chen et al.,2011).
  
  The next six financial ratios we calculate belong to the family of liquidity ratios (ratios x15-x20). Liquidity is a common variable in many credit decisions and represents a firm's ability to convert an asset into cash quickly (Chen et al.,2011). Liquidity ratios are important indicators of a firm's health as they assess its ability to meet its debt obligations. Chen et al. (2011) note that the cash to total assets ratio (x15) is the most important single variable relative to default in the private dataset. The quick ratio (x17) is an indicator used to assess if a firm has adequate liquidity to meet short term needs. A higher quick ratio indicates that a cash shortfall of the firm is less likely to occur in the near future (Berk \& DeMarzo, 2016). 
  
- Another type of ratios which deliver important information on insolvency are the activity ratios (x21-x24). They measure the efficiency of a firm in using its own resources to generate cash and revenues. The asset turnover ratio (x21) measures the ability of a company to produce sales from its assets by comparing sales to its asset base. Accounts receivable (x23) and accounts payable (x24) turnover ratios are powerful predictors are powerful predictors, the reciprocals of which illustrate how many times the firm's accounts are converted into sales over a period (Chen et al., 2011).  
- 
- As in Chen et al. (2011), we also compute an indicator of size risk which is the logarithm of total assets (x25) in order to study the insolvency risk of small, medium and large firms. Finally, we calculate the ratios of the percentage change of incremental inventories, liabilities and cash flow (x26-x28). As the increased cash flow is the additional operating cash flow that an entity receives from taking on a new project, a positive incremental cash flow means that the firm's cash flow will increase with the acceptance of a project, the ratio of which indicates that the firm should invest time and money in the project (Chen et al., 2011). 
- 
- Table 3 presents all the financial ratios used in the current study, the formulas used for their calculation and their category. In our code, the calculation procedure of the financial ratios can be found in lines 95-124 of the quantlet "data.preparation", where the ratios for each firm are computed and added as columns to the dataset by using the mutate() command of the dplyr package. Then we create a dataset (test\_data\_rel) where only relevant variables are kept, i.e. ID of the firm, solvency status, year and the 28 financial ratios. 
+ Another type of ratios which deliver important information on insolvency are the activity ratios (x21-x24). They measure the efficiency of a firm in using its own resources to generate cash and revenue. The asset turnover ratio (x21) measures the ability of a company to produce sales from its assets by comparing sales to its asset base. Accounts receivable (x23) and accounts payable (x24) turnover ratios are powerful predictors 
+(Chen et al., 2011).  
 
-\begin{table}
+\begin{table}[t]
 \begin{center}
 \caption{Definitions of financial ratios}
 \scriptsize
@@ -199,6 +227,8 @@ x28 & VAR25/VAR1 & Percentage of incremental cash flow & Percentage\\
 \end{tabular}
 \end{center}
 \end{table}
+
+ We also compute a risk indicator accorting to the size of each firm, which is defined as the logarithm of total assets (x25) in order to study the insolvency risk of small, medium and large firms (Chen et al., 2011). Finally, we calculate the ratios of the percentage change of incremental inventories, liabilities and cash flow (x26-x28). As the increased cash flow is the additional operating cash flow that an entity receives from taking on a new project, a positive incremental cash flow means that the firm's cash flow will increase with the acceptance of a project, the ratio of which indicates that the firm should invest time and money in the project (Chen et al., 2011). 
  
  In order to avoid sensitivity to outliers in applying the Random Forest, CART and the logit model, we follow the methodogy of Chen et al. (2011) and we replace extreme ratio values according to the following rule: For i = 1,...,28, if $x_i<q_{0.05}(x_i)$, then $x_i=q_{0.05}(x_i)$, and if $x_i>q_{0.95}(x_i)$, then $x_i=q_{0.95}(x_i)$, where $q_{0.05}(x_i)$ and $q_{0.95}(x_i)$ refer to the 0.05 and 0.95 quantiles of the ratio $x_i$ respectively. This will make our results robust and insensitive to outliers. For that purpose we create the function "replace\_extreme\_values()" (lines 83-91 of the "data.preparation" quantlet), which is then separately applied to the subsets of solvent and insolvent companies (lines 134-145). The lower and upper quantile as well as the median of the financial ratios for solvent and insolvent firms are presented in table 4. Our results coincide almost entirely with those of Chen et al. (2011).  The final clean dataset to be used in further analysis is then created by binding the two subsets of solvent and insolvent firms and is saved as "data\_clean".
 
@@ -247,6 +277,8 @@ x28 & -12.17 & 0.00 & 0.94 & -7.03 & 0.00 & 0.91\\
 
 \section{Binary Response Models}
 \subsection{Theory}
+
+Logit and Probit models are the most important and probably most used member of the class of models called Binary Response or Generalized Linear Models. These parametric models are applied to estimate the probability of an observation belonging to a particular class while using observed data of known outcomes to infer models which predict the outcome of future observations.
 
 The outcome of interest in the Creditreform-dataset is of binary nature. Firms can either go bankrupt or not. This behavior is commonly modeled by Binary Response Models like the probit or the logit model. Binary response variables follow a Bernoulli probability function
 
@@ -454,6 +486,102 @@ In order to facilitate making predictions based on the \texttt{brm}-class we aug
 
 A call to \texttt{predict()} on a \texttt{brm}-model will add a column of ones to the provided \texttt{data} and multiply the matrix with the weights calculated during training of the model (line 62). Finally these scores of the index-function $X\beta$ will be applied to the correct distribution. The distribution is stored inside \texttt{model\$distribution} which points to \texttt{pnorm} in case of \texttt{brm}-model of \texttt{mode} "probit" and a pointer to \texttt{plogis} if the \texttt{mode} is equal to "logit". 
 
+\subsection{Using the Logit-Model on the creditreform Dataset}
+
+We use the \texttt{caret} package to build a logistic regression model. This package provides a \texttt{train()} method for fitting the data for various algorithms. We select the algorithm via the parameters supplied to the \texttt{train()}-method. The \texttt{method} parameter specifies the type of model which is applied to predict the target variable (Kuhn, et al., 2017).
+
+\lstinputlisting[language=R, firstline=42, lastline=42, firstnumber=42]{../Logit/logit_model_fin.R}
+ 
+We apply the \texttt{glm} method. The function glm(), and the predict method for glm objects, reflect a classical approach to statistical inference. It only handles binary classification. Thus, we define our target variable \texttt{status} as categorical by using\texttt{as.factor()} command (Stephens, 2016). All the other financial ratios are independent variables that influence the binary outcome of a target variable \texttt{status}. One important argument is \texttt{family\=binomial}. Family() function specifies the assumed distribution of the dependent variable \texttt{status}. In our case, we model a target variable as a binomial distribution. The binomial family accepts the links such as logit, probit, cauchit, log and cloglog. The link function \texttt{links} the output to a linear model. It passes dependent variable through the link function, and then models the resulting value as a linear function of the values of independent variables. Different combinations of family functions and link functions lead to different kinds of generalized linear models (for example, Poisson, or probit). Without an explicit link argument, the link function defaults to standard \texttt{logit} (Zumel \& Mount, 2014). We store the resulting model in the object texttt{glm\_mod} and use \texttt{predict()} function to predict the insolvency of the German firms in the years 2000 until 2002. To this end, we pass the trained model \texttt{glm\_mod} and the test set features without the actual labels to the predict() function. We specify the type of prediction as \texttt{type=prob} to receive the probability for a firm's insolvency. The predicted probabilities are passed into \texttt{evaluate\_prediction} function to estimate the overall prediction power over models.
+
+\lstinputlisting[language=R, firstline=53, lastline=53]{../Logit/logit_model_fin.R}
+
+The practical advantage of logit model is that it provides insight into the impact of each predictor variable on the response variable. None of the nonparametric methods really provide this information. The coefficients of a logistic regression model can be thus treated as advice and may serve as orientation for decision making (Zumel \& Mount, 2014). Yet, the calculation and interpretation of coefficients exceeds the scope of this project. 
+
+The logit model has some limitations. For example, if we include the wrong independent variables, the model will have little to no predictive value. It requires each data point be independent of all other data points. If observations are related to one another, then the model will tend to overweight the significance of those 
+observations (Robinson, 2018). Further the method is searching for a single linear decision boundary that separates insolvent and solvent firms. This works well if the data are linearly separable. A linear separating boundary is, however, not suitable if there is doubt that the separation mechanism is of a nonlinear 
+kind (Chen, et al., 2011). Therefore, it is always a good idea to try different models and choose the one which performs best on a test data set. 
+Tree-based models for instance, divide the feature space into half-spaces using axis-aligned linear decision boundaries. CART model, which is introduced next, is nice in that it is easy to implement and easy to explain. 
+
+
+\section{Classification and Regression Trees (CART)}
+
+Tree-based methods, or decision tree methods, are used for two broad types of problems - classification and regression. These methods are appropriate by extensive datasets. Its strength is that, in large data sets, it has the potential to reflect relatively complex forms of data structures, which may be hard to detect with 
+conventional regression modelling. Additionally, the methodology is relatively easy to use and can be applied to a wide class of problems (Maindonald \& Braun, 2010).
+Once again, we use the \texttt{caret} package to build a CART model. We pass the \texttt{rpart} method into train() function to fit the data (Kuhn, et al., 2017). There is a package with same name \texttt{rpart}, which is specifically available for decision tree implementation. Caret links its train function with other packages simplifying the work process significantly. 
+
+\lstinputlisting[language=R, firstline=49, firstnumber=49]{../CART/cart_modell_fin.R}
+%caret_model_fin line 49
+
+The basic way to visualize classification or regression tree built with \texttt{R}'s \texttt{rpart()} function is to call \texttt{plot()}. The call typically produces a couple of black clouds of overlaid text. Therefore, the traditional representation of the CART model is not graphically appealing. There are better ways to plot \texttt{rpart()} trees for example by using the \texttt{prp()} function from \texttt{rpart.plot package} or the \texttt{fancyRpartPlot()} from \texttt{rattle} package (Milborrow, 2016). We have chosen the \texttt{fancyRpartPlot()} function to get a legible structure of our decision tree.
+
+%CART/fancyRpartPlot.pdf
+\begin{figure}
+\caption{Decision Tree}
+\includegraphics[scale=1]{../CART/fancyRpartPlot.pdf}
+\end{figure}
+
+fancyRpartPlot() builds more elaborate and clean trees, which can be easily interpreted. Each node box displays the classification, the probability of each class at that specific node and the percentage of observations that arrived at each node (Rickert, 2013). 
+
+Once we have built the model, we are ready to validate it on a separate data set - a test set. We store the results in the object \texttt{mod\_fit} and apply \texttt{predict()} function to calculate the probabilities for further analysis. 
+
+\subsection{Variable Importance}
+
+It might be interesting to acquire information regarding which financial statement variables are most important in predicting the outcome. There are practical reasons for doing so. For example, we want to rank-order financial ratios in regard to their relative importance. This information can provide insights about the most important causes of insolvency, allow a deeper understanding of financial health of the companies and enable investors more effective decision making. If predictor variables were uncorrelated, this would be a simple task. We would rank-order the predictor variables by their correlation with the response variable. In our case though, the financial ratios variables are correlated (as shown in the chart below), and this complicates the task significantly.
+ 
+We used \texttt{corrplot} package to graphical display a correlation matrix. Positive correlations are displayed in blue and negative correlations in red colour. Colour intensity and the size of the circle are proportional to the correlation coefficients. Every correlation coefficient ranges from 1 to -1, where 1 is a prefect positive
+correlation, -1 a perfect negative correlation, and 0 indicates no correlation between two features.
+
+\begin{figure}
+\caption{Correlation Matrix }
+\includegraphics[scale=1]{../CART/CorrPlot.pdf}
+\end{figure}
+%CART/CorrPlot.pdf 
+
+\texttt{caret} package includes a command to perform variable importance. The varImp() function calculate important features of almost all models (Kuhn, et al., 2017). We use a plot method to visualize the results for importance scores generated from varImp() function. We apply the \texttt{top=10} option to make the chart more readable and select the ten most important variables.
+
+\begin{figure}
+\caption{Variable Importance - varImp() function}
+\includegraphics[scale=1]{../CART/VarImp_top_10.png}
+\end{figure}
+%CART/VarImp top 10.png
+
+We can see that the varImp function considers Accounts Payable Turnover (AP/SALE, x24) to be the most important feature to predict German default firms, followed by Interest Coverage Ratio Leverage (EBIT/INTE, x14), Quick Ratio (QA/CL, x17), Operating Income/Total Assets (OI/TA, x3), Net Indebtedness Leverage ((CL-CASH)/TA, x11).
+
+In the whole, decision trees are an attractive method since they work with any type of data, numerical or categorical, without any distributional assumptions and without pre-processing. Furthermore, most R's implementations handle missing data and this method is also robust to redundant and nonlinear data. The algorithm is easy to use, and the output (the tree) is relatively easy to understand. On the other hand, decision trees have some shortcomings. They tend to overfit, especially without pruning, because the decision tree can \texttt{memorize} the training set. The model then become very specific to the training data and consequently has less ability to classify the unobserved data correctly. Besides, they have high training variance, which means that samples drawn from the same population can produce trees with different structures and different prediction accuracy. Additionally, a prediction accuracy can be eventually low, compared to other methods. For these reasons a technique called bagging is often used to improve decision tree models. Random forest is a more specialized approach, which directly combines decision trees with bagging and yields markedly better results (Zumel \& Mount, 2014). 
+
+\section{Random Forest}
+
+Random forest approach often gives an improved predictive accuracy for relatively complex tree models. This ensemble method combines several individual classification trees in the following way: from the original sample several bootstrap samples are drawn, and an unpruned classification tree is fitted to each bootstrap sample. The variable selection for each split in the classification tree is conducted only from a small random subset of predictor variables. From the complete forest the status of the response variable is predicted as an average or majority vote of the predictions of all trees (Maindonald \& Braun, 2010).
+
+The function \texttt{randomForest()} in the \texttt{randomForest} package is an attractive alternative to rpart() (Breiman, et al., 2015). The following syntax uses randomForest() function applied to our dataset:
+
+\lstinputlisting[language=R, firstline=44, lastline=45, firstnumber=44]{../Random_Forest/random_forest_modell_fin.R}
+%random_forest_modell_fin line 44-47
+
+We pass several arguments in to the \texttt{randomForest()} function. First of all, since it is a classification problem we define our target variable \texttt{status} as categorical by using \texttt{as.factor()} (Stephens, 2016). In comparison to CART models, trees are grown independently to their maximum extent, limited however by nodesize (minimum number of trees at a node). This parameter implicitly sets the depth of generated trees. Additionally, maxnodes can be used to limit the number of nodes (Maindonald \& Braun, 2010). 
+
+The main tuning parameter is the number \texttt{mtry} of variables that are randomly sampled at each split. By default, the \texttt{randomForest()} function in R draws square root of the total number of variables at each node for classification trees. Essentially, \texttt{mtry} controls the trade-off between the amount of information in each individual tree, and the correlation between trees. Smaller \texttt{mtry} values will grow the trees faster. However, in our case using a larger \texttt{mtry} is better, since we have a large number of variables to choose from, of which only a small fraction is actually useful. By doing so, we are more likely to draw some useful variables at every step of the tree-growing procedure (Zumel \& Mount, 2014).
+
+Further, the \texttt{ntree} argument specifies how many trees we want to grow. By tuning this parameter, the final accuracy of a model might increase up to some point. Also, limiting the number of trees restrict the complexity and computing time (Maindonald \& Braun, 2010). 
+
+Random forests highly increase the prediction accuracy as compared to individual classification trees. However, the interpretability of a random forest is not as straightforward as that of an individual classification tree, where the influence of a predictor variable directly corresponds to its position in the tree. Thus, alternative measures for variable importance are required for the interpretation of random forests (Strobl, et al., 2007). 
+
+We can calculate the variable importance by specifying \texttt{importance\=TRUE} in the \texttt{randomForest()} function, and then calling the functions \texttt{importance()} and \texttt{varImpPlot()}. Two measures of importance for each variable are then calculated: \texttt{MeanDecreaseAccuracy} and \texttt{MeanDecreaseGini}. The first measure is a \texttt{leave-one-out} type assessment of variable's contribution to prediction accuracy. Thereby the variable's values are randomly permuted in the out-of-bag samples, and the corresponding decrease in each tree's accuracy is estimated. If the average decrease over all the trees is large, then the variable is considered important - its value makes a big difference in predicting the outcome. If the average decrease is small, then the variable does not make much difference to the outcome. The second measure shows how each variable affects the quality of the tree by representing the decrease in node purity that occurs from splitting on a permuted variable (Maindonald \& Braun, 2010). 
+
+\begin{figure}]
+\begin{center}
+\caption{Variable Importance - \texttt{importance()}-function}
+\includegraphics[scale=0.75, height=9cm, width=10cm]{../Random_Forest/Rplot.pdf}
+\end{center}
+\end{figure}
+%Random_Forest/Rplot.pdf
+
+Both measures rate equally the first three and the fifth variables: Accounts Payable Turnover (AP/SALE, x24), Operating Income/Total Assets (OI/TA, x3), EBITDA ((EBITA+AD)/TA, x6) and Account Receivable Turnover Activity (AR/SALE, x23). Interestingly, this ranking order of \texttt{importance} differs from the results obtained with \texttt{varImp()} function applied for the CART model. Knowing which variables are most important or at least, which variables contribute the most to the structure of the underlying decision trees, can help us with variable reduction. This is useful not only for building smaller, faster trees, but for choosing variables to be used by another modelling algorithm, if that is desired.
+
+The \texttt{random forest} package is robust and very user friendly. However, it is important to note that it has a drawback that it is invariably biased towards features with many cut points. There is a package \texttt{party} which provides the cforest() command to build a forest of conditional inference trees. The basic construction of each tree is fairly similar to a random forest. Hence the decisions are made in slightly different ways, using a statistical test rather than a purity measure. The \texttt{party} package is better than the \texttt{randomForest} package in terms of accuracy, since cforest uses the weighted average of the trees to get the final ensemble. However, it is computationally more expensive (Modi, 2016). In our dataset we do not have features which have many categories and therefore we favour the \texttt{random forest} package to 
+calculate the insolvency predictions. Additionally, it is computationally more efficient.
+
 \section{Linear Discriminant Analysis}
 \subsection{Theory}
 
@@ -656,8 +784,10 @@ Should the \texttt{lda}-function work as intended we would expect this result on
 \subsubsection{Binary Response Models}
 \subsubsection{Evaluation}
 
+\newpage
 \subsection{Tables}
-\begin{table}
+\begin{center}
+\begin{table}[h]
 \caption{Variables of the Creditreform database}
 \label{creditVars}
 \begin{tabular}{cc} 
@@ -702,7 +832,7 @@ Abschlussart & Type of account\\
 \hline\hline
 \end{tabular}
 \end{table}
-
+\end{center}
 
 \begin{thebibliography}{9}
 \bibitem{winkel09}

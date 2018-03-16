@@ -82,6 +82,7 @@ evaluate_model = function(fitted_probs, labels){
              factor(x = opt_predictions, levels = c(0,1)))
   
   opt_accuracy = (ct[1, 1] + ct[2, 2]) / sum(ct)
+  opt_precision = precision = ct[1, 1] / (ct[1, 1] + ct[1, 2])
 
   plot(x = 1 - specificities,
        y = sensitivities,
@@ -97,6 +98,7 @@ evaluate_model = function(fitted_probs, labels){
   return(list(sensitivity = opt_sensitivity,
               specificity = opt_specificity,
               accuracy = opt_accuracy,
+              precision = opt_precision,
               threshold = opt_threshold,
               predictions = opt_predictions,
               auc = auc,
