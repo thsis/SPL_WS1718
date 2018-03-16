@@ -1,8 +1,8 @@
 \select@language {english}
-\contentsline {figure}{\numberline {1}{\ignorespaces Decision Tree}}{18}{figure.1}
-\contentsline {figure}{\numberline {2}{\ignorespaces Correlation Matrix }}{19}{figure.2}
-\contentsline {figure}{\numberline {3}{\ignorespaces Variable Importance - varImp() function}}{20}{figure.3}
-\contentsline {figure}{\numberline {4}{\ignorespaces Variable Importance - \texttt {importance()}-function}}{22}{figure.4}
-\contentsline {figure}{\numberline {5}{\ignorespaces Using Linear Discriminant Analysis on the Creditreform Database}}{27}{figure.5}
-\contentsline {figure}{\numberline {6}{\ignorespaces The Setosa-Species is already almost separable, even in the normal space.}}{30}{figure.6}
-\contentsline {figure}{\numberline {7}{\ignorespaces We already see that the first LDA-component is enough for a good classification.}}{31}{figure.7}
+\contentsline {figure}{\numberline {1}{\ignorespaces Decision Tree}}{17}{figure.1}
+\contentsline {figure}{\numberline {2}{\ignorespaces Correlation Matrix }}{18}{figure.2}
+\contentsline {figure}{\numberline {3}{\ignorespaces Variable Importance - varImp() function}}{19}{figure.3}
+\contentsline {figure}{\numberline {4}{\ignorespaces Variable Importance - \texttt {importance()}-function}}{20}{figure.4}
+\contentsline {figure}{\numberline {5}{\ignorespaces Using Linear Discriminant Analysis on the Creditreform Database}}{25}{figure.5}
+\contentsline {figure}{\numberline {6}{\ignorespaces The Setosa-Species is already almost separable, even in the normal space.}}{28}{figure.6}
+\contentsline {figure}{\numberline {7}{\ignorespaces We already see that the first LDA-component is enough for a good classification.}}{29}{figure.7}

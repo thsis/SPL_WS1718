@@ -102,7 +102,6 @@ We used the free programming language \texttt{R} for our analysis. For cleaning 
 
 In order to clean the data we load the Creditreform dataset into \texttt{R} with the read.csv() command and store it as "data". Using \texttt{dplyrs}'s \texttt{filter()} command we choose only those observations from the years between 1997-2002 and store them as \texttt{data1}.
 
-\newpage
 \lstinputlisting[language=R, firstline=4, lastline=10, firstnumber=4]{../Preparation/data.preparation.R}
 
 Then we want to choose only those observations belonging to the four most prevalent industry sectors in both solvent and insolvent firms, i.e manufacturing, wholesale and retail trade, real estate and construction. We extract the industry class of firms by using the substring() command and save it in a new column of data1 as follows:
@@ -116,8 +115,6 @@ These two digits contained in the variable "Ind.Klasse" are then used to identif
 Then we turn our interest on the size of the companies. Specifically the distribution of total assets which can be considered to be representative of the distribution of the companies' size (Chen et al., 2011). Following the methodology of Zhang \& H{\"a}rdle (2010), we keep only firms with total assets (VAR6 in the dataset) in the range of $10^5 - 10^8$ Euros, since the credit quality of small firms often depends mostly on the finances of a key individual (e.g. the owner).
 
 Finally, we eliminate observations with zero values in variables used as denominators in the calculation of the financial ratios that will be used for the classification of the companies (lines 60-67 in the code) and save the result as "data\_clean". 
-
-\newpage
 
 \lstinputlisting[language=R, firstline=60, lastline=67, firstnumber=60]{../Preparation/data.preparation.R}
 
@@ -439,9 +436,9 @@ The \texttt{gradientDescentMinimizer()}-function accepts following arguments:
 
 We begin by filling the matrix \texttt{a} with 1000 \texttt{n\_pars}-dimensional points which we draw from the uniform distribution, making use of \texttt{R}'s built-in \texttt{runif}-function. We draw random numbers within the range of $[-100, 100]$ to cover a wide part of the objective function's domain.  
 
-The workhorse in this routine is the \texttt{get\_gradient()}-function, which computes the finite differences. First we need to compute the values of the objective function at the current and next step (lines 146 and 147). Then we can apply the current and next step as inputs to the objective function and compute the difference $f(x_{t+1}) - f(x_t)$. The current step is provided as the \texttt{x} argument to the function call. The next steps need to be inferred by the function. If $f(x_t)$ is multidimensional we need to perform an $\epsilon$-step in each dimension of the vector, since we want to approximate the partial derivatives of $f(x)$ evaluated at $x_t$. I.e. first we want to increment just the first element of $x$ and store the result, then just the second element, and repeat the process until we reach the last element. If we stack these vectors, we get a matrix of one-directional $\epsilon$-steps that are essentially updates of the starting point $x_t$ with which it is easy to compute the gradients as their element-wise difference, normalized by \texttt{epsilon\_step}. The gradients are finally trimmed if necessary and returned.
-
 \lstinputlisting[language=R, firstline=130, lastline=139, firstnumber=130]{../BRM/utils.R}
+
+The workhorse in this routine is the \texttt{get\_gradient()}-function, which computes the finite differences. First we need to compute the values of the objective function at the current and next step (lines 146 and 147). Then we can apply the current and next step as inputs to the objective function and compute the difference $f(x_{t+1}) - f(x_t)$. The current step is provided as the \texttt{x} argument to the function call. The next steps need to be inferred by the function. If $f(x_t)$ is multidimensional we need to perform an $\epsilon$-step in each dimension of the vector, since we want to approximate the partial derivatives of $f(x)$ evaluated at $x_t$. I.e. first we want to increment just the first element of $x$ and store the result, then just the second element, and repeat the process until we reach the last element. If we stack these vectors, we get a matrix of one-directional $\epsilon$-steps that are essentially updates of the starting point $x_t$ with which it is easy to compute the gradients as their element-wise difference, normalized by \texttt{epsilon\_step}. The gradients are finally trimmed if necessary and returned.
 
 \begin{algorithm}
 \caption{get\_gradient()}\label{getGrad}
@@ -569,10 +566,10 @@ Random forests highly increase the prediction accuracy as compared to individual
 
 We can calculate the variable importance by specifying \texttt{importance\=TRUE} in the \texttt{randomForest()} function, and then calling the functions \texttt{importance()} and \texttt{varImpPlot()}. Two measures of importance for each variable are then calculated: \texttt{MeanDecreaseAccuracy} and \texttt{MeanDecreaseGini}. The first measure is a \texttt{leave-one-out} type assessment of variable's contribution to prediction accuracy. Thereby the variable's values are randomly permuted in the out-of-bag samples, and the corresponding decrease in each tree's accuracy is estimated. If the average decrease over all the trees is large, then the variable is considered important - its value makes a big difference in predicting the outcome. If the average decrease is small, then the variable does not make much difference to the outcome. The second measure shows how each variable affects the quality of the tree by representing the decrease in node purity that occurs from splitting on a permuted variable (Maindonald \& Braun, 2010). 
 
-\begin{figure}]
+\begin{figure}[H]
 \begin{center}
 \caption{Variable Importance - \texttt{importance()}-function}
-\includegraphics[scale=0.75, height=9cm, width=10cm]{../Random_Forest/Rplot.pdf}
+\includegraphics[scale=1, height=8.3cm, width=11cm]{../Random_Forest/Rplot.pdf}
 \end{center}
 \end{figure}
 %Random_Forest/Rplot.pdf
@@ -595,7 +592,7 @@ max\ J_{b}(w) = w \prime S_{b} w, \qquad w \in \mathbb{R}^d, d \in \mathbb{N}
 min\ J_{w}(w) = w \prime S_{w} w
 \end{equation}
 
-This is done by maximizing the so called Raleigh coefficient
+This is done by maximizing the so called Rayleigh coefficient
 \begin{equation}
 \label{LDA}
 max J = \frac{J_b(w)}{J_w(w)} = \frac{w \prime S_{b} w}{w \prime S_{w} w}.
