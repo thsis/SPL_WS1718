@@ -28,8 +28,11 @@
 \usepackage{colordef}
 \usepackage{lvblisting}
 
+
+
 \usepackage{algorithm}
 \usepackage[noend]{algpseudocode}
+\usepackage{ragged2e}
 
 \makeatletter
 \def\BState{\State\hskip-\ALG@thistlm}
@@ -100,9 +103,9 @@ The firms are divided into the sectors of construction (39.7\%), manufacturing (
 
 We used the free programming language \texttt{R} for our analysis. For cleaning the data we use primarily the \texttt{dplyr} package, which allows us to manipulate data easier than with base \texttt{R} allowing for less verbose, i.e. more easily readable code. 
 
-In order to clean the data we load the Creditreform dataset into \texttt{R} with the read.csv() command and store it as "data". Using \texttt{dplyrs}'s \texttt{filter()} command we choose only those observations from the years between 1997-2002 and store them as \texttt{data1}.
+In order to clean the data we load the Creditreform dataset into \texttt{R} with the read.csv() command and store it as \texttt{data}. Using \texttt{dplyrs}'s \texttt{filter()} command we choose only those observations from the years between 1997-2002 and store them as \texttt{data1}.
 
-\lstinputlisting[language=R, firstline=4, lastline=10, firstnumber=4]{../Preparation/data.preparation.R}
+\lstinputlisting[language=R, firstline=4, lastline=10, firstnumber=4, escapechar=|, caption={|\textbf{\href{https://github.com/thsis/SPL_WS1718/blob/master/Preparation/data.preparation.R}{data.preparation.R}}|}]{../Preparation/data.preparation.R}
 
 Then we want to choose only those observations belonging to the four most prevalent industry sectors in both solvent and insolvent firms, i.e manufacturing, wholesale and retail trade, real estate and construction. We extract the industry class of firms by using the substring() command and save it in a new column of data1 as follows:
 
@@ -628,7 +631,6 @@ S_b w = \lambda S_w w.
 \end{equation}
 
 This is a generalized eigenvalue problem for which there exists a convenient \texttt{R}-solution in the form of the \texttt{geigen}-package.
-
 \subsection{Implementation}
 
 The result from \ref{LDAsolution}, which is essentially the rotation of the underlying data's column space that ensures the highest separability, is implemented in the \texttt{lda}-class for the two-class case. The \texttt{lda()} function accepts two arguments:
@@ -677,7 +679,7 @@ Unfortunately this is not exactly what we want for the scatter matrix defined in
 \lstinputlisting[language=R, firstline=6, lastline=31, firstnumber=6]{../LDA/lda.R}
 
 With the \texttt{matrix}-object \texttt{S\_w} storing the within-scatter-matrix $S_w$ and \texttt{S\_b} storing $S_b$ we can continue by solving the generalized Eigenvalue problem posed in \ref{LDAsolution}. This is done by the \texttt{geigen()} function from the \texttt{geigen} package.
-
+\newpage
 \lstinputlisting[language=R, firstline=36, lastline=43, firstnumber=36]{../LDA/lda.R}
 
 We extract the eigenvectors and eigenvalues from \texttt{V} (line 36) in form of a list. However, caution is required because the eigenvectors are not ordered, which is different to the implementation of eigenvalues in the \texttt{base}-function \texttt{eigen()}. Therefore we rearrange the eigenvectors according to their absolute eigenvalues (line 39). We extract only the first two eigenvectors, because we require the most informative rotations in order to produce two-dimensional plots. Additionally we compute the percentage of explained variance as 
@@ -715,6 +717,7 @@ Looking at the creditreform dataset we can apply our custom routines by creating
 
 To make predicting with the \texttt{flda}-class as easy as plotting we augment the standard \texttt{predict} function in a similar fashion. We expect the user to have already trained an \texttt{flda}-model to which she or he wishes to apply new data and obtain predictions on the class labels. 
 
+\newpage
 \lstinputlisting[language=R, firstline=71, lastline=88, firstnumber=71]{../LDA/lda.R}
 
 The provided new data should have a similar structure to the training data. This means that especially the order of the columns should be the same. We check for obviously non-conforming data in line 77 but we do not perform explicit tests on the order of columns. If the data has the required shape we calculate the discriminant function for each observation, which is the scalar product of the observation's data vector and the first eigenvector from the trained model. We then proceed calculating a threshold $c$ for being able to discriminate between the two groups by following the rule
@@ -727,7 +730,7 @@ predictions are made according to the threshold, if the value of the discriminan
 
 \section{Evaluation of predictions}
 
-In this section we explain the steps followed in the "evaluate\_predictions" quantlet. Purpose of this quantlet is to create a function that will take labels (actual solvency status) and predictions about the solvency status of firms and will return the confusion matrix, the ROC curve and the AUC as well as some evaluation metrics like sensitivity, specificity, precision and accuracy.
+In this section we explain the steps followed in the \texttt{evaluate\_predictions} quantlet. Purpose of this quantlet is to create a function that will take labels (actual solvency status) and predictions about the solvency status of firms and will return the confusion matrix, the ROC curve and the AUC as well as some evaluation metrics like sensitivity, specificity, precision and accuracy.
 
 The confusion matrix, also known as error matrix, is a matrix that illustrates the performance of a classification model on a set of test data with known true values (labels). Each row of the matrix corresponds to a case of a predicted class while each column corresponds to a case of an actual class. It is called confusion matrix because it depicts whether the classifier is confusing the two classes, i.e. if it is wrongly labelling one class as another. It is a special case of contingency table, with two dimensions ("actual" and "predicted") and two "classes" (solvent and insolvent in our case) in each dimension. The cells of our confusion matrix will present the number of:
 
@@ -744,12 +747,64 @@ Sensitivity and specificity are assessment metrics of the discriminative power o
 
 The values of specificity and sensitivity will allow us to plot the ROC curve. The ROC curve (Receiver Operating Characteristic curve) is a graphical plot which depicts the diagnostic ability of a binary classification model for different values of its discrimination threshold. In our case, this threshold refers to the probability value above of which a firm is predicted to be insolvent. It is created by plotting the sensitivity values(y axis) against their corresponding $1-specifity$ values (x axis) as the threshold varies (Fawcett, 2006). The area under the ROC curve (AUC) can be interpreted as the average power of the test on default or non-default corresponding to all discrimination thresholds (H\"ardle et al.(2012)). A larger AUC corresponds to a better classification result. A model with perfect discriminative power will have an AUC value of 1, while a random model without discriminative power will have an AUC value of 0.5, i.e. its ROC curve will be the 45 degree line. Thus, any reasonable rating model is expected to have an AUC value above 0.5, while AUC values close to 1 will indicate models with high diagnostic ability.  
 
-The first function we created in this quantlet is the get\_prediction() function (lines $19-22$). This function takes as inputs the fitted probabilities for insolvency and the threshold above of which a firm would be predicted to be defaulted. Using the ifelse() function in the body of this function, get\_prediction() will return predictions for the solvency status of each firm. We construct then the evaluate\_predictions() function (lines $24-47$). Inputs of this function are the actual solvency status of each company (labels), the corresponding predictions about the status and the "verbose" parameter which is equal to FALSE by default. In the body of the function we create first the previously mentioned confusion matrix which we expect to be a 2x2 matrix. If it is not the case, the test in line 30 will show us a warning message. Then we get the values of TP, TN, FP and FN and we compute the values of sensitivity, specificity, precision and accuracy, which are then saved as a list in "reports". The function will also print a data frame with those reports if we change the logical value of "verbose" to TRUE. The two previously mentioned functions are used in the body of the last function which completes the task of the quantlet. 
+\subsection{Implementation}
 
-The final function created in this quantlet is the evaluate\_model() function (lines $49-101$), which takes the fitted probabilities for bankruptcy and the actual status (labels) as inputs. At first we create a threshold list in the body of the function with threshold values varying from 0 to 1 by tiny steps. Then we apply the get\_prediction() function to this list in order to get a list of predictions for each threshold value which we store as "pred\_list". Afterwards we apply the evaluate\_predictions() function to pred\_list and we get a list of reports. We use then the values of sensitivity and specificity from reports in order to compute the ROC curve and the area under it (AUC) (lines $58-70$). For calculating the AUC we create the function get\_auc() which takes the values of $1-specificities$ and sensitivities as inputs. This function uses the trapezoidal method to approximate the AUC (solution found in \href{https://stackoverflow.com/questions/4954507/calculate-the-area-under-a-curve}{stackoverflow.com}). For each difference in $1-specificities$ there is one rectangle which underestimates the area under curve (corresponding to the "left" value of sensitivities) and one rectangle that overestimates it (corresponding to the "right" value of sensitivities). Therefore the function approximates the AUC by taking the average of the two rectangles. 
+\lstinputlisting[language=R, firstline=19, lastline=21, firstnumber=19]{../Evaluation/Evaluate_Predictions.fin.R}
 
-We are next interested in finding the values of sensitivities and specificities for which the distance between the ROC curve and the 45-degree line (i.e. the ROC curve of a model with no discriminative power) is maximized. We use the index of these values in order to find the optimal values of sensitivity, specificity and the threshold, which is then used to compute the optimal predictions. These predictions are then used to create the optimal confusion matrix and get the optimal accuracy (lines $73-84$). In the final part of the evaluate\_model() function the ROC curve is plotted and the function returns a list with the optimal measures calculated above.
- 
+The first function we created in this quantlet is the \texttt{get\_prediction()}-function (lines 19-22). This function takes as inputs the fitted probabilities for insolvency and the threshold above of which a firm would be predicted to be defaulted. Using the \texttt{ifelse()} function in the body of this function, \texttt{get\_prediction()} will return predictions for the solvency status of each firm. We construct then the \texttt{evaluate\_predictions()} function (lines 24-47). Inputs of this function are the actual solvency status of each company (labels), the corresponding predictions about the status and the \texttt{verbose} parameter which is equal to FALSE by default. In the body of the function we create first the previously mentioned confusion matrix which we expect to be a 2x2 matrix. If it is not the case, the test in line 30 will show us a warning message. Then we get the values of TP, TN, FP and FN and we compute the values of sensitivity, specificity, precision and accuracy, which are then saved as a list in \texttt{reports}. The function will also print a data frame with those reports if we change the logical value of \texttt{verbose} to \texttt{TRUE}. The two previously mentioned functions are used in the body of the last function which completes the task of the quantlet. 
+
+\lstinputlisting[language=R, firstline=24, lastline=47, firstnumber=24]{../Evaluation/Evaluate_Predictions.fin.R}
+
+The final function created in this quantlet is the evaluate\_model() function (lines 49-101), which takes the fitted probabilities for bankrupcy and the actual status (labels) as inputs. At first we create a threshold list in the body of the function with threshold values varying from 0 to 1 by tiny steps. Then we apply the \texttt{get\_prediction()} function to this list in order to get a list of predictions for each threshold value which we store as \texttt{pred\_list}. Afterwards we apply the \texttt{evaluate\_predictions()} function to \texttt{pred\_list} and we get a list of reports. We use then the values of sensitivity and specificity from \texttt{reports} in order to compute the ROC curve and the area under it (AUC) (lines 58-70). For calculating the AUC we create the function \texttt{get\_auc()} which takes the values of $1-\texttt{specificities}$ and \texttt{sensitivities} as inputs. This function uses the trapezoidal method to approximate the AUC (solution found in \href{https://stackoverflow.com/questions/4954507/calculate-the-area-under-a-curve}{stackoverflow.com}). For each difference in $1-specificities$ there is one rectangle which underestimates the area under curve (corresponding to the "left" value of sensitivities) and one rectangle that overestimates it (corresponding to the "right" value of sensitivities). Therefore the function approximates the AUC by taking the average of the two rectangles. 
+
+We are next interested in finding the values of sensitivities and specificities for which the distance between the ROC curve and the 45-degree line (i.e. the ROC curve of a model with no discriminative power) is maximized. We use the index of these values in order to find the optimal values of sensitivity, specificity and the threshold, which is then used to compute the optimal predictions. These predictions are then used to create the optimal confusion matrix and get the optimal accuracy (lines 73-84). In the final part of the \texttt{evaluate\_model()} function the ROC curve is plotted and the function returns a list with the optimal measures calculated above.
+
+\lstinputlisting[language=R, firstline=49, lastline=106, firstnumber=49]{../Evaluation/Evaluate_Predictions.fin.R}
+
+\newpage
+\section{Results and Conclusions}
+
+
+\begin{wrapfigure}{r}{0.3\textwidth}
+\caption{ROC Logit}
+\includegraphics[scale=.45]{../Evaluation/ROC-Curve_Logit.png}
+\caption{ROC CART}
+\includegraphics[scale=0.45]{../Evaluation/ROC-Curve_CART.png}
+\caption{ROC Random Forest}
+\includegraphics[scale=.45]{../Evaluation/ROC-Curve_Random-forest.png}
+\end{wrapfigure}
+
+
+Logistic regression and decision trees are benchmarking methods in predicting company credit risk. Their modelling techniques are well known for being able to return good probability estimates. Such models can be evaluated in terms of their estimated probabilities. 
+
+Most of the performance measures of a classifier can be read off the entries of confusion matrix. Accuracy measure is largely used to measure a prediction power of a model. Besides, we seek to obtain an idea of more detailed measures such as sensitivity, specificity, and precision. Additionally, we produce the receiver operating characteristic curve (ROC curve) for each method to compare their discriminative power. For each different classifier we pick a different score threshold between positive and negative determination and plot both the true positive rate and the false positive rate. The ROC curve represents every possible trade-off between sensitivity and specificity that is available for each classifier. Finally, we also compute the area under the curve (AUC), which is 1.0 for perfect classifiers and 0.5 for classifiers that do no better than random guesses. This metric might provide interesting information for the investors, whose ultimate goal is to reduce losses due to companie's bankruptcy. 
+%Evaluation/ROC-Curve_CART.png
+% Evaluation/ROC-Curve_Logit.png
+% Evaluation/ROC-Curve_Random-forest.png 
+
+The evidence from empirical results consistently shows that a credit risk model based on random forest significantly outperforms CART and Logit approach in modelling 
+the default risk of German firms. Logit model and CART show almost equal accuracy rates, though the values of the area under the curve (AUC), show that the CART 
+classifier do no better than random guessing.
+
+\begin{center}
+\begin{table}[b]
+\caption{Classifier performance measure}
+\begin{tabular}{cccc}
+\hline\hline
+Performance measure  &                Logit (\%)   &                  CART(\%)   &     Random forest (\%) \\
+\hline
+Accuracy Rate        &                 71,6        &                 74,6        &       87,2             \\
+Sensitivity          &                 81,6        &                 90,6        &       91,2             \\
+Specificity          &                 70,9        &                 73,5        &       87,0             \\
+Precision            &                 15,5        &                 18,3        &       31,4             \\
+AUC                  &                 82,9        &                 56,1        &       95,8             \\
+\hline\hline
+\end{tabular}
+\end{table}
+\end{center}
+
+
+
 \section{Appendix}
 
 \subsection{Unit Tests}
@@ -782,6 +837,7 @@ Should the \texttt{lda}-function work as intended we would expect this result on
 \subsubsection{Evaluation}
 
 \newpage
+
 \subsection{Tables}
 \begin{center}
 \begin{table}[h]
@@ -831,6 +887,24 @@ Abschlussart & Type of account\\
 \end{table}
 \end{center}
 
+\subsection{Code}
+\subsubsection{Preparation}
+\lstinputlisting[language=R]{../Preparation/data.preparation.R}
+\subsubsection{BRM}
+\lstinputlisting[language=R]{../BRM/utils.R}
+\lstinputlisting[language=R]{../BRM/logit.R}
+\subsubsection{Logit}
+\lstinputlisting[language=R]{../Logit/logit_model_fin.R}
+\subsubsection{CART}
+\lstinputlisting[language=R]{../CART/CART_Modell.R}
+\subsubsection{Random\_Forest}
+\lstinputlisting[language=R]{../Random_Forest/random_forest_modell_fin.R }
+\subsubsection{LDA}
+\lstinputlisting[language=R]{../LDA/utils.R}
+\lstinputlisting[language=R]{../LDA/lda.R}
+\subsubsection{Evaluation}
+\lstinputlisting[language=R]{../Evaluation/Evaluate_Predictions.fin.R}
+
 \begin{thebibliography}{9}
 \bibitem{winkel09}
   Winkelmann, R., Boes, S. (2009): \textit{"Analysis of Microdata"}, 2nd edition.
@@ -846,5 +920,41 @@ Abschlussart & Type of account\\
   Miao, H., Ramchander, S., Ryan, P., Wang, T. (2018), Default prediction models: The role of forward-looking measures of returns and volatility, Journal of Empirical Finance, 46, 146-162
 \bibitem{Zhang10} 
   Zhang, J.L., H{\"a}rdle, W.K. (2010). The Bayesian Additive Classification Tree Applied to Credit Risk Modelling. Computational Statistics and Data Analysis, 54: 1197-1205 
+\bibitem{kabacoff11}
+Kabacoff, R. I. (2011). R in Action - Data Analysis and graphics with R. Shelter Island, NY 11964: Manning Piblucations Co..
+\bibitem{maindonald10}
+Maindonald, J. \& Braun, J. W. (2010). Data Analysis and Graphics Using R - an Example-Based Approach. NY: Cambrigde University Press.
+\bibitem{Zumel14}
+Zumel, N. \& Mount, J. (2014). Practical Data Science with R. Shelter Island,NY 11964: Manning Publications Co..
+
+
+% Packages
+\bibitem{breiman15}
+Breiman, L., Cutler, A., Liaw, A. \& Wiener, M. (2015). Package 'randomForest', s.l.: s.n.
+\bibitem{kuhn17}
+Kuhn, M. et al. (2017). Package 'caret', s.l.: s.n.
+\bibitem{milbo16}
+Milborrow, S. (2016). Plotting rpart trees with the rpart.plot package, s.l.: s.n.
+\bibitem{modi16}
+Modi, M. (2016). Different random forest packages in R, s.l.: s.n.
+
+% Online
+\bibitem{modiOnl}
+Modi, M. (2016). linkedin. [Online] 
+Available at: https://www.linkedin.com/pulse/different-random-forest-packages-r-madhur-modi/
+\bibitem{rickertOnl}
+Rickert, J. (2013). Revolutions. [Online] 
+Available at: http://blog.revolutionanalytics.com/2013/06/plotting-classification-and-regression-trees-with-plotrpart.html
+\bibitem{robinsonOnl}
+Robinson, N. (2018). The Disadvantages of Logistic Regression. [Online] 
+Available at: https://classroom.synonym.com/disadvantages-logistic-regression-8574447.html
+\bibitem{stephensOnl}
+Stephens, T. (2016). Trevor Stephens. [Online] 
+Available at: http://trevorstephens.com/kaggle-titanic-tutorial/r-part-5-random-forests/
+\bibitem{stroblOnl}
+Strobl, C., Boulesteix, A.-L., Zeileis, A. \& Hothorn, T. (2007). BMC Bioinformatics. [Online] 
+Available at: https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-8-25
+
+
 \end{thebibliography}
 \end{document}
