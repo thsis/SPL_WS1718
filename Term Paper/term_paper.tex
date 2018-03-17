@@ -77,49 +77,88 @@
 
 \section{Introduction}
 
-The term default probability is a financial term which describes the likelihood that a borrower will fail to make scheduled repayments over a specific time horizon, 
-which is usually a year. The effective estimation and prediction of corporate defaults are crucial for asset pricing, credit risk assessment of loan portfolios as 
-well as the valuation of other financial products exposed to corporate defaults (Miao et al., 2018). This issue has been considered in several studies. There are two 
-basic approaches to deal with default risk analysis: the market-based model (a.k.a. structural model) and the statistical approach, determined through the empirical 
-analysis of historical data like accounting data (H{\"a}rdle et al., 2012).
+The term default probability is a financial term which describes the likelihood that a borrower will fail to make scheduled repayments over a specific time horizon, which is usually a year. The effective estimation and prediction of corporate defaults are crucial for asset pricing, credit risk assessment of loan portfolios as 
+well as the valuation of other financial products exposed to corporate defaults (Miao et al., 2018). This issue has been considered in several studies. There are two basic approaches to deal with default risk analysis: the market-based model (a.k.a. structural model) and the statistical approach, determined through the empirical analysis of historical data like accounting data (H{\"a}rdle et al., 2012).
 
-In our paper we aim to perform default prediction analysis by following the methodologies of H{\"a}rdle et al. (2012), Chen et al. (2011) and Zhang \& H{\"a}rdle (2010) We 
-seek to replicate some of their results with the help of the R programming language. Our analysis is based on the Creditreform-database, which provides several 
-financial statement variables of German firms. In our work we perform linear and nonlinear techniques for predicting bankruptcy based on financial ratios. We compare 
-the predictive performance between following models: logit, probit, CART (Classification and Regression Tree), random forest and LDA (Linear Discriminant Analysis). 
+In our paper we aim to perform default prediction analysis by following the methodologies of H{\"a}rdle et al. (2012), Chen et al. (2011) and Zhang \& H{\"a}rdle (2010) We seek to replicate some of their results using the \texttt{R} programming language. Our analysis is based on the creditreform-database, which provides several 
+financial statement variables of German firms. In our work we perform linear and generalized linear techniques for predicting bankruptcy based on financial ratios. We compare the predictive performance between following models: logit, probit, Classification and Regression Trees (CART), Random Forests (RF) and Linear Discriminant Analysis (LDA). 
 
-The rest of the paper is organized as follows. In the next section we describe the creditreform-dataset. In Section 3 we explain the data preparation procedures as well as the variables and ratios used in this paper. Section 4 contains a brief introduction to Binary Response Models, with a custom implementation and an application of a Logit model to the creditreform-dataset. In Section 5 we apply Classification and Regression Trees (CART), which is followed by a Section about Random Forests (RF). Linear Discriminant Analysis (LDA) is briefly explained and applied in Section 6. In Section 7, we present the steps we take to evaluate predictions of the selected models and the suitable performance measures. Section 8 summarises the conclusions we draw from our analysis.
+The rest of the paper is organized as follows. In the next section we describe the creditreform-dataset. In section 3 we explain the data preparation procedures as well as the variables and ratios used in this paper. Section 4 contains a brief introduction to Binary Response Models, with a custom implementation and an application of a Logit model to the creditreform-dataset. In section 5 we apply Classification and Regression Trees (CART), which is followed by a section about Random Forests (RF). Linear Discriminant Analysis (LDA) is briefly explained and applied in section 6. In Section 7, we present the steps we take to evaluate predictions of the selected models and the suitable performance measures. Finally section 8 summarises the conclusions we draw from our analysis.
 
 \section{The dataset}
 
-We used the creditreform database obtained from the Laboratory for Empirical and Quantitative Research (LEQR) of the Humboldt University of Berlin \href{https://leqr.wiwi.hu-berlin.de/leqr/content/databaseInformation/creditreform/creditreform.htm}{(leqr.wiwi.hu-berlin.de)} to analyse a sample of 20,000 solvent and 1,000 insolvent German firms from the period of 1996-2007. 
-Due to incomplete data from 2003 onwards and missing data for insolvent firms in 1996 we will focus our analysis on the data of the period 1997 to 2002. About half of the data refers to the years 2001 and 2002. The majority of firms appear several times in different years in the dataset, while the data for the insolvent firms was collected two years prior to the default (Chen et al. (2011)). Each firm is described by several financial statement variables as those in balance sheets and income statements. A complete list of all variables of the Creditreform database as well as their descriptions is provided in table \ref{creditVars} in the Appendix. 
+We used the creditreform database obtained from the Laboratory for Empirical and Quantitative Research (LEQR) of the Humboldt University of Berlin \href{https://leqr.wiwi.hu-berlin.de/leqr/content/databaseInformation/creditreform/creditreform.htm}{(leqr.wiwi.hu-berlin.de)} to analyse a sample of 20,000 solvent and 1,000 insolvent German firms from the period of 1996-2007. Due to incomplete data from 2003 onwards and missing data for insolvent firms in 1996 we will focus our analysis on the data of the period between 1997 and 2002. About half of the data refers to the years 2001 and 2002. The majority of firms appear several times in different years in the dataset, while the data for the insolvent firms was collected two years prior to the default (Chen et al. (2011)). Each firm is described by several financial statement variables as those in balance sheets and income statements. A complete list of all variables of the creditreform database as well as their descriptions is provided in table \ref{creditVars}. 
 
-%The firms of the database are classified into economic activity sectors according to the German Classification of Economic Activities, Edition 1993 (WZ93) issued by the German Federal Statistical Office \href{https://www.destatis.de/DE/Methoden/Klassifikationen/GueterWirtschaftklassifikationen/Content75/KlassifikationWZ93.html}{(destatis.de)}. This classification method uses a five-digit code (\texttt{VAR26} in the dataset), where the first two digits correspond to 17 broad sectors of the economy and the other three are used for a more precise classification into subsectors.
+The firms are divided into the sectors of construction (39.7\%), manufacturing (25.7\%), wholesale and retail trade (20.1\%), real estate (9.4\%) and others (5.1\%). The respective composition of solvent firms is manufacturing (27.4\%), wholesale and retail trade(24.8\%), real estate (16.9\%), construction (13.9\%) and others (17.1\%), including publishing, administration and defence, education and health (Chen et al. 2011). In our project we focus on the four largest industry sectors.
 
-The firms are divided into the sectors of construction (39.7\%), manufacturing (25.7\%), wholesale and retail trade (20.1\%), real estate (9.4\%) and others (5.1\%) (including agriculture, mining, electricity, gas and water supply, hotels and restaurants, transport and communication, financial intermediation and social service activities. The respective composition of solvent firms is manufacturing (27.4\%), wholesale and retail trade(24.8\%), real estate (16.9\%), construction (13.9\%) and others (17.1\%), including publishing, administration and defence, education and health (Chen et al. 2011). In our project we focus on the four largest industry sectors.
+\begin{center}
+\begin{table}
+\centering
+\caption{Variables of the Creditreform database}
+\label{creditVars}
+\begin{tabular}{cc} 
+\hline\hline
+Column & Value\\
+\hline
+ID & ID of each company\\
+T2 & Solvency status (solvent:0, insolvent:1)\\
+Jahr & Year\\
+VAR1 & Cash and cash equivalents\\
+VAR2 & Inventories\\
+VAR3 & Current assets\\
+VAR4 & Tangible assets\\
+VAR5 & Intangible assets\\
+VAR6 & Total assets\\
+VAR7 & Accounts receivable\\
+VAR29 & Accounts receivable vs. affiliated companies\\
+VAR8 & Lands and buildings\\
+VAR9 & Equity (own funds)\\
+VAR10 & Shareholder loan\\
+VAR11 & Accrual for pension liabilities\\
+VAR12 & Total current liabilities\\
+VAR13 & Total longterm liabilities\\
+VAR14 & Bank debt\\
+VAR15 & Accounts payable\\
+VAR30 & Accounts payable vs. affiliated companies\\
+VAR16 & Sales\\
+VAR17 & Administrative expenses\\
+VAR18 & Amortization and depreciation\\
+VAR19 & Interest expenses\\
+VAR20 & Earnings before interest and taxes (EBIT)\\
+VAR21 & Operating income\\
+VAR22 & Net income\\
+VAR23 & Increase (decrease) in inventories\\
+VAR24 & Increase (decrease) in liabilities\\
+VAR25 & Increase (decrease) in cash\\
+VAR26 & Industry classification code\\
+VAR27 & Legal form\\
+VAR28 & Number of employees\\
+Rechtskreis & Accounting principle\\
+Abschlussart & Type of account\\
+\hline\hline
+\end{tabular}
+\end{table}
+\end{center}
 
 \section{Data preparation}
 
-We used the free programming language \texttt{R} for our analysis. For cleaning the data we use primarily the \texttt{dplyr} package, which allows us to manipulate data easier than with base \texttt{R} allowing for less verbose, i.e. more easily readable code. 
-
-In order to clean the data we load the Creditreform dataset into \texttt{R} with the read.csv() command and store it as \texttt{data}. Using \texttt{dplyrs}'s \texttt{filter()} command we choose only those observations from the years between 1997-2002 and store them as \texttt{data1}.
+For cleaning the data we use primarily the \texttt{dplyr} package, which allows us to manipulate data easier than with base \texttt{R} allowing for less verbose, i.e. more easily readable code. In order to clean the data we load the Creditreform dataset into \texttt{R} with the \texttt{read.csv()} command and store it as \texttt{data}. Using \texttt{dplyrs}'s \texttt{filter()} command we choose only those observations from the years between 1997-2002 and store them as \texttt{data1}.
 
 \lstinputlisting[language=R, firstline=4, lastline=10, firstnumber=4, escapechar=|, caption={|\textbf{\href{https://github.com/thsis/SPL_WS1718/blob/master/Preparation/data.preparation.R}{data.preparation.R}}|}]{../Preparation/data.preparation.R}
 
-Then we want to choose only those observations belonging to the four most prevalent industry sectors in both solvent and insolvent firms, i.e manufacturing, wholesale and retail trade, real estate and construction. We extract the industry class of firms by using the substring() command and save it in a new column of data1 as follows:
+We then want to choose only those observations belonging to the four most prevalent industry sectors in both solvent and insolvent firms, i.e manufacturing, wholesale and retail trade, real estate and construction. We extract the industry class of firms by using the \texttt{substring()} command and save it in a new column of \texttt{data1}.
 
-\lstinputlisting[firstline=13, lastline=13, firstnumber=13]{../Preparation/data.preparation.R}
+\lstinputlisting[firstline=13, lastline=13, firstnumber=13, escapechar=|, caption={|\textbf{\href{https://github.com/thsis/SPL_WS1718/blob/master/Preparation/data.preparation.R}{data.preparation.R}}|}]{../Preparation/data.preparation.R}
 
-These two digits contained in the variable "Ind.Klasse" are then used to identify in which of the 17 broad industry sectors, defined in the German Classification of Economic Activities Edition 1993 (WZ93), issued by the German Federal Statistical Office \href{https://www.destatis.de/DE/Methoden/Klassifikationen/GueterWirtschaftklassifikationen/Content75/KlassifikationWZ93.html}{(destatis.de)}, each firm belongs. If the value of the variable is in the range 15-37 then the firm belongs to the manufacturing sector. Accordingly the ranges 50-52 and 70-74 correspond to "Wholesale and Retail Trade" and "Real Estate" respectively, while the value 45 corresponds to "Construction". We create four subsets of data1 for each of the above mentioned sectors by using the filter() command again and remove data and data1 with the rm() command as we do not need them anymore. The 4 subsets are then bound with rbind() into a new dataset with the name "data". 
+These two digits contained in the variable \texttt{Ind.Klasse} are then used to identify in which of the 17 broad industry sectors, defined in the German Classification of Economic Activities Edition 1993 (WZ93), issued by the German Federal Statistical Office \href{https://www.destatis.de/DE/Methoden/Klassifikationen/GueterWirtschaftklassifikationen/Content75/KlassifikationWZ93.html}{(destatis.de)}, each firm belongs. If the value of the variable is in the range 15-37 then the firm belongs to the manufacturing sector. Accordingly the ranges 50-52 and 70-74 correspond to "Wholesale and Retail Trade" and "Real Estate" respectively, while the value 45 corresponds to "Construction". We create four subsets of data1 for each of the above mentioned sectors by using the \texttt{filter()} command again and remove \texttt{data} and \texttt{data1} with the \texttt{rm()} command as we do not need them anymore. The 4 subsets are then bound with \texttt{rbind()} into a new dataset with the name \texttt{data}. 
 
-\lstinputlisting[language=R, firstline=22, lastline=39, firstnumber=22]{../Preparation/data.preparation.R}
+\lstinputlisting[language=R, firstline=22, lastline=39, firstnumber=22, escapechar=|, caption={|\textbf{\href{https://github.com/thsis/SPL_WS1718/blob/master/Preparation/data.preparation.R}{data.preparation.R}}|}]{../Preparation/data.preparation.R}
 
-Then we turn our interest on the size of the companies. Specifically the distribution of total assets which can be considered to be representative of the distribution of the companies' size (Chen et al., 2011). Following the methodology of Zhang \& H{\"a}rdle (2010), we keep only firms with total assets (VAR6 in the dataset) in the range of $10^5 - 10^8$ Euros, since the credit quality of small firms often depends mostly on the finances of a key individual (e.g. the owner).
+We then turn our interest on the size of the companies. Specifically the distribution of total assets which can be considered to be representative of the distribution of the companies' size (Chen et al., 2011). Following the methodology of Zhang \& H{\"a}rdle (2010), we keep only firms with total assets (\texttt{VAR6} in the dataset) in the range of $10^5 - 10^8$ Euros, since the credit quality of small firms often depends mostly on the finances of a key individual (e.g. the owner).
 
-Finally, we eliminate observations with zero values in variables used as denominators in the calculation of the financial ratios that will be used for the classification of the companies (lines 60-67 in the code) and save the result as "data\_clean". 
+Finally, we eliminate observations with zero values in variables used as denominators in the calculation of the financial ratios that will be used for the classification of the companies (lines 60-67 in the code) and save the result as \texttt{data\_clean}. 
 
-\lstinputlisting[language=R, firstline=60, lastline=67, firstnumber=60]{../Preparation/data.preparation.R}
+\lstinputlisting[language=R, firstline=60, lastline=67, firstnumber=60, escapechar=|, caption={|\textbf{\href{https://github.com/thsis/SPL_WS1718/blob/master/Preparation/data.preparation.R}{data.preparation.R}}|}]{../Preparation/data.preparation.R}
 
 We end up with 9591 solvent and 783 insolvent firms, which is a similar result as in Chen et al. (2010). 
 
@@ -146,9 +185,9 @@ Year & Solvent & Insolvent\\
 
 The Creditreform database contains many financial statement variables for each company. Such statements are often used by investors to evaluate firms in two basic ways. A firm is either compared with itself by analysing how it has changed over time, or the firm is compared to other similar firms by means of a common set of financial ratios (Berk \& DeMarzo, 2016).  We follow the methodology of Chen et al. (2011) and use 23 financial statement variables to create 28 financial ratios to be used in classification. The variables used in the creation of the financial ratios are summarized in table \ref{finRatios}. These financial ratios can be divided into six main groups (risk factors): profitability, leverage, liquidity, activity, firm size and percentage change for some variables.
 
-Table \ref{finRatios} presents all the financial ratios used in the current study, the formulas used for their calculation and their category. In our code, the calculation procedure of the financial ratios can be found in lines 92-121 where we add the ratios for each firm to the dataset by using the \texttt{dplyr}'s \texttt{mutate()}- command. Then we create a dataset (test\_data\_rel) where only relevant variables are kept, i.e. ID of the firm, solvency status, year and the 28 financial ratios. 
+Table \ref{finRatios} presents all the financial ratios used in the current study, the formulas used for their calculation and their category. In our code, the calculation procedure of the financial ratios can be found in lines 92-121 where we add the ratios for each firm to the dataset by using the \texttt{dplyr}'s \texttt{mutate()}-command. Then we create a dataset \texttt{test\_data\_rel} where only relevant variables are kept, i.e. the ID of the firm, it's solvency status, the year as well as the 28 financial ratios. 
 
-\begin{table}[b]
+\begin{table}
 \begin{center}
 \caption{Variables used for the calculation of financial ratios and their description}
 \footnotesize
@@ -173,19 +212,17 @@ VAR3 - VAR12 & Working capital & &\\
 \end{center}
 \end{table}
 
-\newpage
-\lstinputlisting[language=R, firstline=92, lastline=121, firstnumber=92]{../Preparation/data.preparation.R}
-
 Profitability ratios have appeared in many studies to be strong predictors for bankruptcy (Chen et al., 2011). They measure the ability of a firm to generate revenue relative to its costs over a specific time period. We calculate 7 ratios belonging to this group (ratios x1-x7). The return on assets ratio (x1), for example, provides information on how effective a firm is in making use of its assets to create income. A higher ratio signals that a firm is able to earn more money on less investment (Chen et al., 2011). 
 
-Among the profitability ratios, the net profit margin ratio (x2) shows the percentage of sales which the firm keeps in earnings. A high ratio corresponds to a firm with more profitability and better control over its costs (Chen et al., 2011).  
+Among the profitability ratios, the net profit margin ratio \texttt{x2} shows the percentage of sales which the firm keeps in earnings. A high ratio corresponds to a firm with more profitability and better control over its costs (Chen et al., 2011).  
 
-Another important factor of risk measurement is leverage. It refers to the extent that a firm relies on debt as a source of financing (Berk \& DeMarzo, 2016). As firms combine debt and equity to finance their operations, leverage ratios are useful in evaluating a firm's ability to meet its financial obligations. We calculate 7 ratios belonging to this group (ratios x8-x14). An example of a leverage ratio is the net indebtedness (x11) which measures the level of short term liabilities not covered by the firm's most liquid assets as a proportion to the firm's total assets. Except from measuring the short term leverage of a firm, this ratio provides a measure of liquidity as well. Another popular leverage ratio is the debt ratio (x13), which is defined as the debt of a company divided by its total assets. While this ratio performs well for public firms, it performs  considerably worse for private firms compared to the total liabilities to total assets ratio (x12). The reason for that is that liabilities is a more inclusive term which includes debt, deferred taxes, minority interest, accounts payable and other liabilities (Chen et al.,2011).
+\lstinputlisting[language=R, firstline=92, lastline=121, firstnumber=92, escapechar=|, caption={|\textbf{\href{https://github.com/thsis/SPL_WS1718/blob/master/Preparation/data.preparation.R}{data.preparation.R}}|}]{../Preparation/data.preparation.R}
+
+Another important factor of risk measurement is leverage. It refers to the extent that a firm relies on debt as a source of financing (Berk \& DeMarzo, 2016). As firms combine debt and equity to finance their operations, leverage ratios are useful in evaluating a firm's ability to meet its financial obligations. We calculate 7 ratios belonging to this group (\texttt{x8-x14}). An example of a leverage ratio is the net indebtedness \texttt{x11} which measures the level of short term liabilities not covered by the firm's most liquid assets as a proportion to the firm's total assets. Except from measuring the short term leverage of a firm, this ratio provides a measure of liquidity as well. Another popular leverage ratio is the debt ratio \texttt{x13}, which is defined as the debt of a company divided by its total assets. While this ratio performs well for public firms, it performs  considerably worse for private firms compared to the total liabilities to total assets ratio \texttt{x12}. The reason for that is that liabilities is a more inclusive term which includes debt, deferred taxes, minority interest, accounts payable and other liabilities (Chen et al.,2011).
  
- The next six financial ratios we calculate belong to the family of liquidity ratios (ratios x15-x20). Liquidity is a common variable in many credit decisions and represents a firm's ability to convert an asset into cash quickly (Chen et al.,2011). Liquidity ratios are important indicators of a firm's health as they assess its ability to meet its debt obligations. Chen et al. (2011) note that the cash to total assets ratio (x15) is the most important single variable relative to default in the private dataset. The quick ratio (x17) is an indicator used to assess if a firm has adequate liquidity to meet short term needs. A higher quick ratio indicates that a cash shortfall of the firm is less likely to occur in the near future (Berk \& DeMarzo, 2016). 
+ The next six financial ratios we calculate belong to the family of liquidity ratios (\texttt{x15-x20}). Liquidity is a common variable in many credit decisions and represents a firm's ability to convert an asset into cash quickly (Chen et al.,2011). Liquidity ratios are important indicators of a firm's health as they assess its ability to meet its debt obligations. Chen et al. (2011) note that the cash to total assets ratio \texttt{x15} is the most important single variable relative to default in the private dataset. The quick ratio \texttt{x17} is an indicator used to assess if a firm has adequate liquidity to meet short term needs. A higher quick ratio indicates that a cash shortfall of the firm is less likely to occur in the near future (Berk \& DeMarzo, 2016). 
  
- Another type of ratios which deliver important information on insolvency are the activity ratios (x21-x24). They measure the efficiency of a firm in using its own resources to generate cash and revenue. The asset turnover ratio (x21) measures the ability of a company to produce sales from its assets by comparing sales to its asset base. Accounts receivable (x23) and accounts payable (x24) turnover ratios are powerful predictors 
-(Chen et al., 2011).  
+ Another type of ratios which deliver important information on insolvency are the activity ratios \texttt{x21-x24}. They measure the efficiency of a firm in using its own resources to generate cash and revenue. The asset turnover ratio \texttt{x21} measures the ability of a company to produce sales from its assets by comparing sales to its asset base. Accounts receivable \texttt{x23} and accounts payable \texttt{x24} turnover ratios are powerful predictors (Chen et al., 2011).  
 
 \begin{table}[t]
 \begin{center}
@@ -228,12 +265,13 @@ x28 & VAR25/VAR1 & Percentage of incremental cash flow & Percentage\\
 \end{center}
 \end{table}
 
- We also compute a risk indicator accorting to the size of each firm, which is defined as the logarithm of total assets (x25) in order to study the insolvency risk of small, medium and large firms (Chen et al., 2011). Finally, we calculate the ratios of the percentage change of incremental inventories, liabilities and cash flow (x26-x28). As the increased cash flow is the additional operating cash flow that an entity receives from taking on a new project, a positive incremental cash flow means that the firm's cash flow will increase with the acceptance of a project, the ratio of which indicates that the firm should invest time and money in the project (Chen et al., 2011). 
- 
- In order to avoid sensitivity to outliers in applying the Random Forest, CART and the logit model, we follow the methodogy of Chen et al. (2011) and we replace extreme ratio values according to the following rule: For i = 1,...,28, if $x_i<q_{0.05}(x_i)$, then $x_i=q_{0.05}(x_i)$, and if $x_i>q_{0.95}(x_i)$, then $x_i=q_{0.95}(x_i)$, where $q_{0.05}(x_i)$ and $q_{0.95}(x_i)$ refer to the 0.05 and 0.95 quantiles of the ratio $x_i$ respectively. This will make our results robust and insensitive to outliers. For that purpose we create the function "replace\_extreme\_values()" (lines 83-91 of the "data.preparation" quantlet), which is then separately applied to the subsets of solvent and insolvent companies (lines 134-145). The lower and upper quantile as well as the median of the financial ratios for solvent and insolvent firms are presented in table 4. Our results coincide almost entirely with those of Chen et al. (2011).  The final clean dataset to be used in further analysis is then created by binding the two subsets of solvent and insolvent firms and is saved as "data\_clean".
+ Additionally, we compute a risk indicator accorting to the size of each firm, which is defined as the logarithm of total assets \texttt{x25} in order to study the insolvency risk of small, medium and large firms (Chen et al., 2011). Finally, we calculate the ratios of the percentage change of incremental inventories, liabilities and cash flow (\texttt{x26-x28}). As the increased cash flow is the additional operating cash flow that an entity receives from taking on a new project, a positive incremental cash flow means that the firm's cash flow will increase with the acceptance of a project, the ratio of which indicates that the firm should invest time and money in the project (Chen et al., 2011). 
 
-\begin{table}
+\lstinputlisting[language=R, firstline=80, lastline=88, firstnumber=80, escapechar=|, caption={|\textbf{\href{https://github.com/thsis/SPL_WS1718/blob/master/Preparation/data.preparation.R}{data.preparation.R}}|}]{../Preparation/data.preparation.R}
+
+\begin{table}[t]
 \begin{center}
+\label{finantialRatios}
 \caption{Three number summary of the financial ratios for solvent and insolvent firms.}
 \footnotesize
 \begin{tabular}{c|ccc|ccc} 
@@ -274,6 +312,158 @@ x28 & -12.17 & 0.00 & 0.94 & -7.03 & 0.00 & 0.91\\
 \end{tabular}
 \end{center}
 \end{table}
+ 
+ In order to avoid sensitivity to outliers in applying the Random Forest, CART and the logit model, we follow the methodogy of Chen et al. (2011) and we replace extreme ratio values according to the following rule: For i = 1, ..., 28, if $x_i<q_{0.05}(x_i)$, then $x_i=q_{0.05}(x_i)$, and if $x_i>q_{0.95}(x_i)$, then $x_i=q_{0.95}(x_i)$, where $q_{0.05}(x_i)$ and $q_{0.95}(x_i)$ refer to the 0.05 and 0.95 quantiles of the ratio $x_i$ respectively. This will make our results robust and insensitive to outliers. For that purpose we create the function \texttt{replace\_extreme\_values()} (lines 80-88), which is then separately applied to the subsets of solvent and insolvent companies. The lower and upper quantile as well as the median of the financial ratios for solvent and insolvent firms are presented in table \ref{finantialRatios}. The final clean dataset to be used in further analysis is then created by binding the two subsets of solvent and insolvent firms and is saved as \texttt{data\_clean}. The resulting dataframe coincides almost entirely with the results reported by Chen et al. (2011).
+
+
+\section{Linear Discriminant Analysis}
+\subsection{Theory}
+
+Since we are mostly interested in classifying if a company is going to default or not, we opted for a method that is especially suited to separate labelled data. Linear Discriminant Analysis (LDA) is a technique for dimensionality reduction that encorporates information on class-labels of the different observations. In contrast to  Principal Component Analysis, which is a unsupervised dimensionality reduction technique, it finds the rotation that ensures the highest separability between classes. It accomplishes this goal by trying to maximize between class variance while simultaneously minimizing the within class variance (H{\"a}rdle, 2003).
+
+\begin{equation}
+max\ J_{b}(w) = w \prime S_{b} w, \qquad w \in \mathbb{R}^d, d \in \mathbb{N}
+\end{equation}
+
+\begin{equation}
+min\ J_{w}(w) = w \prime S_{w} w
+\end{equation}
+
+This is done by maximizing the so called Rayleigh coefficient
+\begin{equation}
+\label{LDA}
+max J = \frac{J_b(w)}{J_w(w)} = \frac{w \prime S_{b} w}{w \prime S_{w} w}.
+\end{equation}
+
+The matrices for between and within class variance are defined as
+\begin{equation}
+S_b = \sum_{c=1}^{C}(\mu_c - \mu)(\mu_c - \mu)\prime
+\end{equation}
+
+\begin{equation}
+\label{Sw}
+S_w = \sum_{c=1}^{C}\sum_{i \in c}(x_i - \mu_c)(x_i - \mu_c)\prime
+\end{equation} 
+
+where $C$ is the number of classes, $\mu_c$ is the vector of sample means for each class respectively and $\mu$ is the vector of sample means for the full dataset. For identification purposes we can always chose weights $w$ such that $w\prime S_w w = 1$, since $J$ is constant with regards to rescalings. We can therefore replace $w$ by $\alpha w$ which will result in the constant $\alpha$ canceling out. This way the initial optimization problem can be formulated as
+
+\begin{equation}
+\argmin_{w} -\frac{1}{2} w\prime S_b w \quad s.t. \quad w \prime S_w w = 1
+\end{equation}
+
+with the lagrangian being
+
+\begin{equation}
+\mathcal{L} = -\frac{1}{2} w\prime S_b w + \frac{1}{2}\lambda\left(w\prime S_w w - 1\right).
+\end{equation}
+
+The halves are added for more convenient matrix derivatives. The Karush-Kuhn-Tucker conditions imply that the solution to this maximization problem and subsequently the vector of weights we want to find needs to fulfill
+
+\begin{equation}
+\label{LDAsolution}
+S_b w = \lambda S_w w.
+\end{equation}
+
+Which results in a generalized eigenvalue problem (Duda, 1973). For solving these, there exists a convenient \texttt{R}-solution in the form of the \texttt{geigen}-package.
+
+\subsection{Implementation}
+
+The result from \ref{LDAsolution}, which is essentially the rotation of the underlying data's column space that ensures the highest separability, is implemented in the \texttt{lda}-class for the two-class case. The \texttt{lda()} function accepts two arguments:
+
+\begin{enumerate}
+\item \texttt{data}: a \texttt{data.frame} containing at least one column of factors indicating the class label.
+\item \texttt{by}: a \texttt{character}-string equal to the column's name containing the class labels. Note that all other non-numerical columns will be ignored by the function, since LDA is only meaningful for continuous variables.
+\end{enumerate} 
+
+The function in a first step extracts the useable columns and the number of classes provided in \texttt{data}. It then performs a quick check if the prerequisites are met and then continues with the calculation of the class-means $\mu_1$ and $mu_2$, the overall mean $\mu$, as well as the scatter-matrices $S_b$ and $S_w$. With these we can solve the generalized eigenvalue problem from \ref{LDAsolution}.
+
+\begin{algorithm}
+\caption{\texttt{lda()}} \label{lda-function}
+\begin{algorithmic}[1]
+\Procedure{Set up Auxiliary Variables}{}
+\State $\textit{num} \gets \textbf{extract numeric columns}$
+\State $\textit{classes} \gets \textbf{extract class labels}$
+\State $\textit{mu} \gets \textbf{calculate class means}$
+\State $\textit{x\_bar} \gets \textbf{calculate overall means}$
+\State $\textit{S} \gets \textbf{calculate variance per group}$
+\State $\textit{S\_b1 \& S\_b2} \gets \textbf{get summands for between class scatter matrix}$
+\EndProcedure
+
+\Procedure{Calculate Scatter Matrices}{}
+\State $\textit{S\_b} \gets \texttt{S\_b1 + S\_b2}$
+\State $\textit{S\_w} \gets \texttt{S[[[1]] + S[[2]]}$
+\EndProcedure
+
+\Procedure{Solve Generalized Eigenvalue Problem}{}
+\State $\textit{V} \gets \textbf{calculate Eigenvectors and Eigenvalues}$
+\State $\textit{v} \gets \textbf{extract 2 Eigenvectors associated to largest Eigenvalues}$
+\State $\textit{lda1 \& lda2} \gets \textbf{calculate first two LDA-Components}$
+\State $\textit{inertia} \gets \textbf{calculate percentage of explained variance}$
+\State $\textbf{return: } \texttt{lda1, lda2, classes, mu, v, inertia}$
+\EndProcedure
+
+\end{algorithmic}
+\end{algorithm}
+
+The first task of the \texttt{lda()}-function is to determine, if the prerequisites for further computation are met. To this avail it first asserts that the user provided a dataframe that contains at least one numeric column and a column that contains exactly two distinct class labels (lines 11-17). In a second step it calculates all required variables such as the class means $\mu_1$ and $\mu_2$, the overall mean $\mu$ and the covariance matrices for each group (lines 18-19). The class specific metrics are computed by calls to custom made functions defined in the \texttt{utils.R}-file of the \texttt{LDA}-directory. Essentially these functions are wrappers for subsetting a provided dataframe by a provided key, here this is the class-label, and and an \texttt{apply} call looping over the respective subset's columns. The \texttt{get\_class\_means()} calculates the mean inside the \texttt{apply}-function whereas \texttt{get\_class\_cov()} uses a call to the built-in \texttt{cov}-function. However note that \texttt{cov} calculates 
+
+$$\hat{cov}(X) = \frac{1}{N-1} \sum_{i = 1}^{N}(x_i - \bar{x})(x_i - \bar{x})\prime.$$
+
+Unfortunately this is not exactly what we want for the scatter matrix defined in \ref{Sw}. We need to multiply the resulting list of covariance matrices elementwise by the number of observations in each class minus one. We correct this before calculating the within class scatter matrix on line 31. 
+
+\lstinputlisting[language=R, firstline=6, lastline=31, firstnumber=6, escapechar=|, caption={|\textbf{\href{https://github.com/thsis/SPL_WS1718/blob/master/LDA/lda.R}{lda.R}}|}]{../LDA/lda.R}
+
+With the \texttt{matrix}-object \texttt{S\_w} storing the within-scatter-matrix $S_w$ and \texttt{S\_b} storing $S_b$ we can continue by solving the generalized Eigenvalue problem posed in \ref{LDAsolution}. This is done by the \texttt{geigen()} function from the \texttt{geigen} package.
+
+\lstinputlisting[language=R, firstline=36, lastline=43, firstnumber=36, escapechar=|, caption={|\textbf{\href{https://github.com/thsis/SPL_WS1718/blob/master/LDA/lda.R}{lda.R}}|}]{../LDA/lda.R}
+
+We extract the eigenvectors and eigenvalues from \texttt{V} (line 36) in form of a list. However, caution is required because the eigenvectors are not ordered, which is different to the implementation of eigenvalues in the \texttt{base}-function \texttt{eigen()}. Therefore we rearrange the eigenvectors according to their absolute eigenvalues (line 39). We extract only the first two eigenvectors, because we require the most informative rotations in order to produce two-dimensional plots. Additionally we compute the percentage of explained variance as 
+
+\begin{equation}
+intertia_i = \frac{\lambda_i^2}{\sum_{j=1}^{d}\lambda_{j}^{2}}.
+\end{equation}
+
+The rotations \texttt{lda1} and \texttt{lda2} are computed by an \texttt{apply}-call (lines 45-46) to an anonymous function which emulates a scalar product by multiplying the two vectors \texttt{v[, i]}, which is the $i$-th eigenvector $i \in \{1, 2\}$, with each observation in the provided dataset. Computationally this is equivalent to the matrix multiplication $Xv_i$, where $X$ is the data matrix and $v_i$ is the eigenvector.
+
+Finally we gather the results into a \texttt{list} and sets it's class to \texttt{flda}. This allows us to augment pre-existing functions with a custom method for predicting and plotting for future objects of the\texttt{flda}-class in an object-oriented fashion.
+
+\subsubsection{Predictions}
+
+To make predicting with the \texttt{flda}-class as easy as plotting we augment the standard \texttt{predict} function in a similar fashion. We expect the user to have already trained an \texttt{flda}-model to which she or he wishes to apply new data and obtain predictions on the class labels. 
+
+\lstinputlisting[language=R, firstline=71, lastline=88, firstnumber=71, escapechar=|, caption={|\textbf{\href{https://github.com/thsis/SPL_WS1718/blob/master/LDA/lda.R}{lda.R}}|}]{../LDA/lda.R}
+
+The provided new data should have a similar structure to the training data. This means that especially the order of the columns should be the same. We check for obviously non-conforming data in line 77 but we do not perform explicit tests on the order of columns. If the data has the required shape we calculate the discriminant function for each observation, which is the scalar product of the observation's data vector and the first eigenvector from the trained model. We then proceed calculating a threshold $c$ for being able to discriminate between the two groups by following the rule
+
+\begin{equation}
+c = \frac{1}{2} v \prime \left(\mu_1 + \mu_2\right) 
+\end{equation}
+
+predictions are made according to the threshold, if the value of the discriminant function is smaller than the threshold we assign the label of the first class and the second class otherwise (Duda, 1973). 
+
+\subsubsection{Plotting}
+
+With a trained model of the \texttt{flda}-class it may be of interest to plot the rotations in order to get a visualisable idea of the separability of the two classes. To make this as easy as possible for the end-user we implemented a \texttt{plot} method for each instance of a \texttt{flda}-class. This means that a user can simply store a call to the \texttt{lda}-function inside a variable, called \texttt{model} for example. To plot the rotations one can simply invoke \texttt{plot} on \texttt{model} as easy as with any other model class by typing \texttt{plot(model)}.
+
+This is done by augmenting \texttt{R}'s \texttt{plot}-function using the \texttt{plot.\_\_className\_\_} syntax. Here we replace \texttt{\_\_className\_\_} by \texttt{flda}
+
+\lstinputlisting[language=R, firstline=61, lastline=69, firstnumber=61, escapechar=|, caption={|\textbf{\href{https://github.com/thsis/SPL_WS1718/blob/master/LDA/lda.R}{lda.R}}|}]{../LDA/lda.R}
+
+We overwrite the behavior of \texttt{plot} in order to accomodate \texttt{flda}-objects. Here we pass the model's precomputed rotations to the \texttt{ggplot2} function. The \texttt{ggplot2::\_\_function\_\_} makes it explicit that we want the \texttt{\_\_function\_\_} from the \texttt{ggplot2} package. Another benefit of this syntax is that this way we do not implicitly change a users namespace, which may potentially hide some functions by overwriting them with \texttt{ggplot2} routines and therefore may result in unexpected behavior.
+
+Looking at the creditreform dataset we can apply our custom routines by creating a train-set first and then visualizing the results. This reveals already why LDA's predictive results are of poor quality. The feature space spanned by the financial ratios is simply not linearly separable.
+
+
+\lstinputlisting[language=R, firstline=19, lastline=21, firstnumber=19, escapechar=|, caption={|\textbf{\href{https://github.com/thsis/SPL_WS1718/blob/master/LDA/creditLDA.R}{creditLDA.R}}|}]{../LDA/creditLDA.R}
+
+\begin{figure}[b]
+\caption{Using Linear Discriminant Analysis on the Creditreform Database}
+\centering
+\includegraphics[scale=0.5]{../LDA/creditLDA.png}
+\end{figure}
+
+However, we can see here, that it is not possible to separate the two classes, especially by linear techniques. The plot visualises the LDA's inability to provide satisfyingly accurate predictions (H{\"a}rdle et al., 2012).
+
 
 \section{Binary Response Models}
 \subsection{Theory}
@@ -338,11 +528,11 @@ and solve the first order conditions for a maximum.
 \frac{\partial l}{\partial \beta} \stackrel{!}{=} 0
 \end{equation}
 
-In general, the resulting system of equations has no closed-form solution for $\beta_ML$ and numerical solutions are needed which can be obtained by iterative optimization techniques, one we will implement in the next section.
+In general, the resulting system of equations has no closed-form solution for $\beta_ML$ and numerical solutions are needed which can be obtained by iterative optimization techniques (Winkelmann 2009). We will implement one of these methods in the next section.
 
 \subsection{Implementation}
 
-The architecture of the \texttt{brm}-class follows the general structure outlined in the chapter before. First, it generates a log-Likelihood-function, which it then optimizes using a Gradient-Descent-Algorithm. After training the model it is possible for the user to very easily obtain predictions by invoking the \texttt{predict()}-function, which has been augmented with a method for the \texttt{brm}-class.
+Our aim is to provide a function class which allows the end user to easily train a Binary Response Model of the \textit{logit} or \textit{probit} variety providing a dataset with an observed outcome variable. After training the user should also be in a position, where it is equally easy to obtain predictions for new data. With this goal in mind we created the \texttt{brm}-class. The architecture of the \texttt{brm}-class follows the general structure outlined in the chapter before. First, it generates a log-Likelihood-function, which it then optimizes using a Gradient-Descent-Algorithm. After training the model it is possible for the user to  obtain predictions by invoking the \texttt{predict()}-function, which has been augmented with a method for the \texttt{brm}-class.
 
 \subsubsection{Obtaining the Likelihood}
 
@@ -369,12 +559,13 @@ The first task is to define a function that accepts a distribution and yet undef
 \end{algorithmic}
 \end{algorithm}
 
+\newpage
 The heavy lifting in this function is done by this \texttt{R}-snippet:
 \lstinputlisting[language=R, firstline=15, lastline=25, firstnumber=15]{../BRM/logit.R}
 
 The \texttt{for}-loop from the pseudo code is implemented as an \texttt{apply}-call to \texttt{Xy\_mat}, which in turn is a matrix of numeric columns. The \texttt{apply}-function initially selects each row in \texttt{Xy\_mat} and extracts the outcome-variable \texttt{Xy\_mat[y\_pos]} which corresponds to $y_i$ from \ref{logL}. It then computes the scalar product between the regressors of \texttt{Xy\_mat}'s row, which plays the role of $x_i \prime \beta$ in \ref{logL}. The scalar product is wrapped in \texttt{dist} which represents the cumulative distribution function $G(x\prime\beta)$ and is one of the arguments to \texttt{get\_loglikelihood()}.
 
-\lstinputlisting[language=R, firstline=30, lastline=33, firstnumber=30]{../BRM/logit.R}
+\lstinputlisting[language=R, firstline=30, lastline=33, firstnumber=30, escapechar=|, caption={|\textbf{\href{https://github.com/thsis/SPL_WS1718/blob/master/BRM/logit.R}{logit.R}}|}]{../BRM/logit.R}
 
 This way \texttt{dist} will point to the built-in functions for computing probabilities, depending if the user wishes to train a logit or a probit model. The arguments \texttt{lower.tail=TRUE} and \texttt{lower.tail=FALSE} stand for $G(x\prime \beta)$ and $G(x\prime \beta)= 1 - G(x\prime \beta))$ respectively. Finally the resulting vector is summed up and multiplied by $-1$. This is done because of the way we implemented the Gradient Descent algorithm. Currently \texttt{gradientDescentMinimizer()} can only find minima. However, Maximum-Likelihood estimation poses a maximization problem. Luckily, we can transform any maximization problem into a minimization problem by multiplying with minus one.
 
@@ -387,7 +578,7 @@ Since we now have a log-Likelihood function, the next step is to optimize it. To
 x_{t+1} = x_t - \eta \cdot \nabla f(x_t), \qquad t \in \mathbb{N}, \eta \in \mathbb{R}^+
 \end{equation}
 
-where $\eta$ is the learning rate. To this standard method of performing a Gradient Descent routine we will also make some minor modifications. First of all, we will approximate the gradients by taking finite differences, which is easier to implement albeit computationally inefficient. Finite differences are computed by
+where $\eta$ is the learning rate (Duda, 1973). To this standard method of performing a Gradient Descent routine we will also make some minor modifications. First of all, we will approximate the gradients by taking finite differences, which is easier to implement albeit computationally inefficient. Finite differences are computed by
 
 \begin{equation}
 \label{finDiff}
@@ -435,13 +626,13 @@ The \texttt{gradientDescentMinimizer()}-function accepts following arguments:
 
 \end{enumerate}
 
-\lstinputlisting[language=R, firstline=143, lastline=148, firstnumber=143]{../BRM/utils.R}
+\lstinputlisting[language=R, firstline=143, lastline=148, firstnumber=143, escapechar=|, caption={|\textbf{\href{https://github.com/thsis/SPL_WS1718/blob/master/BRM/utils.R}{utils.R}}|}]{../BRM/utils.R}
 
 We begin by filling the matrix \texttt{a} with 1000 \texttt{n\_pars}-dimensional points which we draw from the uniform distribution, making use of \texttt{R}'s built-in \texttt{runif}-function. We draw random numbers within the range of $[-100, 100]$ to cover a wide part of the objective function's domain.  
 
-\lstinputlisting[language=R, firstline=130, lastline=139, firstnumber=130]{../BRM/utils.R}
+\lstinputlisting[language=R, firstline=130, lastline=139, firstnumber=130, escapechar=|, caption={|\textbf{\href{https://github.com/thsis/SPL_WS1718/blob/master/BRM/utils.R}{utils.R}}|}]{../BRM/utils.R}
 
-The workhorse in this routine is the \texttt{get\_gradient()}-function, which computes the finite differences. First we need to compute the values of the objective function at the current and next step (lines 146 and 147). Then we can apply the current and next step as inputs to the objective function and compute the difference $f(x_{t+1}) - f(x_t)$. The current step is provided as the \texttt{x} argument to the function call. The next steps need to be inferred by the function. If $f(x_t)$ is multidimensional we need to perform an $\epsilon$-step in each dimension of the vector, since we want to approximate the partial derivatives of $f(x)$ evaluated at $x_t$. I.e. first we want to increment just the first element of $x$ and store the result, then just the second element, and repeat the process until we reach the last element. If we stack these vectors, we get a matrix of one-directional $\epsilon$-steps that are essentially updates of the starting point $x_t$ with which it is easy to compute the gradients as their element-wise difference, normalized by \texttt{epsilon\_step}. The gradients are finally trimmed if necessary and returned.
+The workhorse in this routine is the \texttt{get\_gradient()}-function, which computes the finite differences. First we need to compute the values of the objective function at the current and next step (lines 146 and 147). Then we can apply the current and next step as inputs to the objective function and compute the difference $f(x_{t+1}) - f(x_t)$. The current step is provided as the \texttt{x} argument to the function call. The next steps need to be inferred by the function. If $f(x_t)$ is multidimensional we need to perform an $\epsilon$-step in each dimension of the vector, since we want to approximate the partial derivatives of $f(x)$ evaluated at $x_t$. I.e. first we want to increment just the first element of $x$ and store the result, then just the second element, and repeat the process until we reach the last element. If we stack these vectors, we get a matrix of one-directional $\epsilon$-steps that are essentially updates of the starting point $x_t$. The objective function is then evaluated at these updated points. The gradients are then computed as the element-wise difference of the updated point compared with the start, normalized by \texttt{epsilon\_step}. The gradients are finally trimmed if necessary and returned.
 
 \begin{algorithm}
 \caption{get\_gradient()}\label{getGrad}
@@ -474,43 +665,42 @@ x_1 & x_2 & \cdots\\
 \end{algorithmic}
 \end{algorithm}
 
-\lstinputlisting[language=R, firstline=155, lastline=177, firstnumber=155]{../BRM/utils.R}
+In each iteration the \texttt{while}-loop ensures that convergence has not been reached. This is implemented by a call to \texttt{any} wrapped around a vector of logical expressions. If any element of the gradient is still greater than the specified precision, the call to \texttt{any} will evaluate to \texttt{TRUE}. The second breaking criterion is a safeguard for the loop not to run infinitely many times. If the current iteration is larger than \texttt{max\_iter} the algorithm will break and the user will receive a warning (lines 175-176). 
 
-In each iteration the \texttt{while}-loop ensures that convergence has not been reached. This is implemented by a call to \texttt{any} wrapped around a vector of logical expressions. If any element of the gradient is still greater than the specified precision, the call to \texttt{any} will evaluate to \texttt{TRUE}. The second breaking criterion is a safeguard for the loop not to run infinite times. If the current iteration is larger than \texttt{max\_iter} the algorithm will break and the user will receive a warning (lines 175-176). If the user wishes to receive information about the status of the algorithm during runtime, the optional argument \texttt{verbose} can be set to \texttt{TRUE} which will print a logstring to the console in regular intervals (lines 156-161).
+\lstinputlisting[language=R, firstline=155, lastline=177, firstnumber=155, escapechar=|, caption={|\textbf{\href{https://github.com/thsis/SPL_WS1718/blob/master/BRM/utils.R}{utils.R}}|}]{../BRM/utils.R}
+
+Should the user wish to receive information about the status of the algorithm during runtime, the optional argument \texttt{verbose} can be set to \texttt{TRUE} which will print a logstring to the console in regular intervals (lines 156-161). The results of the training are gathered together in the \texttt{out}-list. We store the calculated weights in \texttt{weights}, in \texttt{type} and \texttt{dist} we store wether a \textit{logit} or a \texttt{probit}-model was used. \texttt{dist} contains a pointer to the \texttt{R}-cumulative density functions of the correct distribution. We also store the value of the log-Likelihood-function in \texttt{likelihood\_val} for calculating test-statistics. Note however, that we did not implement this, since this paper focuses on obtaining predictions. Finally we assign the class and return \texttt{out}.
 
 \subsubsection{Predictions}
 
 In order to facilitate making predictions based on the \texttt{brm}-class we augmented the built-in function \texttt{predict()} with a method that works on our custom class in a predefined way.
 
-\lstinputlisting[language=R, firstline=61, lastline=68, firstnumber=61]{../BRM/logit.R}
+\lstinputlisting[language=R, firstline=61, lastline=68, firstnumber=61, escapechar=|, caption={|\textbf{\href{https://github.com/thsis/SPL_WS1718/blob/master/BRM/logit.R}{logit.R}}|}]{../BRM/logit.R}
 
-A call to \texttt{predict()} on a \texttt{brm}-model will add a column of ones to the provided \texttt{data} and multiply the matrix with the weights calculated during training of the model (line 62). Finally these scores of the index-function $X\beta$ will be applied to the correct distribution. The distribution is stored inside \texttt{model\$distribution} which points to \texttt{pnorm} in case of \texttt{brm}-model of \texttt{mode} "probit" and a pointer to \texttt{plogis} if the \texttt{mode} is equal to "logit". 
+A call to \texttt{predict()} on a \texttt{brm}-model will add a column of ones to the provided \texttt{data}, to act as an intercept, and multiply the matrix with the weights calculated during training of the model (line 62). Finally these scores of the index-function $X\beta$ will be applied to the correct distribution. The distribution is stored inside \texttt{model\$distribution} which points to \texttt{pnorm} in case of \texttt{brm}-model of \texttt{mode} "probit" and a pointer to \texttt{plogis} if the \texttt{mode} is equal to "logit". 
 
 \subsection{Using the Logit-Model on the creditreform Dataset}
 
-We use the \texttt{caret} package to build a logistic regression model. This package provides a \texttt{train()} method for fitting the data for various algorithms. We select the algorithm via the parameters supplied to the \texttt{train()}-method. The \texttt{method} parameter specifies the type of model which is applied to predict the target variable (Kuhn, et al., 2017).
+We implemented a custom \textit{logit}-model but since it is using only \texttt{R}-routines it can be slow on large datasets including a high number of variables. Instead, we use the \texttt{caret} package to build a logistic regression model. This package provides a \texttt{train()} method for fitting the data being able to chose among various algorithms. We chose the algorithm by specifying the \texttt{method} parameter in order to predict the target variable (Kuhn, et al., 2017).
 
-\lstinputlisting[language=R, firstline=42, lastline=42, firstnumber=42]{../Logit/logit_model_fin.R}
+\lstinputlisting[language=R, firstline=42, lastline=42, firstnumber=42, escapechar=|, caption={|\textbf{\href{https://github.com/thsis/SPL_WS1718/blob/master/Logit/logit_model_fin.R}{logit\_model\_fin.R}}|}]{../Logit/logit_model_fin.R}
  
-We apply the \texttt{glm} method. The function glm(), and the predict method for glm objects, reflect a classical approach to statistical inference. It only handles binary classification. Thus, we define our target variable \texttt{status} as categorical by using\texttt{as.factor()} command (Stephens, 2016). All the other financial ratios are independent variables that influence the binary outcome of a target variable \texttt{status}. One important argument is \texttt{family\=binomial}. Family() function specifies the assumed distribution of the dependent variable \texttt{status}. In our case, we model a target variable as a binomial distribution. The binomial family accepts the links such as logit, probit, cauchit, log and cloglog. The link function \texttt{links} the output to a linear model. It passes dependent variable through the link function, and then models the resulting value as a linear function of the values of independent variables. Different combinations of family functions and link functions lead to different kinds of generalized linear models (for example, Poisson, or probit). Without an explicit link argument, the link function defaults to standard \texttt{logit} (Zumel \& Mount, 2014). We store the resulting model in the object texttt{glm\_mod} and use \texttt{predict()} function to predict the insolvency of the German firms in the years 2000 until 2002. To this end, we pass the trained model \texttt{glm\_mod} and the test set features without the actual labels to the predict() function. We specify the type of prediction as \texttt{type=prob} to receive the probability for a firm's insolvency. The predicted probabilities are passed into \texttt{evaluate\_prediction} function to estimate the overall prediction power over models.
+We apply the \texttt{glm} method. The function \texttt{glm()}, and the \texttt{predict} method for \texttt{glm} objects, reflect a classical approach to statistical inference. It only handles binary classification. Thus, we define our target variable \texttt{status} as categorical by using the \texttt{as.factor()} command (Stephens, 2016). All the other financial ratios are independent variables that influence the binary outcome of a target variable \texttt{status}. One important argument is \texttt{family\=binomial}. The \texttt{family()} function specifies the assumed distribution of the dependent variable \texttt{status}. In our case, we model a target variable as a binomial distribution. The binomial family accepts the links such as "logit", "probit", "cauchit", "log" and "cloglog". The \texttt{link} function links the output to a linear model. It passes the dependent variable through the link function, and then models the resulting value as a linear function of the values of independent variables. Different combinations of family functions and link functions lead to different kinds of generalized linear models (for example, Poisson, or probit). Without an explicit \texttt{link} argument, the link function defaults to standard \texttt{logit} (Zumel \& Mount, 2014). We store the resulting model in the object texttt{glm\_mod} and use \texttt{predict()} function to predict the insolvency of the German firms in the years 2000 until 2002. To this end, we pass the trained model \texttt{glm\_mod} and the test set features without the actual labels to the \texttt{predict()} function. We specify the type of prediction as \texttt{type=prob} to receive the probability for a firm's insolvency. The predicted probabilities are passed into \texttt{evaluate\_prediction} function to estimate the overall prediction power over models.
 
-\lstinputlisting[language=R, firstline=53, lastline=53]{../Logit/logit_model_fin.R}
+\lstinputlisting[language=R, firstline=53, lastline=53, escapechar=|, caption={|\textbf{\href{https://github.com/thsis/SPL_WS1718/blob/master/Logit/logit_model_fin.R}{logit\_model\_fin.R}}|}]{../Logit/logit_model_fin.R}
 
-The practical advantage of logit model is that it provides insight into the impact of each predictor variable on the response variable. None of the nonparametric methods really provide this information. The coefficients of a logistic regression model can be thus treated as advice and may serve as orientation for decision making (Zumel \& Mount, 2014). Yet, the calculation and interpretation of coefficients exceeds the scope of this project. 
+The practical advantage of logit model is that it provides insight into the impact of each predictor variable on the response variable. None of the nonparametric methods really provides this information. The coefficients of a logistic regression model can be thus treated as advice and may serve as orientation for decision making (Zumel \& Mount, 2014). Yet, the calculation and interpretation of coefficients exceeds the scope of this project. 
 
-The logit model has some limitations. For example, if we include the wrong independent variables, the model will have little to no predictive value. It requires each data point be independent of all other data points. If observations are related to one another, then the model will tend to overweight the significance of those 
-observations (Robinson, 2018). Further the method is searching for a single linear decision boundary that separates insolvent and solvent firms. This works well if the data are linearly separable. A linear separating boundary is, however, not suitable if there is doubt that the separation mechanism is of a nonlinear 
-kind (Chen, et al., 2011). Therefore, it is always a good idea to try different models and choose the one which performs best on a test data set. 
-Tree-based models for instance, divide the feature space into half-spaces using axis-aligned linear decision boundaries. CART model, which is introduced next, is nice in that it is easy to implement and easy to explain. 
-
+The logit model has some limitations. For example, if we include the wrong independent variables, the model will have little to no predictive value. It requires each data point to be independent of all other data points. If observations are related to one another, then the model will tend to overestimate the significance of those observations (Robinson, 2018). Further the method is searching for a single linear decision boundary that separates insolvent and solvent firms. This works well if the data are linearly separable. A linear separating boundary is, however, not suitable if there is doubt that the separation mechanism is of a nonlinear kind (Chen, et al., 2011). Therefore, it is always a good idea to try different models and choose the one which performs best on a test data set. 
+Tree-based models for instance, divide the feature space into half-spaces using axis-aligned linear decision boundaries.
 
 \section{Classification and Regression Trees (CART)}
 
-Tree-based methods, or decision tree methods, are used for two broad types of problems - classification and regression. These methods are appropriate by extensive datasets. Its strength is that, in large data sets, it has the potential to reflect relatively complex forms of data structures, which may be hard to detect with 
+Tree-based methods, or decision tree methods, are used for two broad types of problems - classification and regression. These methods are appropriate for extensive datasets. Its strength is that, in large data sets, it has the potential to reflect relatively complex forms of data structures, which may be hard to detect with 
 conventional regression modelling. Additionally, the methodology is relatively easy to use and can be applied to a wide class of problems (Maindonald \& Braun, 2010).
-Once again, we use the \texttt{caret} package to build a CART model. We pass the \texttt{rpart} method into train() function to fit the data (Kuhn, et al., 2017). There is a package with same name \texttt{rpart}, which is specifically available for decision tree implementation. Caret links its train function with other packages simplifying the work process significantly. 
+Once again, we use the \texttt{caret} package to build a CART model. We pass the \texttt{rpart} method into the \texttt{train()} function to fit the data (Kuhn, et al., 2017). There is a package with same name \texttt{rpart}, which is specifically available for decision tree implementation. The \texttt{caret}-package links its train function with other packages simplifying the work process significantly. 
 
-\lstinputlisting[language=R, firstline=49, firstnumber=49]{../CART/cart_modell_fin.R}
+\lstinputlisting[language=R, firstline=49, firstnumber=49, escapechar=|, caption={|\textbf{\href{https://github.com/thsis/SPL_WS1718/blob/master/CART/cart_modell_fin.R}{cart\_modell\_fin.R}}|}]{../CART/cart_modell_fin.R}
 %caret_model_fin line 49
 
 The basic way to visualize classification or regression tree built with \texttt{R}'s \texttt{rpart()} function is to call \texttt{plot()}. The call typically produces a couple of black clouds of overlaid text. Therefore, the traditional representation of the CART model is not graphically appealing. There are better ways to plot \texttt{rpart()} trees for example by using the \texttt{prp()} function from \texttt{rpart.plot package} or the \texttt{fancyRpartPlot()} from \texttt{rattle} package (Milborrow, 2016). We have chosen the \texttt{fancyRpartPlot()} function to get a legible structure of our decision tree.
@@ -518,54 +708,51 @@ The basic way to visualize classification or regression tree built with \texttt{
 %CART/fancyRpartPlot.pdf
 \begin{figure}
 \caption{Decision Tree}
-\includegraphics[scale=1]{../CART/fancyRpartPlot.pdf}
+\includegraphics[scale=0.8]{../CART/fancyRpartPlot.pdf}
 \end{figure}
 
 fancyRpartPlot() builds more elaborate and clean trees, which can be easily interpreted. Each node box displays the classification, the probability of each class at that specific node and the percentage of observations that arrived at each node (Rickert, 2013). 
 
-Once we have built the model, we are ready to validate it on a separate data set - a test set. We store the results in the object \texttt{mod\_fit} and apply \texttt{predict()} function to calculate the probabilities for further analysis. 
+Once we have built the model, we are ready to validate it on a separate data set - the test set. We store the results in the object \texttt{mod\_fit} and apply \texttt{predict()} function to calculate the probabilities for further analysis. 
 
 \subsection{Variable Importance}
 
-It might be interesting to acquire information regarding which financial statement variables are most important in predicting the outcome. There are practical reasons for doing so. For example, we want to rank-order financial ratios in regard to their relative importance. This information can provide insights about the most important causes of insolvency, allow a deeper understanding of financial health of the companies and enable investors more effective decision making. If predictor variables were uncorrelated, this would be a simple task. We would rank-order the predictor variables by their correlation with the response variable. In our case though, the financial ratios variables are correlated (as shown in the chart below), and this complicates the task significantly.
+It might be interesting to acquire information regarding which financial statement variables are most important in predicting the outcome. There are practical reasons for doing so. For example, we want to rank-order financial ratios in regard to their relative importance. This information can provide insights about the most important causes of insolvency, allow a deeper understanding of financial health of the companies and enable investors more effective decision making. If predictor variables were uncorrelated, this would be a simple task. We would rank the predictor variables by their correlation with the response variable. In our case though, the financial ratios variables are correlated (as shown in the chart below), and this complicates the task.
  
-We used \texttt{corrplot} package to graphical display a correlation matrix. Positive correlations are displayed in blue and negative correlations in red colour. Colour intensity and the size of the circle are proportional to the correlation coefficients. Every correlation coefficient ranges from 1 to -1, where 1 is a prefect positive
-correlation, -1 a perfect negative correlation, and 0 indicates no correlation between two features.
+We used \texttt{corrplot} package to graphical display a correlation matrix. Positive correlations are displayed in blue and negative correlations in red colour. Colour intensity and the size of the circle are proportional to the correlation coefficients. Every correlation coefficient ranges from 1 to -1, where 1 is a prefect positive correlation, -1 a perfect negative correlation, and 0 indicates no correlation between two features.
 
 \begin{figure}
 \caption{Correlation Matrix }
-\includegraphics[scale=1]{../CART/CorrPlot.pdf}
+\includegraphics[scale=0.8]{../CART/CorrPlot.pdf}
 \end{figure}
 %CART/CorrPlot.pdf 
 
-\texttt{caret} package includes a command to perform variable importance. The varImp() function calculate important features of almost all models (Kuhn, et al., 2017). We use a plot method to visualize the results for importance scores generated from varImp() function. We apply the \texttt{top=10} option to make the chart more readable and select the ten most important variables.
+The \texttt{caret}-package includes a command to perform variable importance. \texttt{The varImp()} function calculates important features of almost all models (Kuhn, et al., 2017). We use a call to \texttt{plot} to visualize the results for importance scores generated by the \texttt{varImp()} function. We apply the \texttt{top=10} option to make the chart more readable and select the ten most important variables.
 
 \begin{figure}
 \caption{Variable Importance - varImp() function}
-\includegraphics[scale=1]{../CART/VarImp_top_10.png}
+\includegraphics[scale=0.9]{../CART/VarImp_top_10.png}
 \end{figure}
 %CART/VarImp top 10.png
 
-We can see that the varImp function considers Accounts Payable Turnover (AP/SALE, x24) to be the most important feature to predict German default firms, followed by Interest Coverage Ratio Leverage (EBIT/INTE, x14), Quick Ratio (QA/CL, x17), Operating Income/Total Assets (OI/TA, x3), Net Indebtedness Leverage ((CL-CASH)/TA, x11).
+We can see that the \texttt{varImp function} considers Accounts Payable Turnover (\texttt{x24}) to be the most important feature to predict German default firms, followed by Interest Coverage Ratio Leverage (\texttt{x14}), Quick Ratio \texttt{(x17)}, Operating Income/Total Assets \texttt{(x3)} and Net Indebtedness Leverage \texttt{(x11)}.
 
-In the whole, decision trees are an attractive method since they work with any type of data, numerical or categorical, without any distributional assumptions and without pre-processing. Furthermore, most R's implementations handle missing data and this method is also robust to redundant and nonlinear data. The algorithm is easy to use, and the output (the tree) is relatively easy to understand. On the other hand, decision trees have some shortcomings. They tend to overfit, especially without pruning, because the decision tree can \texttt{memorize} the training set. The model then become very specific to the training data and consequently has less ability to classify the unobserved data correctly. Besides, they have high training variance, which means that samples drawn from the same population can produce trees with different structures and different prediction accuracy. Additionally, a prediction accuracy can be eventually low, compared to other methods. For these reasons a technique called bagging is often used to improve decision tree models. Random forest is a more specialized approach, which directly combines decision trees with bagging and yields markedly better results (Zumel \& Mount, 2014). 
+All in all, decision trees are an attractive method since they work with many types of data, be it numerical or categorical, without any distributional assumptions and without pre-processing. Furthermore, most of \texttt{R}'s implementations handle missing data. Additionally, this method is robust to redundant and nonlinear data. The algorithm is easy to use, and the graphical output is relatively easy interpretable. On the other hand, decision trees have some shortcomings. They tend to overfit, especially without pruning, because the decision tree can \texttt{memorize} the training set. The model then becomes very specific to the training data and consequently has less ability to classify the unobserved data correctly. Besides, they tend to have a high training variance, which means that samples drawn from the same population can produce trees with different structures and different prediction accuracy. Additionally, a prediction accuracy can be eventually low, compared to other methods. For these reasons a technique called bagging is often used to improve decision tree models. Random Forests are a more specialized approach, which directly combines decision trees with bagging and yields remarkably better results (Zumel \& Mount, 2014). 
 
 \section{Random Forest}
 
-Random forest approach often gives an improved predictive accuracy for relatively complex tree models. This ensemble method combines several individual classification trees in the following way: from the original sample several bootstrap samples are drawn, and an unpruned classification tree is fitted to each bootstrap sample. The variable selection for each split in the classification tree is conducted only from a small random subset of predictor variables. From the complete forest the status of the response variable is predicted as an average or majority vote of the predictions of all trees (Maindonald \& Braun, 2010).
-
-The function \texttt{randomForest()} in the \texttt{randomForest} package is an attractive alternative to rpart() (Breiman, et al., 2015). The following syntax uses randomForest() function applied to our dataset:
-
-\lstinputlisting[language=R, firstline=44, lastline=45, firstnumber=44]{../Random_Forest/random_forest_modell_fin.R}
+The Random Forest approach often gives an improved predictive accuracy for relatively complex tree models. This ensemble method combines several individual classification trees in the following way: from the original sample several bootstrap samples are drawn, and an unpruned classification tree is fitted to each bootstrap sample. The variable selection for each split in the classification tree is conducted only from a small random subset of predictor variables. From the complete forest the status of the response variable is predicted as an average or majority vote of the predictions of all trees (Maindonald \& Braun, 2010).
+\newpage
+\lstinputlisting[language=R, firstline=44, lastline=49, firstnumber=44, escapechar=|, caption={|\textbf{\href{https://github.com/thsis/SPL_WS1718/blob/master/Random_Forest/random_forest_modell_fin.R}{random\_forest\_modell\_fin.R}}|}]{../Random_Forest/random_forest_modell_fin.R}
 %random_forest_modell_fin line 44-47
 
-We pass several arguments in to the \texttt{randomForest()} function. First of all, since it is a classification problem we define our target variable \texttt{status} as categorical by using \texttt{as.factor()} (Stephens, 2016). In comparison to CART models, trees are grown independently to their maximum extent, limited however by nodesize (minimum number of trees at a node). This parameter implicitly sets the depth of generated trees. Additionally, maxnodes can be used to limit the number of nodes (Maindonald \& Braun, 2010). 
+We pass several arguments in to the \texttt{randomForest()} function. First of all, since it is a classification problem we define our target variable \texttt{status} as categorical by using \texttt{as.factor()} (Stephens, 2016). In comparison to CART models, trees are grown independently to their maximum extent, limited however by \texttt{nodesize} (minimum number of trees at a node). This parameter implicitly sets the depth of generated trees. Additionally, \texttt{maxnodes} can be used to limit the number of nodes (Maindonald \& Braun, 2010). 
 
-The main tuning parameter is the number \texttt{mtry} of variables that are randomly sampled at each split. By default, the \texttt{randomForest()} function in R draws square root of the total number of variables at each node for classification trees. Essentially, \texttt{mtry} controls the trade-off between the amount of information in each individual tree, and the correlation between trees. Smaller \texttt{mtry} values will grow the trees faster. However, in our case using a larger \texttt{mtry} is better, since we have a large number of variables to choose from, of which only a small fraction is actually useful. By doing so, we are more likely to draw some useful variables at every step of the tree-growing procedure (Zumel \& Mount, 2014).
+The main tuning parameter is the number \texttt{mtry} of variables that are randomly sampled at each split. By default, the \texttt{randomForest()} function in \texttt{R} draws square root of the total number of variables at each node for classification trees. Essentially, \texttt{mtry} controls the trade-off between the amount of information in each individual tree, and the correlation between trees. Smaller \texttt{mtry} values will grow the trees faster. However, in our case using a larger \texttt{mtry} is better, since we have a large number of variables to choose from, of which only a small fraction is actually useful. By doing so, we are more likely to draw some useful variables at every step of the tree-growing procedure (Zumel \& Mount, 2014).
 
-Further, the \texttt{ntree} argument specifies how many trees we want to grow. By tuning this parameter, the final accuracy of a model might increase up to some point. Also, limiting the number of trees restrict the complexity and computing time (Maindonald \& Braun, 2010). 
+Further, the \texttt{ntree} argument specifies how many trees we want to grow. By tuning this parameter, the final accuracy of a model might increase up to some point. Also, limiting the number of trees restricts the complexity and computing time (Maindonald \& Braun, 2010). 
 
-Random forests highly increase the prediction accuracy as compared to individual classification trees. However, the interpretability of a random forest is not as straightforward as that of an individual classification tree, where the influence of a predictor variable directly corresponds to its position in the tree. Thus, alternative measures for variable importance are required for the interpretation of random forests (Strobl, et al., 2007). 
+Random forests highly increase the prediction accuracy compared to individual classification trees. However, the interpretability of a random forest is not as straightforward as that of an individual classification tree, where the influence of a predictor variable directly corresponds to its position in the tree. Thus, alternative measures for variable importance are required for the interpretation of random forests (Strobl, et al., 2007). 
 
 We can calculate the variable importance by specifying \texttt{importance\=TRUE} in the \texttt{randomForest()} function, and then calling the functions \texttt{importance()} and \texttt{varImpPlot()}. Two measures of importance for each variable are then calculated: \texttt{MeanDecreaseAccuracy} and \texttt{MeanDecreaseGini}. The first measure is a \texttt{leave-one-out} type assessment of variable's contribution to prediction accuracy. Thereby the variable's values are randomly permuted in the out-of-bag samples, and the corresponding decrease in each tree's accuracy is estimated. If the average decrease over all the trees is large, then the variable is considered important - its value makes a big difference in predicting the outcome. If the average decrease is small, then the variable does not make much difference to the outcome. The second measure shows how each variable affects the quality of the tree by representing the decrease in node purity that occurs from splitting on a permuted variable (Maindonald \& Braun, 2010). 
 
@@ -577,162 +764,15 @@ We can calculate the variable importance by specifying \texttt{importance\=TRUE}
 \end{figure}
 %Random_Forest/Rplot.pdf
 
-Both measures rate equally the first three and the fifth variables: Accounts Payable Turnover (AP/SALE, x24), Operating Income/Total Assets (OI/TA, x3), EBITDA ((EBITA+AD)/TA, x6) and Account Receivable Turnover Activity (AR/SALE, x23). Interestingly, this ranking order of \texttt{importance} differs from the results obtained with \texttt{varImp()} function applied for the CART model. Knowing which variables are most important or at least, which variables contribute the most to the structure of the underlying decision trees, can help us with variable reduction. This is useful not only for building smaller, faster trees, but for choosing variables to be used by another modelling algorithm, if that is desired.
+Both measures rate equally the first three and the fifth variables: Accounts Payable Turnover \texttt{x24}, Operating Income/Total Assets \texttt{x3}, EBITDA \texttt{x6} and Account Receivable Turnover Activity \texttt{x23}. Interestingly, this ranking order of \texttt{importance} differs from the results obtained with \texttt{varImp()} function applied for the CART model. Knowing which variables are most important or at least, which variables contribute the most to the structure of the underlying decision trees, can help us with variable reduction. This is useful not only for building smaller, faster trees, but for choosing variables to be used by another modelling algorithm, should that be desired.
 
-The \texttt{random forest} package is robust and very user friendly. However, it is important to note that it has a drawback that it is invariably biased towards features with many cut points. There is a package \texttt{party} which provides the cforest() command to build a forest of conditional inference trees. The basic construction of each tree is fairly similar to a random forest. Hence the decisions are made in slightly different ways, using a statistical test rather than a purity measure. The \texttt{party} package is better than the \texttt{randomForest} package in terms of accuracy, since cforest uses the weighted average of the trees to get the final ensemble. However, it is computationally more expensive (Modi, 2016). In our dataset we do not have features which have many categories and therefore we favour the \texttt{random forest} package to 
-calculate the insolvency predictions. Additionally, it is computationally more efficient.
-
-\section{Linear Discriminant Analysis}
-\subsection{Theory}
-
-Linear Discriminant Analysis (LDA) is a technique for dimensionality reduction that encorporates information on class-labels of the different observations. In contrast to  Principal Component Analysis, which is a unsupervised dimensionality reduction technique, it finds the rotation that ensures the highest separability between classes. It accomplishes this goal by trying to maximize between class variance while simultaneously minimizing within class variance.
-
-\begin{equation}
-max\ J_{b}(w) = w \prime S_{b} w, \qquad w \in \mathbb{R}^d, d \in \mathbb{N}
-\end{equation}
-
-\begin{equation}
-min\ J_{w}(w) = w \prime S_{w} w
-\end{equation}
-
-This is done by maximizing the so called Rayleigh coefficient
-\begin{equation}
-\label{LDA}
-max J = \frac{J_b(w)}{J_w(w)} = \frac{w \prime S_{b} w}{w \prime S_{w} w}.
-\end{equation}
-
-The matrices for between and within class variance are defined as
-\begin{equation}
-S_b = \sum_{c=1}^{C}(\mu_c - \mu)(\mu_c - \mu)\prime
-\end{equation}
-
-\begin{equation}
-\label{Sw}
-S_w = \sum_{c=1}^{C}\sum_{i \in c}(x_i - \mu_c)(x_i - \mu_c)\prime
-\end{equation} 
-
-where $C$ is the number of classes, $\mu_c$ is the vector of sample means for each class respectively and $\mu$ is the vector of sample means for the full dataset. For identification purposes we can always chose weights $w$ such that $w\prime S_w w = 1$, since $J$ is constant with regards to rescalings. We can therefore replace $w$ by $\alpha w$ which will result in the constant $\alpha$ canceling out. This way the initial optimization problem can be formulated as
-
-\begin{equation}
-\argmin_{w} -\frac{1}{2} w\prime S_b w \quad s.t. \quad w \prime S_w w = 1
-\end{equation}
-
-with the lagrangian being
-
-\begin{equation}
-\mathcal{L} = -\frac{1}{2} w\prime S_b w + \frac{1}{2}\lambda\left(w\prime S_w w - 1\right).
-\end{equation}
-
-The halves are added for more convenient matrix derivatives. The Karush-Kuhn-Tucker conditions imply that the solution to this maximization problem and subsequently the vector of weights we want to find needs to fulfill
-
-\begin{equation}
-\label{LDAsolution}
-S_b w = \lambda S_w w.
-\end{equation}
-
-This is a generalized eigenvalue problem for which there exists a convenient \texttt{R}-solution in the form of the \texttt{geigen}-package.
-\subsection{Implementation}
-
-The result from \ref{LDAsolution}, which is essentially the rotation of the underlying data's column space that ensures the highest separability, is implemented in the \texttt{lda}-class for the two-class case. The \texttt{lda()} function accepts two arguments:
-
-\begin{enumerate}
-\item \texttt{data}: a \texttt{data.frame} containing at least one column of factors indicating the class label.
-\item \texttt{by}: a \texttt{character}-string equal to the column's name containing the class labels. Note that all other non-numerical columns will be ignored by the function, since LDA is only meaningful for continuous variables.
-\end{enumerate} 
-
-The function in a first step extracts the useable columns and the number of classes provided in \texttt{data}. It then performs a quick check if the prerequisites are met and then continues with the calculation of the class-means $\mu_1$ and $mu_2$, the overall mean $\mu$, as well as the scatter-matrices $S_b$ and $S_w$. With these we can solve the generalized eigenvalue problem from \ref{LDAsolution}.
-
-\begin{algorithm}
-\caption{\texttt{lda()}} \label{lda-function}
-\begin{algorithmic}[1]
-\Procedure{Set up Auxiliary Variables}{}
-\State $\textit{num} \gets \textbf{extract numeric columns}$
-\State $\textit{classes} \gets \textbf{extract class labels}$
-\State $\textit{mu} \gets \textbf{calculate class means}$
-\State $\textit{x\_bar} \gets \textbf{calculate overall means}$
-\State $\textit{S} \gets \textbf{calculate variance per group}$
-\State $\textit{S\_b1 \& S\_b2} \gets \textbf{get summands for between class scatter matrix}$
-\EndProcedure
-
-\Procedure{Calculate Scatter Matrices}{}
-\State $\textit{S\_b} \gets \texttt{S\_b1 + S\_b2}$
-\State $\textit{S\_w} \gets \texttt{S[[[1]] + S[[2]]}$
-\EndProcedure
-
-\Procedure{Solve Generalized Eigenvalue Problem}{}
-\State $\textit{V} \gets \textbf{calculate Eigenvectors and Eigenvalues}$
-\State $\textit{v} \gets \textbf{extract 2 Eigenvectors associated to largest Eigenvalues}$
-\State $\textit{lda1 \& lda2} \gets \textbf{calculate first two LDA-Components}$
-\State $\textit{inertia} \gets \textbf{calculate percentage of explained variance}$
-\State $\textbf{return: } \texttt{lda1, lda2, classes, mu, v, inertia}$
-\EndProcedure
-
-\end{algorithmic}
-\end{algorithm}
-
-The first task of the \texttt{lda()}-function is to determine, if the prerequisites for further computation are met. To this avail it first asserts that the user provided a dataframe that contains at least one numeric column and a column that contains exactly two distinct class labels (lines 11-17). In a second step it calculates all required variables such as the class means $\mu_1$ and $\mu_2$, the overall mean $\mu$ and the covariance matrices for each group (lines 18-19). The class specific metrics are computed by calls to custom made functions defined in the \texttt{utils.R}-file of the \texttt{LDA}-directory. Essentially these functions are wrappers for subsetting a provided dataframe by a provided key, here this is the class-label, and and an \texttt{apply} call looping over the respective subset's columns. The \texttt{get\_class\_means()} calculates the mean inside the \texttt{apply}-function whereas \texttt{get\_class\_cov()} uses a call to the built-in \texttt{cov}-function. However note that \texttt{cov} calculates 
-
-$$\hat{cov}(X) = \frac{1}{N-1} \sum_{i = 1}^{N}(x_i - \bar{x})(x_i - \bar{x})\prime.$$
-
-Unfortunately this is not exactly what we want for the scatter matrix defined in \ref{Sw}. We need to multiply the resulting list of covariance matrices elementwise by the number of observations in each class minus one. We correct this before calculating the within class scatter matrix on line 31. 
-
-\lstinputlisting[language=R, firstline=6, lastline=31, firstnumber=6]{../LDA/lda.R}
-
-With the \texttt{matrix}-object \texttt{S\_w} storing the within-scatter-matrix $S_w$ and \texttt{S\_b} storing $S_b$ we can continue by solving the generalized Eigenvalue problem posed in \ref{LDAsolution}. This is done by the \texttt{geigen()} function from the \texttt{geigen} package.
-\newpage
-\lstinputlisting[language=R, firstline=36, lastline=43, firstnumber=36]{../LDA/lda.R}
-
-We extract the eigenvectors and eigenvalues from \texttt{V} (line 36) in form of a list. However, caution is required because the eigenvectors are not ordered, which is different to the implementation of eigenvalues in the \texttt{base}-function \texttt{eigen()}. Therefore we rearrange the eigenvectors according to their absolute eigenvalues (line 39). We extract only the first two eigenvectors, because we require the most informative rotations in order to produce two-dimensional plots. Additionally we compute the percentage of explained variance as 
-
-\begin{equation}
-intertia_i = \frac{\lambda_i^2}{\sum_{j=1}^{d}\lambda_{j}^{2}}.
-\end{equation}
-
-The rotations \texttt{lda1} and \texttt{lda2} are computed by an \texttt{apply}-call (lines 45-46) to an anonymous function which emulates a scalar product by multiplying the two vectors \texttt{v[, i]}, which is the $i$-th eigenvector $i \in \{1, 2\}$, with each observation in the provided dataset. Computationally this is equivalent to the matrix multiplication $Xv_i$, where $X$ is the data matrix and $v_i$ is the eigenvector.
-
-Finally we gather the results into a \texttt{list} and sets it's class to \texttt{flda}. This allows us to augment pre-existing functions with a custom method for predicting and plotting for future objects of the\texttt{flda}-class in an object-oriented fashion.
-
-\subsubsection{Plotting}
-
-With a trained model of the \texttt{flda}-class it may be of interest to plot the rotations in order to get a visualisable idea of the separability of the two classes. To make this as easy as possible for the end-user we implemented a \texttt{plot} method for each instance of a \texttt{flda}-class. This means that a user can simply store a call to the \texttt{lda}-function inside a variable, called \texttt{model} for example. To plot the rotations one can simply invoke \texttt{plot} on \texttt{model} as easy as with any other model class by typing \texttt{plot(model)}.
-
-This is done by augmenting \texttt{R}'s \texttt{plot}-function using the \texttt{plot.\_\_className\_\_} syntax. Here we replace \texttt{\_\_className\_\_} by \texttt{flda}
-
-\lstinputlisting[language=R, firstline=61, lastline=69, firstnumber=61]{../LDA/lda.R}
-
-We overwrite the behavior of \texttt{plot} in order to accomodate \texttt{flda}-objects. Here we pass the model's precomputed rotations to the \texttt{ggplot2} function. The \texttt{ggplot2::\_\_function\_\_} makes it explicit that we want the \texttt{\_\_function\_\_} from the \texttt{ggplot2} package. Another benefit of this syntax is that this way we do not implicitly change a users namespace, which may potentially hide some functions by overwriting them with \texttt{ggplot2} routines and therefore may result in unexpected behavior.
-
-Looking at the creditreform dataset we can apply our custom routines by creating a train-set first and then visualizing the results. This reveals already why LDA's predictive results are of poor quality. The feature space spanned by the financial ratios is simply not linearly separable.
-
-
-\lstinputlisting[language=R, firstline=19, lastline=21, firstnumber=19]{../LDA/creditLDA.R}
-
-\begin{figure}
-\caption{Using Linear Discriminant Analysis on the Creditreform Database}
-\centering
-\includegraphics{../LDA/creditLDA.png}
-\end{figure}
-
-\subsubsection{Predictions}
-
-To make predicting with the \texttt{flda}-class as easy as plotting we augment the standard \texttt{predict} function in a similar fashion. We expect the user to have already trained an \texttt{flda}-model to which she or he wishes to apply new data and obtain predictions on the class labels. 
-
-\newpage
-\lstinputlisting[language=R, firstline=71, lastline=88, firstnumber=71]{../LDA/lda.R}
-
-The provided new data should have a similar structure to the training data. This means that especially the order of the columns should be the same. We check for obviously non-conforming data in line 77 but we do not perform explicit tests on the order of columns. If the data has the required shape we calculate the discriminant function for each observation, which is the scalar product of the observation's data vector and the first eigenvector from the trained model. We then proceed calculating a threshold $c$ for being able to discriminate between the two groups by following the rule
-
-\begin{equation}
-c = \frac{1}{2} v \prime \left(\mu_1 + \mu_2\right) 
-\end{equation}
-
-predictions are made according to the threshold, if the value of the discriminant function is smaller than the threshold we assign the label of the first class and the second class otherwise. 
+The \texttt{random forest} package is robust and very user friendly. However, it is important to note that it has a drawback in that it is invariably biased towards features with many cut points. There is a package \texttt{party} which provides the \texttt{cforest()} command to build a forest of conditional inference trees. The basic construction of each tree is fairly similar to a Random Forest. Hence the decisions are made in slightly different ways, using a statistical test rather than a purity measure. The \texttt{party} package is better than the \texttt{randomForest} package in terms of accuracy, since \texttt{cforest} uses the weighted average of the trees to get the final ensemble. However, it is computationally more expensive (Modi, 2016). In our dataset we do not have features which have many categories and therefore we favour the \texttt{random forest} package to calculate the insolvency predictions. Additionally, it is computationally more efficient.
 
 \section{Evaluation of predictions}
 
-In this section we explain the steps followed in the \texttt{evaluate\_predictions} quantlet. Purpose of this quantlet is to create a function that will take labels (actual solvency status) and predictions about the solvency status of firms and will return the confusion matrix, the ROC curve and the AUC as well as some evaluation metrics like sensitivity, specificity, precision and accuracy.
+In this section we explain the steps followed in the \texttt{evaluate\_predictions} quantlet. Purpose of this quantlet is to create a function that will take \texttt{labels} (actual solvency status) and \texttt{predictions} about the solvency status of firms and will return the confusion matrix, the ROC curve and the AUC as well as some evaluation metrics like sensitivity, specificity, precision and accuracy.
 
-The confusion matrix, also known as error matrix, is a matrix that illustrates the performance of a classification model on a set of test data with known true values (labels). Each row of the matrix corresponds to a case of a predicted class while each column corresponds to a case of an actual class. It is called confusion matrix because it depicts whether the classifier is confusing the two classes, i.e. if it is wrongly labelling one class as another. It is a special case of contingency table, with two dimensions ("actual" and "predicted") and two "classes" (solvent and insolvent in our case) in each dimension. The cells of our confusion matrix will present the number of:
+The confusion matrix, also known as error matrix, is a matrix that illustrates the performance of a classification model on a set of test data with known true values (labels). Each row of the matrix corresponds to a case of a predicted class while each column corresponds to a case of an actual class. It is called confusion matrix because it depicts whether the classifier is confusing the two classes, i.e. if it is wrongly labelling one class as another. It is a special case of a contingency table, with two dimensions ("actual" and "predicted") and two "classes" (solvent and insolvent in our case) in each dimension. The cells of our confusion matrix will present the number of:
 
 \begin{enumerate}
 \item True Positives (TP): firms who are correctly predicted to be insolvent (hits).
@@ -749,45 +789,42 @@ The values of specificity and sensitivity will allow us to plot the ROC curve. T
 
 \subsection{Implementation}
 
-\lstinputlisting[language=R, firstline=19, lastline=21, firstnumber=19]{../Evaluation/Evaluate_Predictions.fin.R}
+\lstinputlisting[language=R, firstline=19, lastline=21, firstnumber=19, escapechar=|, caption={|\textbf{\href{https://github.com/thsis/SPL_WS1718/blob/master/Evaluation/Evaluate_Predictions.fin.R}{Evaluate\_Predictions.fin.R}}|}]{../Evaluation/Evaluate_Predictions.fin.R}
 
-The first function we created in this quantlet is the \texttt{get\_prediction()}-function (lines 19-22). This function takes as inputs the fitted probabilities for insolvency and the threshold above of which a firm would be predicted to be defaulted. Using the \texttt{ifelse()} function in the body of this function, \texttt{get\_prediction()} will return predictions for the solvency status of each firm. We construct then the \texttt{evaluate\_predictions()} function (lines 24-47). Inputs of this function are the actual solvency status of each company (labels), the corresponding predictions about the status and the \texttt{verbose} parameter which is equal to FALSE by default. In the body of the function we create first the previously mentioned confusion matrix which we expect to be a 2x2 matrix. If it is not the case, the test in line 30 will show us a warning message. Then we get the values of TP, TN, FP and FN and we compute the values of sensitivity, specificity, precision and accuracy, which are then saved as a list in \texttt{reports}. The function will also print a data frame with those reports if we change the logical value of \texttt{verbose} to \texttt{TRUE}. The two previously mentioned functions are used in the body of the last function which completes the task of the quantlet. 
+The first function we created in this quantlet is the \texttt{get\_prediction()}-function (lines 19-22). This function takes as inputs the fitted probabilities for insolvency and the threshold above of which a firm would be predicted to be defaulted. Using the \texttt{ifelse()} function in the body of this function, \texttt{get\_prediction()} will return predictions for the solvency status of each firm. We construct then the \texttt{evaluate\_predictions()} function (lines 24-47). Inputs of this function are the actual solvency status of each company (labels), the corresponding predictions about the status and the \texttt{verbose} parameter which is equal to \texttt{FALSE} by default. In the body of the function we create first the previously mentioned confusion matrix which we expect to be a 2x2 matrix. If it is not the case, the test in line 30 will show us a warning message. Then we get the values of TP, TN, FP and FN and we compute the values of sensitivity, specificity, precision and accuracy, which are then saved as a list in \texttt{reports}. The function will also print a data frame with those reports if we change the logical value of \texttt{verbose} to \texttt{TRUE}.
 
-\lstinputlisting[language=R, firstline=24, lastline=47, firstnumber=24]{../Evaluation/Evaluate_Predictions.fin.R}
+\lstinputlisting[language=R, firstline=24, lastline=45, firstnumber=24, escapechar=|, caption={|\textbf{\href{https://github.com/thsis/SPL_WS1718/blob/master/Evaluation/Evaluate_Predictions.fin.R}{Evaluate\_Predictions.fin.R}}|}]{../Evaluation/Evaluate_Predictions.fin.R}
 
-The final function created in this quantlet is the evaluate\_model() function (lines 49-101), which takes the fitted probabilities for bankrupcy and the actual status (labels) as inputs. At first we create a threshold list in the body of the function with threshold values varying from 0 to 1 by tiny steps. Then we apply the \texttt{get\_prediction()} function to this list in order to get a list of predictions for each threshold value which we store as \texttt{pred\_list}. Afterwards we apply the \texttt{evaluate\_predictions()} function to \texttt{pred\_list} and we get a list of reports. We use then the values of sensitivity and specificity from \texttt{reports} in order to compute the ROC curve and the area under it (AUC) (lines 58-70). For calculating the AUC we create the function \texttt{get\_auc()} which takes the values of $1-\texttt{specificities}$ and \texttt{sensitivities} as inputs. This function uses the trapezoidal method to approximate the AUC (solution found in \href{https://stackoverflow.com/questions/4954507/calculate-the-area-under-a-curve}{stackoverflow.com}). For each difference in $1-specificities$ there is one rectangle which underestimates the area under curve (corresponding to the "left" value of sensitivities) and one rectangle that overestimates it (corresponding to the "right" value of sensitivities). Therefore the function approximates the AUC by taking the average of the two rectangles. 
+The final function created in this quantlet is the \texttt{evaluate\_model()} function (lines 49-101), which takes the fitted probabilities for bankrupcy and the actual status (labels) as inputs. At first we create a threshold list in the body of the function with threshold values starting from 0 to 1, which is increased by miniscule steps. Then we apply the \texttt{get\_prediction()} function to this list in order to get a list of predictions for each threshold value which we store as \texttt{pred\_list}. Afterwards we apply the \texttt{evaluate\_predictions()} function to \texttt{pred\_list} and we get a list of reports. We use then the values of sensitivity and specificity from \texttt{reports} in order to compute the ROC curve and the area under it (AUC) (lines 58-70). For calculating the AUC we create the function \texttt{get\_auc()} which takes the values of $1-\texttt{specificities}$ and \texttt{sensitivities} as inputs. This function uses the \href{https://stackoverflow.com/questions/4954507/calculate-the-area-under-a-curve}{trapezoidal method} to approximate the AUC. For each difference in $1-specificities$ there is one rectangle which underestimates the area under curve (corresponding to the "left" value of sensitivities) and one rectangle that overestimates it (corresponding to the "right" value of sensitivities). Therefore the function approximates the AUC by taking the average of the two rectangles. 
+
+\lstinputlisting[language=R, firstline=49, lastline=90, firstnumber=49, escapechar=|, caption={|\textbf{\href{https://github.com/thsis/SPL_WS1718/blob/master/Evaluation/Evaluate_Predictions.fin.R}{Evaluate\_Predictions.fin.R}}|}]{../Evaluation/Evaluate_Predictions.fin.R}
+
+
+\begin{wrapfigure}[25]{R}{0.3\textwidth}
+\caption{ROC Logit}
+\includegraphics[scale=0.35]{../Evaluation/ROC-Curve_Logit.png}
+\caption{ROC CART}
+\includegraphics[scale=0.35]{../Evaluation/ROC-Curve_CART.png}
+\caption{ROC RF}
+\includegraphics[scale=0.35]{../Evaluation/ROC-Curve_Random-forest.png}
+\end{wrapfigure}
+
 
 We are next interested in finding the values of sensitivities and specificities for which the distance between the ROC curve and the 45-degree line (i.e. the ROC curve of a model with no discriminative power) is maximized. We use the index of these values in order to find the optimal values of sensitivity, specificity and the threshold, which is then used to compute the optimal predictions. These predictions are then used to create the optimal confusion matrix and get the optimal accuracy (lines 73-84). In the final part of the \texttt{evaluate\_model()} function the ROC curve is plotted and the function returns a list with the optimal measures calculated above.
 
-\lstinputlisting[language=R, firstline=49, lastline=106, firstnumber=49]{../Evaluation/Evaluate_Predictions.fin.R}
 
-\newpage
 \section{Results and Conclusions}
-
-
-\begin{wrapfigure}{r}{0.3\textwidth}
-\caption{ROC Logit}
-\includegraphics[scale=.45]{../Evaluation/ROC-Curve_Logit.png}
-\caption{ROC CART}
-\includegraphics[scale=0.45]{../Evaluation/ROC-Curve_CART.png}
-\caption{ROC Random Forest}
-\includegraphics[scale=.45]{../Evaluation/ROC-Curve_Random-forest.png}
-\end{wrapfigure}
 
 
 Logistic regression and decision trees are benchmarking methods in predicting company credit risk. Their modelling techniques are well known for being able to return good probability estimates. Such models can be evaluated in terms of their estimated probabilities. 
 
-Most of the performance measures of a classifier can be read off the entries of confusion matrix. Accuracy measure is largely used to measure a prediction power of a model. Besides, we seek to obtain an idea of more detailed measures such as sensitivity, specificity, and precision. Additionally, we produce the receiver operating characteristic curve (ROC curve) for each method to compare their discriminative power. For each different classifier we pick a different score threshold between positive and negative determination and plot both the true positive rate and the false positive rate. The ROC curve represents every possible trade-off between sensitivity and specificity that is available for each classifier. Finally, we also compute the area under the curve (AUC), which is 1.0 for perfect classifiers and 0.5 for classifiers that do no better than random guesses. This metric might provide interesting information for the investors, whose ultimate goal is to reduce losses due to companie's bankruptcy. 
-%Evaluation/ROC-Curve_CART.png
-% Evaluation/ROC-Curve_Logit.png
-% Evaluation/ROC-Curve_Random-forest.png 
+Most of the performance measures of a classifier can be read off the entries of confusion matrix. Accuracy measure is largely used to measure a prediction power of a model. Besides, we seek to obtain an idea of more detailed measures such as sensitivity, specificity, and precision. Additionally, we produce the receiver operating characteristic curve (ROC curve) for each method to compare their discriminative power. This metric might provide interesting information for the investors, whose ultimate goal is to reduce losses due to company's bankruptcy. 
 
-The evidence from empirical results consistently shows that a credit risk model based on random forest significantly outperforms CART and Logit approach in modelling 
-the default risk of German firms. Logit model and CART show almost equal accuracy rates, though the values of the area under the curve (AUC), show that the CART 
-classifier do no better than random guessing.
+The evidence from empirical results consistently shows that a credit risk model based on random forest significantly outperforms CART and Logit approach in modelling the default risk of German firms. Logit model and CART show almost equal accuracy rates, though the values of the area under the curve (AUC), show that the CART classifier do no better than random guessing.
 
 \begin{center}
-\begin{table}[b]
+\begin{table}
+\centering
 \caption{Classifier performance measure}
 \begin{tabular}{cccc}
 \hline\hline
@@ -802,131 +839,92 @@ AUC                  &                 82,9        &                 56,1       
 \end{tabular}
 \end{table}
 \end{center}
-
-
-
+\newpage
 \section{Appendix}
 
 \subsection{Unit Tests}
 \subsubsection{LDA}
-
-\begin{wrapfigure}{r}{0.3\textwidth}
+\begin{wrapfigure}[10]{r}{0.3\textwidth}
 \label{iris}
-\begin{center}
-\includegraphics[scale=0.3, trim={10mm 20mm 30mm 30mm}]{../LDA/iris.png}
-\end{center}
-\caption{The Setosa-Species is already almost separable, even in the normal space.}
+\includegraphics[width=0.2\textwidth, trim={10mm 20mm 30mm 30mm}]{../LDA/iris.png}
+\vspace{2mm}
+\footnotesize\caption{Setosa species are already linearly separable.}
 \end{wrapfigure}
 
+In order to test the \texttt{lda}-function we take a dataset from which we know that it is linearly separable already and see if we can reproduce the results. Since Linear Discriminant Analysis was first proposed by Sir Ronald A. Fisher it is only fitting that we test it on his famous \texttt{iris} dataset. The \texttt{iris} dataset contains measurements of 150 observations for the sepal and petal length and width of three different species of iris flowers. We know that the sepal length and the petal length are sufficient variables to create an obviously visible separation line in figure \ref{iris} which discriminates the Setosa-species almost perfectly from the rest. An exception is one observation of the setosa speces which seems to be an outlier. 
 
-In order to test the \texttt{lda}-function we take a dataset from which we know that it is linearly separable already and see if we can reproduce the results. Since Linear Discriminant Analysis was first proposed by Sir Ronald A. Fisher it is only fitting that we test it on his famous \texttt{iris} dataset. The \texttt{iris} dataset contains measurements for the sepal and petal length and width of three different species of iris flowers. We know that the sepal length and the petal length are sufficient variables to create a obviously visible separation line in figure \ref{iris} which discriminates the Setosa-species almost perfectly from the rest. 
+\subsubsection{Expectations}
 
-Should the \texttt{lda}-function work as intended we would expect this result only to become better, i.e. the points being perfectly separable. We first import the \texttt{iris} dataset and transform the Species column in order to fit our binary task, that is we create a dichotomous variable indicating if the particular flower is of the Setosa species or not. We can then directly use the \texttt{lda}-function.
-
-\lstinputlisting[language=R, firstline=26, lastline=27, firstnumber=26]{../LDA/lda_tests.R}
-
-\begin{wrapfigure}{r}{0.3\textwidth}
+\begin{wrapfigure}[8]{r}{0.3\textwidth}
 \label{irisLDA}
-\begin{center}
-\includegraphics[scale=0.3, trim={10mm 20mm 30mm 30mm}]{../LDA/irisLDA.png}
-\end{center}
-\caption{We already see that the first LDA-component is enough for a good classification.}
+\includegraphics[width=0.2\textwidth, trim={10mm 20mm 30mm 30mm}]{../LDA/irisLDA.png}
 \end{wrapfigure}
 
-\subsubsection{Binary Response Models}
-\subsubsection{Evaluation}
+Should the \texttt{lda}-function work as intended we would expect this result only to become better, i.e. the points being perfectly separable. We first import the \texttt{iris} dataset and transform the Species column in order to fit our binary task, that is we create a dichotomous variable indicating if the particular flower is of the Setosa species or not. We can then directly use the \texttt{lda}-function and plot the first two components against each other.
+\subsubsection{Test}
+\lstinputlisting[language=R, firstline=26, lastline=27, firstnumber=26, escapechar=|, caption={|\textbf{\href{https://github.com/thsis/SPL_WS1718/blob/master/LDA/lda_tests.R}{lda\_tests.R}}|}]{../LDA/lda_tests.R}
 
+\subsubsection{Result}
+As we can see in figure \ref{irisLDA} the two classes are perfectly separable. In fact they would even be separable using only the first linear component.
+
+\subsection{Evaluation}
+
+In order to test the functions used for evaluating the predictions we compare our custom function with the \texttt{auc()} and \texttt{plot.roc()}-functions from the \texttt{pROC}-package. We load the \texttt{Boston} dataset from the \texttt{MASS}-package, which contains data from 506 different census districts of the Boston metropolitan area. 
+
+\subsubsection{Expectations}
+For testing purposes we will build a logit-model trying to predict wether the census district is adjacent to the Charles River which is stored in the variable \texttt{chas}. These models are of course nonsense. We will calculate the AUC and plot the ROC-curve once with our home-made function and compare them with the functions from the \texttt{pROC}-package. We would expect that the absolute difference between the two AUC-measures should not be larger than 0.001.
+
+\subsubsection{Test}
+\lstinputlisting[language=R, escapechar=|, caption={|\textbf{\href{https://github.com/thsis/SPL_WS1718/blob/master/Evaluation/unit_tests.fin.R}{unit\_tests.fin.R}}|}]{../Evaluation/unit_tests.fin.R}
+
+\subsubsection{Result}
+The function passes eleven out of the thirteen tests (84 \%). The plotted ROC-curves were remarkably similar, and the failed tests were caused by especially bad models yielding almost no predictive power. The differences can be mostly attributed to a design decision, we used a step-function, whereas the authors of the \texttt{pROC}-package use a line-plot. However we consider this test a success.
 \newpage
-
-\subsection{Tables}
-\begin{center}
-\begin{table}[h]
-\caption{Variables of the Creditreform database}
-\label{creditVars}
-\begin{tabular}{cc} 
-\hline\hline
-Column & Value\\
-\hline
-ID & ID of each company\\
-T2 & Indicator of solvency status (solvent=0, insolvent=1)\\
-Jahr & Year\\
-VAR1 & Cash and cash equivalents\\
-VAR2 & Inventories\\
-VAR3 & Current assets\\
-VAR4 & Tangible assets\\
-VAR5 & Intangible assets\\
-VAR6 & Total assets\\
-VAR7 & Accounts receivable\\
-VAR29 & Accounts receivable against affiliated companies\\
-VAR8 & Lands and buildings\\
-VAR9 & Equity (own funds)\\
-VAR10 & Shareholder loan\\
-VAR11 & Accrual for pension liabilities\\
-VAR12 & Total current liabilities\\
-VAR13 & Total longterm liabilities\\
-VAR14 & Bank debt\\
-VAR15 & Accounts payable\\
-VAR30 & Accounts payable against affiliated companies\\
-VAR16 & Sales\\
-VAR17 & Administrative expenses\\
-VAR18 & Amortization and depreciation\\
-VAR19 & Interest expenses\\
-VAR20 & Earnings before interest and taxes (EBIT)\\
-VAR21 & Operating income\\
-VAR22 & Net income\\
-VAR23 & Increase (decrease) in inventories\\
-VAR24 & Increase (decrease) in liabilities\\
-VAR25 & Increase (decrease) in cash\\
-VAR26 & Industry classification code\\
-VAR27 & Legal form\\
-VAR28 & Number of employees\\
-Rechtskreis & Accounting principle\\
-Abschlussart & Type of account\\
-\hline\hline
-\end{tabular}
-\end{table}
-\end{center}
 
 \subsection{Code}
 \subsubsection{Preparation}
-\lstinputlisting[language=R]{../Preparation/data.preparation.R}
+\lstinputlisting[language=R, escapechar=|, caption={|\textbf{\href{https://github.com/thsis/SPL_WS1718/blob/master/Preparation/data.preparation.R}{data.preparation.R}}|}]{../Preparation/data.preparation.R}
 \subsubsection{BRM}
-\lstinputlisting[language=R]{../BRM/utils.R}
-\lstinputlisting[language=R]{../BRM/logit.R}
+\lstinputlisting[language=R, escapechar=|, caption={|\textbf{\href{https://github.com/thsis/SPL_WS1718/blob/master/BRM/utils.R}{utils.R}}|}]{../BRM/utils.R}
+\lstinputlisting[language=R, escapechar=|, caption={|\textbf{\href{https://github.com/thsis/SPL_WS1718/blob/master/BRM/logit.R}{logit.R}}|}]{../BRM/logit.R}
 \subsubsection{Logit}
-\lstinputlisting[language=R]{../Logit/logit_model_fin.R}
+\lstinputlisting[language=R, escapechar=|, caption={|\textbf{\href{https://github.com/thsis/SPL_WS1718/blob/master/Logit/logit_model_fin.R}{logit\_model\_fin.R}}|}]{../Logit/logit_model_fin.R}
 \subsubsection{CART}
-\lstinputlisting[language=R]{../CART/CART_Modell.R}
+\lstinputlisting[language=R, escapechar=|, caption={|\textbf{\href{https://github.com/thsis/SPL_WS1718/blob/master/CART/cart_modell_fin.R}{cart\_modell\_fin.R}}|}]{../CART/cart_modell_fin.R}
 \subsubsection{Random\_Forest}
-\lstinputlisting[language=R]{../Random_Forest/random_forest_modell_fin.R }
+\lstinputlisting[language=R, escapechar=|, caption={|\textbf{\href{https://github.com/thsis/SPL_WS1718/blob/master/Random_Forest/random_forest_modell_fin.R}{random\_forest\_modell\_fin.R}}|}]{../Random_Forest/random_forest_modell_fin.R}
 \subsubsection{LDA}
-\lstinputlisting[language=R]{../LDA/utils.R}
-\lstinputlisting[language=R]{../LDA/lda.R}
+\lstinputlisting[language=R, escapechar=|, caption={|\textbf{\href{https://github.com/thsis/SPL_WS1718/blob/master/LDA/utils.R}{utils.R}}|}]{../LDA/utils.R}
+\lstinputlisting[language=R, escapechar=|, caption={|\textbf{\href{https://github.com/thsis/SPL_WS1718/blob/master/LDA/utils.R}{utils.R}}|}]{../LDA/lda.R}
 \subsubsection{Evaluation}
-\lstinputlisting[language=R]{../Evaluation/Evaluate_Predictions.fin.R}
+\lstinputlisting[language=R, escapechar=|, caption={|\textbf{\href{https://github.com/thsis/SPL_WS1718/blob/master/Evaluation/Evaluate_Predictions.fin.R}{Evaluate\_Predictions.fin.R}}|}]{../Evaluation/Evaluate_Predictions.fin.R}
 
 \begin{thebibliography}{9}
-\bibitem{winkel09}
-  Winkelmann, R., Boes, S. (2009): \textit{"Analysis of Microdata"}, 2nd edition.
 \bibitem{berk16} 
   Berk, J., DeMarzo, P. (2016), Corporate Finance, 4th edition, Harlow, Pearson Education 
 \bibitem{moro11}
   Chen, S., H{\"a}rdle, W.K., Moro, A.R (2011), Modeling default risk with support vector machines,  Quantitative Finance, 11(1), 135-154
+\bibitem{duda73}
+Duda, R. O., Hart, P. E., Stork, D. G. (1973). Pattern Classification. New York: Wiley-Interscience.
 \bibitem {fawcett06}
   Fawcett, T. (2006), An introduction to ROC analysis, Pattern Recognition Letters 27, 861-874
 \bibitem{prastyo12} 
   H{\"a}rdle, W.K., Prastyo, D.D., Hafner, C. (2012), Support vector machines with evolutionary model selection for default prediction, SFB 649 Discussion Paper 2012-030
-\bibitem{miao18} 
-  Miao, H., Ramchander, S., Ryan, P., Wang, T. (2018), Default prediction models: The role of forward-looking measures of returns and volatility, Journal of Empirical Finance, 46, 146-162
-\bibitem{Zhang10} 
-  Zhang, J.L., H{\"a}rdle, W.K. (2010). The Bayesian Additive Classification Tree Applied to Credit Risk Modelling. Computational Statistics and Data Analysis, 54: 1197-1205 
+\bibitem{mva03}
+H{\"a}rdle, W. K., Simar, L., (2003). Applied Multivariate Statistical Analysis. Heidelberg: Springer-Verlag.
 \bibitem{kabacoff11}
 Kabacoff, R. I. (2011). R in Action - Data Analysis and graphics with R. Shelter Island, NY 11964: Manning Piblucations Co..
 \bibitem{maindonald10}
 Maindonald, J. \& Braun, J. W. (2010). Data Analysis and Graphics Using R - an Example-Based Approach. NY: Cambrigde University Press.
+\bibitem{miao18} 
+  Miao, H., Ramchander, S., Ryan, P., Wang, T. (2018), Default prediction models: The role of forward-looking 
+\bibitem{winkel09}
+  Winkelmann, R., Boes, S. (2009): \textit{"Analysis of Microdata"}, 2nd edition.
+measures of returns and volatility, Journal of Empirical Finance, 46, 146-162
+\bibitem{Zhang10} 
+  Zhang, J.L., H{\"a}rdle, W.K. (2010). The Bayesian Additive Classification Tree Applied to Credit Risk Modelling. Computational Statistics and Data Analysis, 54: 1197-1205 
 \bibitem{Zumel14}
-Zumel, N. \& Mount, J. (2014). Practical Data Science with R. Shelter Island,NY 11964: Manning Publications Co..
-
+Zumel, N. \& Munt, J. (2014). Practical Data Science with R. Shelter Island, NY 11964: Manning Publications Co..
 
 % Packages
 \bibitem{breiman15}
@@ -937,6 +935,10 @@ Kuhn, M. et al. (2017). Package 'caret', s.l.: s.n.
 Milborrow, S. (2016). Plotting rpart trees with the rpart.plot package, s.l.: s.n.
 \bibitem{modi16}
 Modi, M. (2016). Different random forest packages in R, s.l.: s.n.
+\bibitem{geigen}
+Berend, H. (2017). Package 'geigen', s.l.: s.n.
+\bibitem{dplyr}
+Wickham, H. (2017). Package 'dplyr', s.l.: s.n.
 
 % Online
 \bibitem{modiOnl}

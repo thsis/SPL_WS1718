@@ -41,8 +41,12 @@ for (i in 1:30){
   
   #fit the model:
   names(training_complete)[1]="status"
-  mod_forest_I=randomForest(as.factor(status)~.,data=training_complete,importance=T,
-                            ntree = 2000, maxnodes= 100, norm.votes = F)
+  mod_forest_I=randomForest(as.factor(status)~.,
+                            data = training_complete,
+                            importance = T,
+                            ntree = 2000, 
+                            maxnodes = 100, 
+                            norm.votes = F)
   # define target variable as categorical
   # specify number of trees to be grown 
   # model predictions:

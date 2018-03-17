@@ -22,8 +22,6 @@ get_prediction = function(fitted_probs, threshold){
 }
 
 evaluate_predictions = function(labels, predictions, verbose = FALSE){
-  # Get TP, TN, FP, FN via a contingency table
-  # Set factor labels to avoid pitfalls if all predictions are the same.
   ct = table(factor(x = labels, levels = c(0, 1)),
              factor(x = predictions, levels = c(0,1)))
   
@@ -54,38 +52,26 @@ evaluate_model = function(fitted_probs, labels){
   report_list = lapply(pred_list,
                        evaluate_predictions,
                        labels = labels)
-  
   reports = unlist(report_list)
-  
   # Calculate ROC:
   sensitivities = reports[names(reports) == "sensitivity"]
   specificities = reports[names(reports) == "specificity"]
-  
   # Calculate AUC:
-  # Compare to upper and lower sums of Riemann Integration.
   get_auc = function(x, y){
-    abs(sum(diff(x) * (head(y, -1) + tail(y, -1)))/2)
-  }
-  
+    abs(sum(diff(x) * (head(y, -1) + tail(y, -1)))/2)}
   auc = get_auc(1-specificities, sensitivities)
-  
-  # Chose optimal threshold, specificity, sensitivity, predictions and confusion matrix:
+  # Choose optimal metrics:
   opt_ind = which.max(sensitivities + specificities - 1)
   opt_sensitivity = sensitivities[opt_ind]
   opt_specificity = specificities[opt_ind]
   opt_threshold = seq(from = 0, to = 1, by = 0.0001)[opt_ind]
-  
   opt_predictions = get_prediction(fitted_probs = fitted_probs,
                                    threshold = opt_threshold)
-  
-  ct = table(factor(x = labels, levels = c(0, 1)),
-             factor(x = opt_predictions, levels = c(0,1)))
-  
   opt_accuracy = (ct[1, 1] + ct[2, 2]) / sum(ct)
   opt_precision = precision = ct[2, 2] / (ct[2, 2] + ct[1, 2])
-
-  plot(x = 1 - specificities,
-       y = sensitivities,
+  ct = table(factor(x = labels, levels = c(0, 1)),
+             factor(x = opt_predictions, levels = c(0,1)))
+  plot(x = 1 - specificities, y = sensitivities,
        main = "ROC-Curve",
        xlab = "False Positive Rate (1 - specificity)",
        ylab = "True Positive Rate (sensitivity)",
@@ -94,7 +80,6 @@ evaluate_model = function(fitted_probs, labels){
        asp = TRUE,
        type = "s")
   abline(c(0, 0), c(1,1), col = "grey")
-  
   return(list(sensitivity = opt_sensitivity,
               specificity = opt_specificity,
               accuracy = opt_accuracy,
@@ -102,5 +87,4 @@ evaluate_model = function(fitted_probs, labels){
               threshold = opt_threshold,
               predictions = opt_predictions,
               auc = auc,
-              contingency_table = ct))
-}
+              contingency_table = ct))}

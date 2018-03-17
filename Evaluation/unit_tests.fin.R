@@ -1,7 +1,7 @@
 ## Unit tests & assorted things
 # Test the evaluation function using a logit model of the Boston-Housing dataset.
 
-source("Evaluate_Predictions.R")
+source("Evaluation/Evaluate_Predictions.fin.R")
 
 library("pROC")
 library("MASS")
@@ -17,7 +17,7 @@ test_eval_fun = function(formula){
   
   par(mfrow = c(1,1))
   # Is the difference between AUCs large?
-  test = abs(r_auc - custom_auc$auc) <= 0.01
+  test = abs(r_auc - custom_auc$auc) <= 0.001
   return(test)
 }
 
