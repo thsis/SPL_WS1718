@@ -83,7 +83,7 @@ well as the valuation of other financial products exposed to corporate defaults 
 In our paper we aim to perform default prediction analysis by following the methodologies of H{\"a}rdle et al. (2012), Chen et al. (2011) and Zhang \& H{\"a}rdle (2010) We seek to replicate some of their results using the \texttt{R} programming language. Our analysis is based on the creditreform-database, which provides several 
 financial statement variables of German firms. In our work we perform linear and generalized linear techniques for predicting bankruptcy based on financial ratios. We compare the predictive performance between following models: logit, probit, Classification and Regression Trees (CART), Random Forests (RF) and Linear Discriminant Analysis (LDA). 
 
-The rest of the paper is organized as follows. In the next section we describe the creditreform-dataset. In section 3 we explain the data preparation procedures as well as the variables and ratios used in this paper. Section 4 contains a brief introduction to Binary Response Models, with a custom implementation and an application of a Logit model to the creditreform-dataset. In section 5 we apply Classification and Regression Trees (CART), which is followed by a section about Random Forests (RF). Linear Discriminant Analysis (LDA) is briefly explained and applied in section 6. In Section 7, we present the steps we take to evaluate predictions of the selected models and the suitable performance measures. Finally section 8 summarises the conclusions we draw from our analysis.
+The rest of the paper is organized as follows. In the next section we describe the creditreform-dataset. In section 3 we explain the data preparation procedures as well as the variables and ratios used in this paper. Section 4 contains a brief introduction to Binary Response Models, with a custom implementation and an application of a Logit model to the creditreform-dataset. In section 5 we apply Classification and Regression Trees (CART), which is followed by a section about Random Forests (RF). Linear Discriminant Analysis (LDA) is briefly explained and applied in section 6. In section 7, we present the steps we take to evaluate predictions of the selected models and the suitable performance measures. Finally section 8 summarises the conclusions we draw from our analysis.
 
 \section{The dataset}
 
@@ -685,7 +685,7 @@ We implemented a custom \textit{logit}-model but since it is using only \texttt{
 
 \lstinputlisting[language=R, firstline=42, lastline=42, firstnumber=42, escapechar=|, caption={|\textbf{\href{https://github.com/thsis/SPL_WS1718/blob/master/Logit/logit_model_fin.R}{logit\_model\_fin.R}}|}]{../Logit/logit_model_fin.R}
  
-We apply the \texttt{glm} method. The function \texttt{glm()}, and the \texttt{predict} method for \texttt{glm} objects, reflect a classical approach to statistical inference. It only handles binary classification. Thus, we define our target variable \texttt{status} as categorical by using the \texttt{as.factor()} command (Stephens, 2016). All the other financial ratios are independent variables that influence the binary outcome of a target variable \texttt{status}. One important argument is \texttt{family\=binomial}. The \texttt{family()} function specifies the assumed distribution of the dependent variable \texttt{status}. In our case, we model a target variable as a binomial distribution. The binomial family accepts the links such as "logit", "probit", "cauchit", "log" and "cloglog". The \texttt{link} function links the output to a linear model. It passes the dependent variable through the link function, and then models the resulting value as a linear function of the values of independent variables. Different combinations of family functions and link functions lead to different kinds of generalized linear models (for example, Poisson, or probit). Without an explicit \texttt{link} argument, the link function defaults to standard \texttt{logit} (Zumel \& Mount, 2014). We store the resulting model in the object texttt{glm\_mod} and use \texttt{predict()} function to predict the insolvency of the German firms in the years 2000 until 2002. To this end, we pass the trained model \texttt{glm\_mod} and the test set features without the actual labels to the \texttt{predict()} function. We specify the type of prediction as \texttt{type=prob} to receive the probability for a firm's insolvency. The predicted probabilities are passed into \texttt{evaluate\_prediction} function to estimate the overall prediction power over models.
+We apply the \texttt{glm} method. The function \texttt{glm()}, and the \texttt{predict} method for \texttt{glm} objects, reflect a classical approach to statistical inference. It only handles binary classification. Thus, we define our target variable \texttt{status} as categorical by using the \texttt{as.factor()} command (Stephens, 2016). All the other financial ratios are independent variables that influence the binary outcome of a target variable \texttt{status}. One important argument is \texttt{family} = \texttt{binomial}. The \texttt{family()} function specifies the assumed distribution of the dependent variable \texttt{status}. In our case, we model a target variable as a binomial distribution. The binomial family accepts the links such as "logit", "probit", "cauchit", "log" and "cloglog". The \texttt{link} function links the output to a linear model. It passes the dependent variable through the link function, and then models the resulting value as a linear function of the values of independent variables. Different combinations of family functions and link functions lead to different kinds of generalized linear models (for example, Poisson, or probit). Without an explicit \texttt{link} argument, the link function defaults to standard \texttt{logit} (Zumel \& Mount, 2014). We store the resulting model in the object \texttt{glm\_mod} and use \texttt{predict()} function to predict the insolvency of the German firms in the years 2000 until 2002. To this end, we pass the trained model \texttt{glm\_mod} and the test set features without the actual labels to the \texttt{predict()} function. We specify the type of prediction as \texttt{type=prob} to receive the probability for a firm's insolvency. The predicted probabilities are passed into \texttt{evaluate\_prediction} function to estimate the overall prediction power over models.
 
 \lstinputlisting[language=R, firstline=53, lastline=53, escapechar=|, caption={|\textbf{\href{https://github.com/thsis/SPL_WS1718/blob/master/Logit/logit_model_fin.R}{logit\_model\_fin.R}}|}]{../Logit/logit_model_fin.R}
 
@@ -708,7 +708,7 @@ The basic way to visualize classification or regression tree built with \texttt{
 %CART/fancyRpartPlot.pdf
 \begin{figure}
 \caption{Decision Tree}
-\includegraphics[scale=0.8]{../CART/fancyRpartPlot.pdf}
+\includegraphics[scale=0.8, trim={0mm 10mm 0mm 0mm}, clip]{../CART/fancyRpartPlot.pdf}
 \end{figure}
 
 fancyRpartPlot() builds more elaborate and clean trees, which can be easily interpreted. Each node box displays the classification, the probability of each class at that specific node and the percentage of observations that arrived at each node (Rickert, 2013). 
@@ -721,14 +721,15 @@ It might be interesting to acquire information regarding which financial stateme
  
 We used \texttt{corrplot} package to graphical display a correlation matrix. Positive correlations are displayed in blue and negative correlations in red colour. Colour intensity and the size of the circle are proportional to the correlation coefficients. Every correlation coefficient ranges from 1 to -1, where 1 is a prefect positive correlation, -1 a perfect negative correlation, and 0 indicates no correlation between two features.
 
-\begin{figure}
+\begin{figure}[h]
 \caption{Correlation Matrix }
-\includegraphics[scale=0.8]{../CART/CorrPlot.pdf}
+\centering
+\includegraphics[scale=0.6]{../CART/CorrPlot.pdf}
 \end{figure}
 %CART/CorrPlot.pdf 
 
 The \texttt{caret}-package includes a command to perform variable importance. \texttt{The varImp()} function calculates important features of almost all models (Kuhn, et al., 2017). We use a call to \texttt{plot} to visualize the results for importance scores generated by the \texttt{varImp()} function. We apply the \texttt{top=10} option to make the chart more readable and select the ten most important variables.
-
+\newpage
 \begin{figure}
 \caption{Variable Importance - varImp() function}
 \includegraphics[scale=0.9]{../CART/VarImp_top_10.png}
@@ -800,7 +801,7 @@ The final function created in this quantlet is the \texttt{evaluate\_model()} fu
 \lstinputlisting[language=R, firstline=49, lastline=90, firstnumber=49, escapechar=|, caption={|\textbf{\href{https://github.com/thsis/SPL_WS1718/blob/master/Evaluation/Evaluate_Predictions.fin.R}{Evaluate\_Predictions.fin.R}}|}]{../Evaluation/Evaluate_Predictions.fin.R}
 
 
-\begin{wrapfigure}[25]{R}{0.3\textwidth}
+\begin{wrapfigure}[27]{R}{0.3\textwidth}
 \caption{ROC Logit}
 \includegraphics[scale=0.35]{../Evaluation/ROC-Curve_Logit.png}
 \caption{ROC CART}
@@ -812,18 +813,19 @@ The final function created in this quantlet is the \texttt{evaluate\_model()} fu
 
 We are next interested in finding the values of sensitivities and specificities for which the distance between the ROC curve and the 45-degree line (i.e. the ROC curve of a model with no discriminative power) is maximized. We use the index of these values in order to find the optimal values of sensitivity, specificity and the threshold, which is then used to compute the optimal predictions. These predictions are then used to create the optimal confusion matrix and get the optimal accuracy (lines 73-84). In the final part of the \texttt{evaluate\_model()} function the ROC curve is plotted and the function returns a list with the optimal measures calculated above.
 
-
+\newpage
 \section{Results and Conclusions}
-
 
 Logistic regression and decision trees are benchmarking methods in predicting company credit risk. Their modelling techniques are well known for being able to return good probability estimates. Such models can be evaluated in terms of their estimated probabilities. 
 
-Most of the performance measures of a classifier can be read off the entries of confusion matrix. Accuracy measure is largely used to measure a prediction power of a model. Besides, we seek to obtain an idea of more detailed measures such as sensitivity, specificity, and precision. Additionally, we produce the receiver operating characteristic curve (ROC curve) for each method to compare their discriminative power. This metric might provide interesting information for the investors, whose ultimate goal is to reduce losses due to company's bankruptcy. 
+Most of the performance measures of a classifier can be read off the entries of a confusion matrix. Accuracy measure is largely used to measure a prediction power of a model. Besides, we seek to obtain an idea of more detailed measures such as sensitivity, specificity, and precision. Additionally, we produce the receiver operating characteristic curve (ROC curve) for each method to compare their discriminative power. This metric might provide interesting information for the investors, whose ultimate goal is to reduce losses due to company's bankruptcy. 
 
-The evidence from empirical results consistently shows that a credit risk model based on random forest significantly outperforms CART and Logit approach in modelling the default risk of German firms. Logit model and CART show almost equal accuracy rates, though the values of the area under the curve (AUC), show that the CART classifier do no better than random guessing.
+The evidence from empirical results consistently shows that a credit risk model based on random forest significantly outperforms CART and Logit approach in modelling the default risk of German firms. Logit model and CART show almost equal accuracy rates, though the values of the area under the curve (AUC), show that the CART classifier does not perform better than a random guess.
+
+In summary, we successfully managed to replicate most of the results reported in the papers. Additionally we implemented custom functions for censoring a dataset by replacing extreme values by the 0.05 and 0.95-percentile and for computing Linear Discriminant Analysis. Additionally we implemented \textit{logit} and \textit{probit} models, followed by an application of the \textit{logit}-model to the creditreform dataset, although we didn't use our own implementation for reasons of efficiency. We applied Classification and Regression Trees as well as Random Forests and evaluated their predictions using our own function for calculating Accuracy, Sensitivity, Specificity, Precision measures and plotting the Receiver Operator Characteristic as well as calculating the Area Under Curve.
 
 \begin{center}
-\begin{table}
+\begin{table}[h]
 \centering
 \caption{Classifier performance measure}
 \begin{tabular}{cccc}
@@ -842,11 +844,10 @@ AUC                  &                 82,9        &                 56,1       
 \newpage
 \section{Appendix}
 
-\subsection{Unit Tests}
-\subsubsection{LDA}
+\subsection{Unit Tests LDA}
 \begin{wrapfigure}[10]{r}{0.3\textwidth}
 \label{iris}
-\includegraphics[width=0.2\textwidth, trim={10mm 20mm 30mm 30mm}]{../LDA/iris.png}
+\includegraphics[scale=0.8, width=0.2\textwidth, trim={10mm 20mm 30mm 30mm}]{../LDA/iris.png}
 \vspace{2mm}
 \footnotesize\caption{Setosa species are already linearly separable.}
 \end{wrapfigure}
@@ -855,19 +856,49 @@ In order to test the \texttt{lda}-function we take a dataset from which we know 
 
 \subsubsection{Expectations}
 
-\begin{wrapfigure}[8]{r}{0.3\textwidth}
+\begin{wrapfigure}[7]{r}{0.3\textwidth}
 \label{irisLDA}
-\includegraphics[width=0.2\textwidth, trim={10mm 20mm 30mm 30mm}]{../LDA/irisLDA.png}
+\includegraphics[scale=0.8, width=0.2\textwidth, trim={10mm 20mm 30mm 30mm}]{../LDA/irisLDA.png}
+\vspace{2mm}
+\caption{LDA manages to separate both groups.}
 \end{wrapfigure}
 
 Should the \texttt{lda}-function work as intended we would expect this result only to become better, i.e. the points being perfectly separable. We first import the \texttt{iris} dataset and transform the Species column in order to fit our binary task, that is we create a dichotomous variable indicating if the particular flower is of the Setosa species or not. We can then directly use the \texttt{lda}-function and plot the first two components against each other.
+
+\vspace{5mm}
 \subsubsection{Test}
+
 \lstinputlisting[language=R, firstline=26, lastline=27, firstnumber=26, escapechar=|, caption={|\textbf{\href{https://github.com/thsis/SPL_WS1718/blob/master/LDA/lda_tests.R}{lda\_tests.R}}|}]{../LDA/lda_tests.R}
 
 \subsubsection{Result}
 As we can see in figure \ref{irisLDA} the two classes are perfectly separable. In fact they would even be separable using only the first linear component.
 
-\subsection{Evaluation}
+
+\subsection{Unit Tests Gradient Descent}
+
+In order to test the \texttt{gradientDescentMinimizer()}-routine we will try it out on a function that is easy to optimize analytically, but tricky when it comes to numerical methods using finite differences. We opt for the function $$f(x)=0.008\cdot x^4 +2.$$
+
+\subsubsection{Expectations}
+
+\begin{wrapfigure}[11]{r}{0.3\textwidth}
+\centering
+\includegraphics[scale=0.3]{../BRM/gradientDescent.png}
+\caption{Although the gradient decays very fast, it is possible to reach the exact minimum.}
+\end{wrapfigure}
+
+Of course the first derivative of $f$ is equal to $$f\prime(x)=0.032\cdot x^3.$$ Which, set to zero, yields a solution at $x^\star=0$. Obtaining this result is easy using calculus, however the \texttt{gradientDescentMinimizer()} computes its approximate gradients using only finite differences. The derivative of function $f$ tends towards 0 pretty early making it hard for an algoritmic procedure to decide how close to 0 is going to be close enough. This may result in an early abort of the update steps which yields unprecise results.
+\vspace{5mm}
+\subsubsection{Test}
+
+
+
+\lstinputlisting[language=R, escapechar=|, caption={|\textbf{\href{https://github.com/thsis/SPL_WS1718/blob/master/BRM/unit_tests.R}{unit\_tests.R}}|}]{../BRM/unit_tests.R}
+
+\subsubsection{Result}
+
+We see that the \texttt{gradientDescentMinimizer()} finds the correct minimum. However, this result has been obtained only after rigorous tuning. In itself this is not a grave shortcoming since it is inherent to any gradient-Descent-routine. All in all we would recommend running the routine multiple times to ensure that it converged towards the same minimum.
+
+\subsection{Unit Tests Evaluation}
 
 In order to test the functions used for evaluating the predictions we compare our custom function with the \texttt{auc()} and \texttt{plot.roc()}-functions from the \texttt{pROC}-package. We load the \texttt{Boston} dataset from the \texttt{MASS}-package, which contains data from 506 different census districts of the Boston metropolitan area. 
 
@@ -946,16 +977,19 @@ Modi, M. (2016). linkedin. [Online]
 Available at: https://www.linkedin.com/pulse/different-random-forest-packages-r-madhur-modi/
 \bibitem{rickertOnl}
 Rickert, J. (2013). Revolutions. [Online] 
-Available at: http://blog.revolutionanalytics.com/2013/06/plotting-classification-and-regression-trees-with-plotrpart.html
+Available at:
+\footnotesize http://blog.revolutionanalytics.com/2013/06/plotting-classification-and-regression-trees-with-plotrpart.html
 \bibitem{robinsonOnl}
 Robinson, N. (2018). The Disadvantages of Logistic Regression. [Online] 
-Available at: https://classroom.synonym.com/disadvantages-logistic-regression-8574447.html
+Available at:
+\footnotesize https://classroom.synonym.com/disadvantages-logistic-regression-8574447.html
 \bibitem{stephensOnl}
 Stephens, T. (2016). Trevor Stephens. [Online] 
-Available at: http://trevorstephens.com/kaggle-titanic-tutorial/r-part-5-random-forests/
+Available at: 
+\footnotesize http://trevorstephens.com/kaggle-titanic-tutorial/r-part-5-random-forests/
 \bibitem{stroblOnl}
 Strobl, C., Boulesteix, A.-L., Zeileis, A. \& Hothorn, T. (2007). BMC Bioinformatics. [Online] 
-Available at: https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-8-25
+Available at: \footnotesize https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-8-25
 
 
 \end{thebibliography}

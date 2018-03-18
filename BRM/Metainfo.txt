@@ -1,0 +1,21 @@
+Name of Quantlet:  BRM
+
+Published in:      'Statistical programming languages - Student Project on SPL_WS17/18'
+
+Description:       Fit Logit and Probit Models.
+
+Keywords:          logit, probit, maximum_likelihood, binary_response_model
+
+See also:
+
+Author:            Thomas Siskos
+
+Submitted:         Sun, March 18 2018 by Thomas Siskos
+
+Datafile:
+
+Input:
+
+Output:
+
+Example:

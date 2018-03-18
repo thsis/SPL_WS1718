@@ -1,10 +1,12 @@
 \select@language {english}
-\contentsline {figure}{\numberline {1}{\ignorespaces Using Linear Discriminant Analysis on the Creditreform Database}}{14}{figure.1}
-\contentsline {figure}{\numberline {2}{\ignorespaces Decision Tree}}{23}{figure.2}
+\contentsline {figure}{\numberline {1}{\ignorespaces Using Linear Discriminant Analysis on the Creditreform Database}}{15}{figure.1}
+\contentsline {figure}{\numberline {2}{\ignorespaces Decision Tree}}{24}{figure.2}
 \contentsline {figure}{\numberline {3}{\ignorespaces Correlation Matrix }}{25}{figure.3}
 \contentsline {figure}{\numberline {4}{\ignorespaces Variable Importance - varImp() function}}{26}{figure.4}
-\contentsline {figure}{\numberline {5}{\ignorespaces Variable Importance - \texttt {importance()}-function}}{27}{figure.5}
-\contentsline {figure}{\numberline {6}{\ignorespaces ROC Logit}}{31}{figure.6}
-\contentsline {figure}{\numberline {7}{\ignorespaces ROC CART}}{31}{figure.7}
-\contentsline {figure}{\numberline {8}{\ignorespaces ROC RF}}{31}{figure.8}
-\contentsline {figure}{\numberline {9}{\ignorespaces Setosa species are already linearly separable.}}{32}{figure.9}
+\contentsline {figure}{\numberline {5}{\ignorespaces Variable Importance - \texttt {importance()}-function}}{28}{figure.5}
+\contentsline {figure}{\numberline {6}{\ignorespaces ROC Logit}}{32}{figure.6}
+\contentsline {figure}{\numberline {7}{\ignorespaces ROC CART}}{32}{figure.7}
+\contentsline {figure}{\numberline {8}{\ignorespaces ROC RF}}{32}{figure.8}
+\contentsline {figure}{\numberline {9}{\ignorespaces Setosa species are already linearly separable.}}{33}{figure.9}
+\contentsline {figure}{\numberline {10}{\ignorespaces LDA manages to separate both groups.}}{33}{figure.10}
+\contentsline {figure}{\numberline {11}{\ignorespaces Although the gradient decays very fast, it is possible to reach the exact minimum.}}{34}{figure.11}

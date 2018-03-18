@@ -1,0 +1,21 @@
+Name of Quantlet:  Evaluation
+
+Published in:      'Statistical programming languages - Student Project on SPL_WS17/18'
+
+Description:       Evaluate fitted models.
+
+Keywords:          roc, auc, precision, accuracy, sensitivity, specificity
+
+See also:
+
+Author:            Michail Psarakis
+
+Submitted:         Sun, March 18 2018 by Thomas Siskos
+
+Datafile:
+
+Input:
+
+Output:
+
+Example:

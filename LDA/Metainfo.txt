@@ -1,0 +1,21 @@
+Name of Quantlet:  LDA
+
+Published in:      'Statistical programming languages - Student Project on SPL_WS17/18'
+
+Description:       Perform Linear Discriminant Analysis.
+
+Keywords:          fisher_linear_discriminant_analysis, lda
+
+See also:
+
+Author:            Thomas Siskos
+
+Submitted:         Sun, March 18 2018 by Thomas Siskos
+
+Datafile:
+
+Input:
+
+Output:
+
+Example:

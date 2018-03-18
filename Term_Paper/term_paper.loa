@@ -1,4 +1,4 @@
-\contentsline {algorithm}{\numberline {1}{\ignorespaces \texttt {lda()}}}{11}{algorithm.1}
-\contentsline {algorithm}{\numberline {2}{\ignorespaces get\_likehood()}}{16}{algorithm.2}
-\contentsline {algorithm}{\numberline {3}{\ignorespaces gradientDescentMinimizer()}}{18}{algorithm.3}
-\contentsline {algorithm}{\numberline {4}{\ignorespaces get\_gradient()}}{19}{algorithm.4}
+\contentsline {algorithm}{\numberline {1}{\ignorespaces \texttt {lda()}}}{12}{algorithm.1}
+\contentsline {algorithm}{\numberline {2}{\ignorespaces get\_likehood()}}{17}{algorithm.2}
+\contentsline {algorithm}{\numberline {3}{\ignorespaces gradientDescentMinimizer()}}{19}{algorithm.3}
+\contentsline {algorithm}{\numberline {4}{\ignorespaces get\_gradient()}}{20}{algorithm.4}

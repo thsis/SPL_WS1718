@@ -1,0 +1,21 @@
+Name of Quantlet:  Logit
+
+Published in:      'Statistical programming languages - Student Project on SPL_WS17/18'
+
+Description:       Fit Logit Models on creditreform dataset.
+
+Keywords:          logit, creditreform
+
+See also:
+
+Author:            Valeryia Mosinzova
+
+Submitted:         Sun, March 18 2018 by Thomas Siskos
+
+Datafile:
+
+Input:
+
+Output:
+
+Example:

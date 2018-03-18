@@ -66,7 +66,7 @@ pdf("varImp.pdf")
 plot(varImp(modfit), main="Variable Importance", top=10)
 dev.off()
 
-# use rpart for plotting fancy decision tree and predictions 
+# use rpart for plotting a visually appealing decision tree and predictions 
 mod_fit=rpart(as.factor(status)~.,data=training_complete)
 
 pdf("fancyRpartPlot.pdf")

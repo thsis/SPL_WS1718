@@ -1,0 +1,21 @@
+Name of Quantlet:  CART
+
+Published in:      'Statistical programming languages - Student Project on SPL_WS17/18'
+
+Description:       Fit CART Model to creditreform dataset.
+
+Keywords:          classification_regression_trees, cart, creditreform
+
+See also:
+
+Author:            Valeryia Mosinzova
+
+Submitted:         Sun, March 18 2018 by Thomas Siskos
+
+Datafile:          
+
+Input:
+
+Output:
+
+Example:
