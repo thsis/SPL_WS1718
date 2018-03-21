@@ -12,8 +12,8 @@ iris$is_setosa = factor(iris$Species == "setosa",
 iris_test = iris[, -5]
 summary(iris_test)
 
-ggplot(iris_test, aes(x = Sepal.Length,
-                      y = Sepal.Width,
+ggplot(iris_test, aes(x     = Sepal.Length,
+                      y     = Sepal.Width,
                       color = is_setosa)) +
   geom_point() +
   ggtitle("Setosa vs. others") +

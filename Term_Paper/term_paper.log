@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.11.4)  18 MAR 2018 13:18
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.11.4)  21 MAR 2018 18:26
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -545,7 +545,7 @@ LaTeX Info: Redefining \nameref on input line 47.
  ABD: EverySelectfont initializing macros
 LaTeX Info: Redefining \selectfont on input line 47.
 
-<hulogo.pdf, id=182, 130.88197pt x 130.88197pt>
+<hulogo.pdf, id=178, 130.88197pt x 130.88197pt>
 File: hulogo.pdf Graphic file (type pdf)
  <use hulogo.pdf>
 Package pdftex.def Info: hulogo.pdf used on input line 51.
@@ -572,7 +572,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
  been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.43 ...}Random\_Forest}{46}{subsubsection.10.4.5}
+l.43 ...ine {10.4.6}LDA}{47}{subsubsection.10.4.6}
                                                    [1])
 \tf@toc=\write4
 \openout4 = `term_paper.toc'.
@@ -643,7 +643,7 @@ Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
 put line 381.
  [12] (../LDA/lda.R) (../LDA/lda.R) [13] (../LDA/lda.R) [14]
 (../LDA/lda.R) (../LDA/creditLDA.R)
-<../LDA/creditLDA.png, id=536, 413.29407pt x 286.06876pt>
+<../LDA/creditLDA.png, id=531, 413.29407pt x 286.06876pt>
 File: ../LDA/creditLDA.png Graphic file (type png)
 
 <use ../LDA/creditLDA.png>
@@ -659,7 +659,7 @@ l.466
 (../BRM/logit.R) [18] (../BRM/utils.R) (../BRM/utils.R [19]) [20]
 (../BRM/utils.R) (../BRM/logit.R) [21] (../Logit/logit_model_fin.R)
 (../Logit/logit_model_fin.R) [22] (../CART/cart_modell_fin.R)
-<../CART/fancyRpartPlot.pdf, id=688, 505.89pt x 505.89pt>
+<../CART/fancyRpartPlot.pdf, id=683, 505.89pt x 505.89pt>
 File: ../CART/fancyRpartPlot.pdf Graphic file (type pdf)
 
 <use ../CART/fancyRpartPlot.pdf>
@@ -670,9 +670,9 @@ re.2}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.721 
-       <../CART/fancyRpartPlot.pdf>]
-<../CART/CorrPlot.pdf, id=743, 505.89pt x 505.89pt>
+l.718 \subsection
+                 {Variable Importance} <../CART/fancyRpartPlot.pdf>]
+<../CART/CorrPlot.pdf, id=738, 505.89pt x 505.89pt>
 File: ../CART/CorrPlot.pdf Graphic file (type pdf)
  <use ../CART/CorrPlot.pdf>
 Package pdftex.def Info: ../CART/CorrPlot.pdf used on input line 727.
@@ -685,7 +685,7 @@ Package pdftex.def Info: ../CART/CorrPlot.pdf used on input line 727.
                                                   \fi \fi 
 l.732 \newpage
                <../CART/CorrPlot.pdf>]
-<../CART/VarImp_top_10.png, id=754, 458.46281pt x 216.81pt>
+<../CART/VarImp_top_10.png, id=749, 458.46281pt x 216.81pt>
 File: ../CART/VarImp_top_10.png Graphic file (type png)
 
 <use ../CART/VarImp_top_10.png>
@@ -699,7 +699,7 @@ Package pdftex.def Info: ../CART/VarImp_top_10.png used on input line 735.
 l.746 \newpage
                <../CART/VarImp_top_10.png>]
 (../Random_Forest/random_forest_modell_fin.R)
-<../Random_Forest/Rplot.pdf, id=762, 614.295pt x 794.97pt>
+<../Random_Forest/Rplot.pdf, id=757, 614.295pt x 794.97pt>
 File: ../Random_Forest/Rplot.pdf Graphic file (type pdf)
 
 <use ../Random_Forest/Rplot.pdf>
@@ -714,7 +714,7 @@ l.777
        <../Random_Forest/Rplot.pdf>] (../Evaluation/Evaluate_Predictions.fin.R
 [29]) (../Evaluation/Evaluate_Predictions.fin.R) [30]
 (../Evaluation/Evaluate_Predictions.fin.R)
-<../Evaluation/ROC-Curve_Logit.png, id=828, 333.49594pt x 216.81pt>
+<../Evaluation/ROC-Curve_Logit.png, id=823, 333.49594pt x 216.81pt>
 File: ../Evaluation/ROC-Curve_Logit.png Graphic file (type png)
 
 <use ../Evaluation/ROC-Curve_Logit.png>
@@ -722,7 +722,7 @@ Package pdftex.def Info: ../Evaluation/ROC-Curve_Logit.png used on input line 8
 06.
 (pdftex.def)             Requested size: 116.72531pt x 75.88463pt.
 
-<../Evaluation/ROC-Curve_CART.png, id=829, 333.49594pt x 216.81pt>
+<../Evaluation/ROC-Curve_CART.png, id=824, 333.49594pt x 216.81pt>
 File: ../Evaluation/ROC-Curve_CART.png Graphic file (type png)
 
 <use ../Evaluation/ROC-Curve_CART.png>
@@ -730,7 +730,7 @@ Package pdftex.def Info: ../Evaluation/ROC-Curve_CART.png used on input line 80
 8.
 (pdftex.def)             Requested size: 116.72531pt x 75.88463pt.
 
-<../Evaluation/ROC-Curve_Random-forest.png, id=830, 333.49594pt x 216.81pt>
+<../Evaluation/ROC-Curve_Random-forest.png, id=825, 333.49594pt x 216.81pt>
 File: ../Evaluation/ROC-Curve_Random-forest.png Graphic file (type png)
 
 <use ../Evaluation/ROC-Curve_Random-forest.png>
@@ -763,20 +763,20 @@ l.844 \newpage
 l.844 \newpage
                <../Evaluation/ROC-Curve_Logit.png> <../Evaluation/ROC-Curve_CAR
 T.png> <../Evaluation/ROC-Curve_Random-forest.png>]
-<../LDA/iris.png, id=886, 413.29407pt x 428.35031pt>
+<../LDA/iris.png, id=881, 413.29407pt x 428.35031pt>
 File: ../LDA/iris.png Graphic file (type png)
  <use ../LDA/iris.png>
 Package pdftex.def Info: ../LDA/iris.png used on input line 850.
 (pdftex.def)             Requested size: 239.58678pt x 228.86955pt.
 
-<../LDA/irisLDA.png, id=888, 413.29407pt x 428.35031pt>
+<../LDA/irisLDA.png, id=883, 413.29407pt x 428.35031pt>
 File: ../LDA/irisLDA.png Graphic file (type png)
 
 <use ../LDA/irisLDA.png>
 Package pdftex.def Info: ../LDA/irisLDA.png used on input line 861.
 (pdftex.def)             Requested size: 239.58678pt x 228.86955pt.
  (../LDA/lda_tests.R)
-<../BRM/gradientDescent.png, id=891, 412.54124pt x 427.5975pt>
+<../BRM/gradientDescent.png, id=886, 412.54124pt x 427.5975pt>
 File: ../BRM/gradientDescent.png Graphic file (type png)
 
 <use ../BRM/gradientDescent.png>
@@ -832,60 +832,47 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 996.
  (./term_paper.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 996.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 996.
-
-
-Package rerunfilecheck Warning: File `term_paper.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `term_paper.out':
-(rerunfilecheck)             Before: F578E07AEDE282DEC64BEE319BA76215;2885
-(rerunfilecheck)             After:  9AA37A99381A24AF26C8172C59EEC327;2846.
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
+Package rerunfilecheck Info: File `term_paper.out' has not changed.
+(rerunfilecheck)             Checksum: 9AA37A99381A24AF26C8172C59EEC327;2846.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 996.
  ) 
 Here is how much of TeX's memory you used:
- 14458 strings out of 493029
- 199833 string characters out of 6136234
- 664520 words of memory out of 5000000
- 16242 multiletter control sequences out of 15000+600000
+ 14456 strings out of 493029
+ 199791 string characters out of 6136234
+ 658520 words of memory out of 5000000
+ 16241 multiletter control sequences out of 15000+600000
  25630 words of font info for 64 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  32i,15n,42p,15149b,2734s stack positions out of 5000i,500n,10000p,200000b,80000s
-pdfTeX warning (dest): name{subsubsection.10.1.4} has been referenced but doe
-s not exist, replaced by a fixed one
-
-{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/share/texlive/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-
-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/fonts/ty
-pe1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/pub
-lic/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
-fonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.
-pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/shar
-e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texli
-ve/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texmf/
-fonts/type1/public/cm-super/sfbx1000.pfb></usr/share/texmf/fonts/type1/public/c
-m-super/sfbx1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1440.pfb
-></usr/share/texmf/fonts/type1/public/cm-super/sfbx2074.pfb></usr/share/texmf/f
-onts/type1/public/cm-super/sfcc1000.pfb></usr/share/texmf/fonts/type1/public/cm
--super/sfcc1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfcc1728.pfb>
-</usr/share/texmf/fonts/type1/public/cm-super/sfit0800.pfb></usr/share/texmf/fo
-nts/type1/public/cm-super/sfrm0700.pfb></usr/share/texmf/fonts/type1/public/cm-
-super/sfrm0800.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1000.pfb><
-/usr/share/texmf/fonts/type1/public/cm-super/sfrm1200.pfb></usr/share/texmf/fon
-ts/type1/public/cm-super/sfrm1440.pfb></usr/share/texmf/fonts/type1/public/cm-s
-uper/sfti1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti1440.pfb></
-usr/share/texmf/fonts/type1/public/cm-super/sftt0800.pfb></usr/share/texmf/font
-s/type1/public/cm-super/sftt1000.pfb>
-Output written on term_paper.pdf (53 pages, 1005049 bytes).
+{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/share/texliv
+e/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr
+6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></
+usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/sh
+are/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/tex
+live/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texm
+f/fonts/type1/public/cm-super/sfbx1000.pfb></usr/share/texmf/fonts/type1/public
+/cm-super/sfbx1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1440.p
+fb></usr/share/texmf/fonts/type1/public/cm-super/sfbx2074.pfb></usr/share/texmf
+/fonts/type1/public/cm-super/sfcc1000.pfb></usr/share/texmf/fonts/type1/public/
+cm-super/sfcc1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfcc1728.pf
+b></usr/share/texmf/fonts/type1/public/cm-super/sfit0800.pfb></usr/share/texmf/
+fonts/type1/public/cm-super/sfrm0700.pfb></usr/share/texmf/fonts/type1/public/c
+m-super/sfrm0800.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1000.pfb
+></usr/share/texmf/fonts/type1/public/cm-super/sfrm1200.pfb></usr/share/texmf/f
+onts/type1/public/cm-super/sfrm1440.pfb></usr/share/texmf/fonts/type1/public/cm
+-super/sfti1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti1440.pfb>
+</usr/share/texmf/fonts/type1/public/cm-super/sftt0800.pfb></usr/share/texmf/fo
+nts/type1/public/cm-super/sftt1000.pfb>
+Output written on term_paper.pdf (53 pages, 1005832 bytes).
 PDF statistics:
- 2343 PDF objects out of 2487 (max. 8388607)
- 2214 compressed objects within 23 object streams
- 1438 named destinations out of 1440 (max. 500000)
- 429 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 2338 PDF objects out of 2487 (max. 8388607)
+ 2209 compressed objects within 23 object streams
+ 1437 named destinations out of 1440 (max. 500000)
+ 421 words of extra memory for PDF output out of 10000 (max. 10000000)
 
