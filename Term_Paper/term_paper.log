@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.11.4)  21 MAR 2018 18:26
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.11.4)  21 MAR 2018 19:10
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -572,7 +572,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
  been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.43 ...ine {10.4.6}LDA}{47}{subsubsection.10.4.6}
+l.43 ...ine {10.4.6}LDA}{48}{subsubsection.10.4.6}
                                                    [1])
 \tf@toc=\write4
 \openout4 = `term_paper.toc'.
@@ -582,11 +582,34 @@ l.43 ...ine {10.4.6}LDA}{47}{subsubsection.10.4.6}
 \openout5 = `term_paper.lot'.
 
 
-(./term_paper.lof
+(./term_paper.lof <qletlogo.pdf, id=256, 198.49156pt x 205.26688pt>
+File: qletlogo.pdf Graphic file (type pdf)
+
+<use qletlogo.pdf>
+Package pdftex.def Info: qletlogo.pdf used on input line 2.
+(pdftex.def)             Requested size: 9.92516pt x 10.26393pt.
+File: qletlogo.pdf Graphic file (type pdf)
+ <use qletlogo.pdf>
+Package pdftex.def Info: qletlogo.pdf used on input line 3.
+(pdftex.def)             Requested size: 9.92516pt x 10.26393pt.
+File: qletlogo.pdf Graphic file (type pdf)
+ <use qletlogo.pdf>
+Package pdftex.def Info: qletlogo.pdf used on input line 4.
+(pdftex.def)             Requested size: 9.92516pt x 10.26393pt.
+File: qletlogo.pdf Graphic file (type pdf)
+ <use qletlogo.pdf>
+Package pdftex.def Info: qletlogo.pdf used on input line 5.
+(pdftex.def)             Requested size: 9.92516pt x 10.26393pt.
 LaTeX Font Info:    Try loading font information for T1+cmtt on input line 6.
- (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-))
+)
+File: qletlogo.pdf Graphic file (type pdf)
+ <use qletlogo.pdf>
+Package pdftex.def Info: qletlogo.pdf used on input line 6.
+(pdftex.def)             Requested size: 9.92516pt x 10.26393pt.
+)
 \tf@lof=\write6
 \openout6 = `term_paper.lof'.
 
@@ -595,8 +618,8 @@ File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 \tf@loa=\write7
 \openout7 = `term_paper.loa'.
 
- [3] [4] [5pdfTeX warning (ext4): destination with the same identifier (name{ta
-ble.1}) has been already used, duplicate ignored
+ [3 <./qletlogo.pdf>] [4] [5pdfTeX warning (ext4): destination with the same id
+entifier (name{table.1}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
@@ -643,7 +666,12 @@ Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
 put line 381.
  [12] (../LDA/lda.R) (../LDA/lda.R) [13] (../LDA/lda.R) [14]
 (../LDA/lda.R) (../LDA/creditLDA.R)
-<../LDA/creditLDA.png, id=531, 413.29407pt x 286.06876pt>
+File: qletlogo.pdf Graphic file (type pdf)
+ <use qletlogo.pdf>
+Package pdftex.def Info: qletlogo.pdf used on input line 460.
+(pdftex.def)             Requested size: 9.92516pt x 10.26393pt.
+
+<../LDA/creditLDA.png, id=540, 413.29407pt x 286.06876pt>
 File: ../LDA/creditLDA.png Graphic file (type png)
 
 <use ../LDA/creditLDA.png>
@@ -659,7 +687,12 @@ l.466
 (../BRM/logit.R) [18] (../BRM/utils.R) (../BRM/utils.R [19]) [20]
 (../BRM/utils.R) (../BRM/logit.R) [21] (../Logit/logit_model_fin.R)
 (../Logit/logit_model_fin.R) [22] (../CART/cart_modell_fin.R)
-<../CART/fancyRpartPlot.pdf, id=683, 505.89pt x 505.89pt>
+File: qletlogo.pdf Graphic file (type pdf)
+
+<use qletlogo.pdf>
+Package pdftex.def Info: qletlogo.pdf used on input line 710.
+(pdftex.def)             Requested size: 9.92516pt x 10.26393pt.
+ <../CART/fancyRpartPlot.pdf, id=693, 505.89pt x 505.89pt>
 File: ../CART/fancyRpartPlot.pdf Graphic file (type pdf)
 
 <use ../CART/fancyRpartPlot.pdf>
@@ -672,34 +705,49 @@ re.2}) has been already used, duplicate ignored
                                                   \fi \fi 
 l.718 \subsection
                  {Variable Importance} <../CART/fancyRpartPlot.pdf>]
-<../CART/CorrPlot.pdf, id=738, 505.89pt x 505.89pt>
+File: qletlogo.pdf Graphic file (type pdf)
+
+<use qletlogo.pdf>
+Package pdftex.def Info: qletlogo.pdf used on input line 725.
+(pdftex.def)             Requested size: 9.92516pt x 10.26393pt.
+ <../CART/CorrPlot.pdf, id=749, 505.89pt x 505.89pt>
 File: ../CART/CorrPlot.pdf Graphic file (type pdf)
- <use ../CART/CorrPlot.pdf>
+
+<use ../CART/CorrPlot.pdf>
 Package pdftex.def Info: ../CART/CorrPlot.pdf used on input line 727.
 (pdftex.def)             Requested size: 303.53633pt x 303.53633pt.
+File: qletlogo.pdf Graphic file (type pdf)
+ <use qletlogo.pdf>
+Package pdftex.def Info: qletlogo.pdf used on input line 734.
+(pdftex.def)             Requested size: 9.92516pt x 10.26393pt.
 
-[25pdfTeX warning (ext4): destination with the same identifier (name{figure.3})
- has been already used, duplicate ignored
-
-\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
-                                                  \fi \fi 
-l.732 \newpage
-               <../CART/CorrPlot.pdf>]
-<../CART/VarImp_top_10.png, id=749, 458.46281pt x 216.81pt>
+<../CART/VarImp_top_10.png, id=751, 458.46281pt x 216.81pt>
 File: ../CART/VarImp_top_10.png Graphic file (type png)
 
 <use ../CART/VarImp_top_10.png>
 Package pdftex.def Info: ../CART/VarImp_top_10.png used on input line 735.
 (pdftex.def)             Requested size: 412.61272pt x 195.12718pt.
- [26pdfTeX warning (ext4): destination with the same identifier (name{figure.4}
+ [25pdfTeX warning (ext4): destination with the same identifier (name{figure.3}
 ) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.736 \end{figure}
+                   <../CART/CorrPlot.pdf>] [26pdfTeX warning (ext4): destinatio
+n with the same identifier (name{figure.4}) has been already used, duplicate ig
+nored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
 l.746 \newpage
                <../CART/VarImp_top_10.png>]
 (../Random_Forest/random_forest_modell_fin.R)
-<../Random_Forest/Rplot.pdf, id=757, 614.295pt x 794.97pt>
+File: qletlogo.pdf Graphic file (type pdf)
+ <use qletlogo.pdf>
+Package pdftex.def Info: qletlogo.pdf used on input line 762.
+(pdftex.def)             Requested size: 9.92516pt x 10.26393pt.
+
+<../Random_Forest/Rplot.pdf, id=770, 614.295pt x 794.97pt>
 File: ../Random_Forest/Rplot.pdf Graphic file (type pdf)
 
 <use ../Random_Forest/Rplot.pdf>
@@ -714,7 +762,7 @@ l.777
        <../Random_Forest/Rplot.pdf>] (../Evaluation/Evaluate_Predictions.fin.R
 [29]) (../Evaluation/Evaluate_Predictions.fin.R) [30]
 (../Evaluation/Evaluate_Predictions.fin.R)
-<../Evaluation/ROC-Curve_Logit.png, id=823, 333.49594pt x 216.81pt>
+<../Evaluation/ROC-Curve_Logit.png, id=836, 333.49594pt x 216.81pt>
 File: ../Evaluation/ROC-Curve_Logit.png Graphic file (type png)
 
 <use ../Evaluation/ROC-Curve_Logit.png>
@@ -722,7 +770,7 @@ Package pdftex.def Info: ../Evaluation/ROC-Curve_Logit.png used on input line 8
 06.
 (pdftex.def)             Requested size: 116.72531pt x 75.88463pt.
 
-<../Evaluation/ROC-Curve_CART.png, id=824, 333.49594pt x 216.81pt>
+<../Evaluation/ROC-Curve_CART.png, id=837, 333.49594pt x 216.81pt>
 File: ../Evaluation/ROC-Curve_CART.png Graphic file (type png)
 
 <use ../Evaluation/ROC-Curve_CART.png>
@@ -730,7 +778,7 @@ Package pdftex.def Info: ../Evaluation/ROC-Curve_CART.png used on input line 80
 8.
 (pdftex.def)             Requested size: 116.72531pt x 75.88463pt.
 
-<../Evaluation/ROC-Curve_Random-forest.png, id=825, 333.49594pt x 216.81pt>
+<../Evaluation/ROC-Curve_Random-forest.png, id=838, 333.49594pt x 216.81pt>
 File: ../Evaluation/ROC-Curve_Random-forest.png Graphic file (type png)
 
 <use ../Evaluation/ROC-Curve_Random-forest.png>
@@ -763,20 +811,20 @@ l.844 \newpage
 l.844 \newpage
                <../Evaluation/ROC-Curve_Logit.png> <../Evaluation/ROC-Curve_CAR
 T.png> <../Evaluation/ROC-Curve_Random-forest.png>]
-<../LDA/iris.png, id=881, 413.29407pt x 428.35031pt>
+<../LDA/iris.png, id=894, 413.29407pt x 428.35031pt>
 File: ../LDA/iris.png Graphic file (type png)
  <use ../LDA/iris.png>
 Package pdftex.def Info: ../LDA/iris.png used on input line 850.
 (pdftex.def)             Requested size: 239.58678pt x 228.86955pt.
 
-<../LDA/irisLDA.png, id=883, 413.29407pt x 428.35031pt>
+<../LDA/irisLDA.png, id=896, 413.29407pt x 428.35031pt>
 File: ../LDA/irisLDA.png Graphic file (type png)
 
 <use ../LDA/irisLDA.png>
 Package pdftex.def Info: ../LDA/irisLDA.png used on input line 861.
 (pdftex.def)             Requested size: 239.58678pt x 228.86955pt.
  (../LDA/lda_tests.R)
-<../BRM/gradientDescent.png, id=886, 412.54124pt x 427.5975pt>
+<../BRM/gradientDescent.png, id=899, 412.54124pt x 427.5975pt>
 File: ../BRM/gradientDescent.png Graphic file (type png)
 
 <use ../BRM/gradientDescent.png>
@@ -834,13 +882,17 @@ Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 996.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 996.
 Package rerunfilecheck Info: File `term_paper.out' has not changed.
 (rerunfilecheck)             Checksum: 9AA37A99381A24AF26C8172C59EEC327;2846.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 996.
  ) 
 Here is how much of TeX's memory you used:
- 14456 strings out of 493029
- 199791 string characters out of 6136234
+ 14462 strings out of 493029
+ 199879 string characters out of 6136234
  658520 words of memory out of 5000000
- 16241 multiletter control sequences out of 15000+600000
+ 16246 multiletter control sequences out of 15000+600000
  25630 words of font info for 64 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  32i,15n,42p,15149b,2734s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -869,10 +921,10 @@ onts/type1/public/cm-super/sfrm1440.pfb></usr/share/texmf/fonts/type1/public/cm
 -super/sfti1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti1440.pfb>
 </usr/share/texmf/fonts/type1/public/cm-super/sftt0800.pfb></usr/share/texmf/fo
 nts/type1/public/cm-super/sftt1000.pfb>
-Output written on term_paper.pdf (53 pages, 1005832 bytes).
+Output written on term_paper.pdf (53 pages, 1027165 bytes).
 PDF statistics:
- 2338 PDF objects out of 2487 (max. 8388607)
- 2209 compressed objects within 23 object streams
+ 2351 PDF objects out of 2487 (max. 8388607)
+ 2220 compressed objects within 23 object streams
  1437 named destinations out of 1440 (max. 500000)
- 421 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 426 words of extra memory for PDF output out of 10000 (max. 10000000)
 

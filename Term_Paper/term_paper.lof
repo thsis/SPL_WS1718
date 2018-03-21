@@ -1,9 +1,9 @@
 \select@language {english}
-\contentsline {figure}{\numberline {1}{\ignorespaces Using Linear Discriminant Analysis on the Creditreform Database}}{15}{figure.1}
-\contentsline {figure}{\numberline {2}{\ignorespaces Decision Tree}}{24}{figure.2}
-\contentsline {figure}{\numberline {3}{\ignorespaces Correlation Matrix }}{25}{figure.3}
-\contentsline {figure}{\numberline {4}{\ignorespaces Variable Importance - varImp() function}}{26}{figure.4}
-\contentsline {figure}{\numberline {5}{\ignorespaces Variable Importance - \texttt {importance()}-function}}{28}{figure.5}
+\contentsline {figure}{\numberline {1}{\ignorespaces Using Linear Discriminant Analysis on the Creditreform Database \includegraphics [scale=0.05]{qletlogo.pdf} {\href {https://github.com/thsis/SPL_WS1718/blob/master/LDA/lda.R}{lda.R}}}}{15}{figure.1}
+\contentsline {figure}{\numberline {2}{\ignorespaces Decision Tree \includegraphics [scale=0.05]{qletlogo.pdf} {\href {https://github.com/thsis/SPL_WS1718/blob/master/CART/cart_modell_fin.R}{cart\_modell\_fin.R}}}}{24}{figure.2}
+\contentsline {figure}{\numberline {3}{\ignorespaces Correlation Matrix \includegraphics [scale=0.05]{qletlogo.pdf} {\href {https://github.com/thsis/SPL_WS1718/blob/master/CART/cart_modell_fin.R}{cart\_modell\_fin.R}}}}{25}{figure.3}
+\contentsline {figure}{\numberline {4}{\ignorespaces Variable Importance - varImp() function \includegraphics [scale=0.05]{qletlogo.pdf} {\href {https://github.com/thsis/SPL_WS1718/blob/master/CART/cart_modell_fin.R}{cart\_modell\_fin.R}}}}{26}{figure.4}
+\contentsline {figure}{\numberline {5}{\ignorespaces Variable Importance - \texttt {importance()}-function \includegraphics [scale=0.05]{qletlogo.pdf} {\href {https://github.com/thsis/SPL_WS1718/blob/master/Random_Forest/random_forest_modell_fin.R}{random\_forest\_modell\_fin.R}}}}{28}{figure.5}
 \contentsline {figure}{\numberline {6}{\ignorespaces ROC Logit}}{32}{figure.6}
 \contentsline {figure}{\numberline {7}{\ignorespaces ROC CART}}{32}{figure.7}
 \contentsline {figure}{\numberline {8}{\ignorespaces ROC RF}}{32}{figure.8}
